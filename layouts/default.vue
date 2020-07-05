@@ -33,21 +33,7 @@ export default {
 
   beforeMount: async function() {
     console.log("default>>>>");
-    let store = this.$store
-    let token = "customer-test" ;
-        token = (token)? token : await store.dispatch("other/get_token");
-        this.set_token(token)
-        // 首頁相關
-        let result = await store.dispatch("web/get_website", {
-            token: token,
-            condition: null
-        });
-      if (result.data && result.data.length !== 0) {
-        // 搜尋該分類的產品列表
-        let res = await store.dispatch("ssr/init_layout", {
-          layout: result.data[0].layout , 
-        });
-      }
+    
     // localStorage.clear();
     // let resp = await this.get_findCar({ condition: null });
     // if (resp.code != 200) return;
