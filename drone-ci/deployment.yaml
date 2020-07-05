@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: shop-client
+spec:
+  selector:
+    matchLabels:
+      app: shop-client
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: shop-client
+    spec:
+      containers:
+      - name: shop-client-container
+        image: 4ding/shop-client
+        env:
+        - name: "PORT"
+          value: "80"
+        - name: "BUILD_NUMBER"
+          value: "{{build_number}}"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shop-client-service
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+  selector:
+    app: shop-client
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shop-client-service-nodeport
+spec:
+  type: NodePort
+  ports:
+  - name: shop-client-nodeport
+    port: 80
+    targetPort: 80
+    nodePort: 31000
+    protocol: TCP
+  selector:
+    app: shop-client
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: shop-client-http
+spec:
+  entryPoints:
+    - http
+  routes:
+    - match: Host(`shop.4ding.site`)
+      kind: Rule
+      services:
+        - name: shop-client-service
+          port: 80
