@@ -13,7 +13,7 @@ export default {
     //     });
     //   if (result.data && result.data.length !== 0) {
     //     // 搜尋該分類的產品列表
-    //     let res = await dispatch("ssr/init_layout", {
+    //     let res = await dispatch("web/init_layout", {
     //       layout: result.data[0].layout , 
     //     });
     //   }

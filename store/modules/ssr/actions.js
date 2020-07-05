@@ -35,7 +35,7 @@ export default {
         layout[i].prod = prod.response[find_index];
       }
     }
-
+    context.commit("web/set_home_layout", layout);
     return layout
   }
 

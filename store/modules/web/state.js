@@ -1,6 +1,10 @@
 // https://vuex.vuejs.org/en/state.html
 
 export default {
-  // 購物車
+  // website原始資料
   style:[],
+  // 首頁資訊
+  home:{
+    layout:{}
+  }
 }

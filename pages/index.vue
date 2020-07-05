@@ -15,31 +15,33 @@ export default {
   data: function() {
     // 資料
     return {
-      layout: [], //
+      layout: this.$store.state.web.home.layout, //
       dd: "123"
     };
   },
 
   async asyncData({ context, app, store }) {
-    let data = {
-      layout: []
-    };
-    // 首頁相關
-    let result = await store.dispatch("web/get_website", {
-      app: app,
-      token: store.state.other.token,
-      condition: null
-    });
-    if (result.data && result.data.length !== 0) {
-      // 搜尋該分類的產品列表
-      let res = await store.dispatch("ssr/init_layout", {
-        layout: result.data[0].layout , 
-      });
-      data.layout = res ;
-    }
+    // let data = {
+    //   layout: []
+    // };
+    //     console.log("get_website>>>>>", result);
+    // // 首頁相關
+    // let result = await store.dispatch("web/get_website", {
+    //   app: app,
+    //   token: store.state.other.token,
+    //   condition: null
+    // });
 
-    console.log("SSR>>>>>", data);
-    return data;
+    // if (result.data && result.data.length !== 0) {
+    //   // 搜尋該分類的產品列表
+    //   let res = await store.dispatch("web/init_layout", {
+    //     layout: result.data[0].layout , 
+    //   });
+    //   data.layout = res ;
+    // }
+
+    // console.log("SSR>>>>>", data);
+    // return data;
   },
   async fetch({ store, $axios, app }) {},
   watch: {
