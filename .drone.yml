@@ -27,3 +27,13 @@ steps:
       SERVER_HOST: https://shop.4ding.site
     build_args_from_env:
     - SERVER_HOST
+- name: deploy-shop-client
+  image: danielgormly/drone-plugin-kube
+  settings:
+    ca:
+      from_secret: k8s_ca
+    server:
+      from_secret: k8s_master
+    template: drone-ci/deployment.yaml
+    token:
+      from_secret: k8s_token
