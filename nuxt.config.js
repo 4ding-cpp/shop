@@ -70,11 +70,16 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
+    '@nuxtjs/toast',
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
     'cookie-universal-nuxt',
-
   ],
+
+  toast: {
+    duration: 500 ,
+    theme: "outline", 
+  },
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options

@@ -12,47 +12,10 @@
           </div>
           <div class="content col-md-10" v-if="product_info.name">
             <div class="row pt-5 pb-5">
+              <!-- 左側圖片導覽 -->
               <div class="col-md-6">
                 <section class>
-                  <div id="carousel" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner">
-                      <div
-                        v-for="(item, key, index) in list"
-                        class="carousel-item"
-                        :class="{'active':carousel==key}"
-                      >
-                        <img :src="`${item.image}`" class="d-block w-100" alt="..." />
-                      </div>
-                    </div>
-                    <ol class="carousel-indicators">
-                      <li
-                        v-for="(item, key, index) in list"
-                        data-target="#carousel"
-                        :data-slide-to="index"
-                        :class="{'active':carousel==key}"
-                        :style="`background-image: url(${item.image})`"
-                        @click="carousel=key"
-                      ></li>
-                    </ol>
-                    <!-- <li
-                        v-for="(item, key, index) in product_info.photox"
-                        data-target="#carousel"
-                        :data-slide-to="index"
-                        :class="{'active':carousel==key}"
-                        :style="`background-image: url(https://assets.4ding.site${item})`"
-                        @click="carousel=key"
-                      ></li>
-                    </ol>
-                    <div class="carousel-inner">
-                      <div
-                        v-for="(item, key, index) in product_info.photox"
-                        class="carousel-item"
-                        :class="{'active':carousel==key}"
-                      >
-                        <img :src="`https://assets.4ding.site${item}`" class="d-block w-100" alt="..." />
-                      </div>
-                    </div>-->
-                  </div>
+                  <CarouselProduct :lists="product_info.photox" />
                 </section>
               </div>
               <div class="col-md-6">
@@ -227,11 +190,7 @@ export default {
     //相依的資料改變時才做計算方法
   },
 
-  created() {
-
-    console.log("~~~",this.product_info.link)
-    
-  },
+  created() {},
   methods: {
     // 初始
     ...mapActions({
@@ -254,35 +213,20 @@ export default {
         count: this.count
       };
       this._store({ act: "cart/add_cart", data: data });
+      this.$toast.success('加入到購物車')
     },
 
   },
   mounted: async function() {
     //元素已掛載， el 被建立。
     this.loading(false);
+    console.log("product_info>>>>",this.product_info)
     // this.get_template('/Csp7Vk3EPg/template/yXxbn5AMuA')
   }
 };
 </script>
 
 <style lang="scss" scoped >
-.carousel-indicators {
-  // top: 100%;
-  position: relative;
-  margin-right: 0px;
-  margin-left: 0px;
-  width: 100%;
-  overflow-y: hidden;
-  overflow-x: auto;
-  height: 100px;
-  & li {
-    // background-image: url(/images/prod01.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    min-width: 60px;
-    height: 60px;
-  }
-}
 .shipping-item {
   height: auto;
 }
