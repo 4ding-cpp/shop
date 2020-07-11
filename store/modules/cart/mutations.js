@@ -21,13 +21,11 @@ export default {
   },
   // 新增一筆購物車
   add_cart(state, o) {
-    // state.content.push(o)
-    if(isNaN(state.content[`${o.normal}-${o.sku}`])){
+    if(!state.content[`${o.normal}-${o.sku}`] ){
       state.content[`${o.normal}-${o.sku}`] = o
     }else{
       state.content[`${o.normal}-${o.sku}`].count +=  Number(o.count) ;
     }
-
     localStorage.setItem('cart',JSON.stringify(state.content))
   },
   // 設定某一筆購物車

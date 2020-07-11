@@ -60,7 +60,7 @@
                           <ButtonChoice
                             :title="item.title"
                             :free="free_shipping"
-                            :active="delivery.selected===item.id"
+                            :active="delivery.selected==item.id"
                             @selected="delivery.selected=item.id"
                           />
                         </div>
@@ -83,7 +83,7 @@
                           <ButtonChoice
                             :title="item.title"
                             :free="free_shipping"
-                            :active="cash.selected===item.id"
+                            :active="cash.selected==item.id"
                             @selected="cash.selected=item.id"
                           />
                         </div>
@@ -220,7 +220,8 @@ export default {
         selected: 0,
         list: []
       },
-      render_id: ""
+      render_id: "",
+
     };
   },
   watch: {
@@ -313,23 +314,26 @@ export default {
     },
     // 選擇取貨門市
     get_cvsStore: async function() {
-      let data = this.delivery.list[this.delivery.selected].data;
-      data.redirect = `${process.env.REDIRECT_URL}/cart/step2`;
-      let cond = Struct.fromJavaScript(data);
-      let resp = await this.$store.dispatch("order/get_cvsStore", {
-        condition: cond
-      });
-      console.log("get_cvsStore>>>>>", resp);
-      if (resp.code == 0) {
-        alert(resp.data);
-        return;
-      } else {
-        const div = document.createElement("div");
-        div.innerHTML = resp.data;
-        document.body.append(div);
-        document.getElementById("__4dingForm").submit();
-        // dx;
-      }
+      let id = this.delivery.list[this.delivery.selected].data.adapter_id ;
+      let redirect = `${process.env.REDIRECT_URL}/cart/step2`;
+      window.location = `${process.env.PAYMENT_URL}a=${id}&&redirect=${redirect}`
+    
+      // data.redirect = `${process.env.REDIRECT_URL}/cart/step2`;
+      // let cond = Struct.fromJavaScript(data);
+      // let resp = await this.$store.dispatch("order/get_cvsStore", {
+      //   condition: cond
+      // });
+      // console.log("get_cvsStore>>>>>", resp);
+      // if (resp.code == 0) {
+      //   alert(resp.data);
+      //   return;
+      // } else {
+      //   const div = document.createElement("div");
+      //   div.innerHTML = resp.data;
+      //   document.body.append(div);
+      //   document.getElementById("__4dingForm").submit();
+      //   // dx;
+      // }
     },
 
     get_cvsStoreInfo: async function() {

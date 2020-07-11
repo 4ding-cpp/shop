@@ -10,7 +10,7 @@ export default async function ({ app, route, store, redirect }) {
   // })
   
   let token = app.$cookies.get('4dingtoken') ;
-  if( token == "" ) {
+  if( token == "" || token === undefined ) {
     token = "customer-test";
     token = (token) ? token : await store.dispatch("other/get_token");
   }
