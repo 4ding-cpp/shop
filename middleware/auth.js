@@ -14,7 +14,7 @@ export default async function ({ app, route, store, redirect }) {
     token = "customer-test";
     token = (token) ? token : await store.dispatch("other/get_token");
   }
-  store.commit('other/set_token', token)
+  await store.commit('other/set_token', token)
 
   // 首頁相關
   let result = await store.dispatch("web/get_website", {
