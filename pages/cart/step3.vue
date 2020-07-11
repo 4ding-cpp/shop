@@ -96,9 +96,7 @@
                 </div>
                 <!-- type:1 -->
                 <div class="row p-2" v-if="invoice===1">
-                  <div class="col-md-12 float-left mb-3 rule">
-                    依統一發票使用辦法規定
-                  </div>
+                  <div class="col-md-12 float-left mb-3 rule">依統一發票使用辦法規定</div>
                 </div>
                 <!-- type:2 -->
                 <div class="row" v-if="invoice===2">
@@ -114,7 +112,6 @@
                   <div class="col-md-12 float-left mb-3">
                     <input class="form-control" type="text" placeholder="請輸入手機條碼" />
                   </div>
-                  
                 </div>
                 <!-- type:4 -->
                 <div class="row" v-if="invoice===4">
@@ -140,11 +137,21 @@
                 <div class="row">
                   <div class="col-md-2 float-left control-label">姓名</div>
                   <div class="col-md-10 float-left mb-3">
-                    <input class="form-control" v-model="customer.name" type="text" placeholder="購買人姓名" />
+                    <input
+                      class="form-control"
+                      v-model="customer.name"
+                      type="text"
+                      placeholder="購買人姓名"
+                    />
                   </div>
                   <div class="col-md-2 float-left control-label">聯絡電話</div>
                   <div class="col-md-10 float-left mb-3">
-                    <input class="form-control" v-model="customer.phone" type="text" placeholder="購買人聯絡電話，例：0987654321" />
+                    <input
+                      class="form-control"
+                      v-model="customer.phone"
+                      type="text"
+                      placeholder="購買人聯絡電話，例：0987654321"
+                    />
                   </div>
                 </div>
               </div>
@@ -156,20 +163,43 @@
                 <div class="row">
                   <div class="col-md-2 float-left control-label">姓名</div>
                   <div class="col-md-10 float-left mb-3">
-                    <input class="form-control" v-model="receiver.name" type="text" placeholder="收件人姓名" />
+                    <input
+                      class="form-control"
+                      v-model="receiver.name"
+                      type="text"
+                      placeholder="收件人姓名"
+                    />
                     <div class="hint-label mt-2">*超商取貨請使用本名，並記得攜帶身分證前往取貨</div>
                   </div>
                   <div class="col-md-2 float-left control-label">聯絡電話</div>
                   <div class="col-md-10 float-left mb-3">
-                    <input class="form-control" v-model="receiver.phone" type="text" placeholder="收件人聯絡電話，例：0987654321" />
+                    <input
+                      class="form-control"
+                      v-model="receiver.phone"
+                      type="text"
+                      placeholder="收件人聯絡電話，例：0987654321"
+                    />
                     <div
                       class="hint-label mt-2"
                     >*取貨通知將以此電話聯繫，請勿加入任何空格或符號，使用超商取貨請務必填寫10碼手機，如：0987654321</div>
                   </div>
                   <div class="col-md-2 float-left control-label">地址</div>
                   <div class="col-md-10 float-left mb-3">
-                    <input class="form-control" v-model="receiver.address" type="text" placeholder="地址" />
+                    <input
+                      class="form-control"
+                      v-model="receiver.address"
+                      type="text"
+                      placeholder="地址"
+                    />
                   </div>
+                  <div class="col-md-12 float-left mb-3">
+                    <button
+                      type="button"
+                      @click="get_cvsStore()"
+                      class="l-btn pick-btn btn-block ml-3"
+                    >選擇取貨門市</button>
+                  </div>
+
                   <div class="form-check w-100 ml-3">
                     <input class="form-check-input" type="checkbox" value id="defaultCheck1" />
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
@@ -206,7 +236,11 @@
                     >為保障彼此之權益，賣家在收到您的訂單後仍保有決定是否接受訂單及出貨與否之權利</label>
                   </div>
                   <div class="form-check w-100 m-3">
-                    <button type="button" @click="create_Order()" class="col-md-5 l-btn checkout-btn">立即結帳</button>
+                    <button
+                      type="button"
+                      @click="create_Order()"
+                      class="col-md-5 l-btn checkout-btn"
+                    >立即結帳</button>
                   </div>
                 </div>
               </div>
@@ -225,6 +259,7 @@ import { Struct } from "google-protobuf/google/protobuf/struct_pb";
 export default {
   data() {
     return {
+      order: {},
       invoice: 1,
       invoice_option: [
         { id: 1, title: "會員載具(個人)" },
@@ -244,16 +279,16 @@ export default {
         }
       ],
       // 購買人
-      customer:{
-        email:"",
-        phone:"",
-        name :""
+      customer: {
+        email: "",
+        phone: "",
+        name: ""
       },
       // 收件人
-      receiver:{
-        address:"",
-        phone:"",
-        name :""
+      receiver: {
+        address: "",
+        phone: "",
+        name: ""
       }
     };
   },
@@ -266,28 +301,28 @@ export default {
       window.open(url, "註冊", "width=300,height=300");
     },
     create_Order: async function() {
-      let store = this.$store.state.order.content
-      let b = this.receiver
-      let logistics = {
-        ...store.logistics,
-        ReceiverName :this.receiver.name,
-        ReceiverCellPhone :this.receiver.phone,
-        ReceiverAddress  :this.receiver.address,
-      }
-      let o = {
-        ...store,
-        logistics,
-        car_id:  this.$store.state.cart.info.id,
-        // customer:{...this.customer}  
-      } 
-      console.log(o)
+      let o = this.$store.state.order.content;
+      // let b = this.receiver;
+      // let logistics = {
+      //   ...store.logistics,
+      //   ReceiverName: this.receiver.name,
+      //   ReceiverCellPhone: this.receiver.phone,
+      //   ReceiverAddress: this.receiver.address
+      // };
+      // let o = {
+      //   ...store,
+      //   logistics,
+      //   car_id: this.$store.state.cart.info.id
+      //   // customer:{...this.customer}
+      // };
+      console.log(o);
       // return ;
       let cond = Struct.fromJavaScript(o);
-console.log("cond>>>>",cond)
+      console.log("cond>>>>", cond);
       let result = await this.$store.dispatch("order/create_Order", {
         condition: cond
       });
-console.log("ssss",result)
+      console.log("ssss", result);
       if (result.code === 0) {
         alert(result.data);
         return false;
@@ -306,9 +341,27 @@ console.log("ssss",result)
       }
       return true;
     },
+    // 選擇取貨門市
+    get_cvsStore: async function() {
+      let id = this.order.LogisticsAdapter;
+      let redirect = `${process.env.REDIRECT_URL}/cart/step3`;
+      window.location = `${process.env.PAYMENT_URL}a=${id}&&redirect=${redirect}`;
+    }
   },
+  created: function() {},
   mounted: async function() {
     this.loading(true);
+    console.log("query:", this.$route.query);
+    this.order = JSON.parse(localStorage.getItem("order"));
+    if (
+      this.order == null ||
+      !this.order.hasOwnProperty("LogisticsAdapter") ||
+      !this.order.hasOwnProperty("PaymentAdapter")
+    ) {
+      this.$router.push("/cart/step2");
+      localStorage.removeItem("order");
+      return;
+    }
 
     this.loading(false);
   }
@@ -317,7 +370,7 @@ console.log("ssss",result)
 <style lang="scss" scoped>
 .rule {
   background-color: #86919b;
-  color:white;
+  color: white;
   padding: 10px;
   font-size: 14px;
 }
