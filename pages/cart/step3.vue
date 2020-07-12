@@ -260,6 +260,7 @@ export default {
   data() {
     return {
       order: {},
+      storeID: "" ,
       invoice: 1,
       invoice_option: [
         { id: 1, title: "會員載具(個人)" },
@@ -302,27 +303,14 @@ export default {
     },
     create_Order: async function() {
       let o = this.$store.state.order.content;
-      // let b = this.receiver;
-      // let logistics = {
-      //   ...store.logistics,
-      //   ReceiverName: this.receiver.name,
-      //   ReceiverCellPhone: this.receiver.phone,
-      //   ReceiverAddress: this.receiver.address
-      // };
-      // let o = {
-      //   ...store,
-      //   logistics,
-      //   car_id: this.$store.state.cart.info.id
-      //   // customer:{...this.customer}
-      // };
-      console.log(o);
-      // return ;
+      o.car_id = this.$store.state.cart.info.id
+      o.payment_adapter = this.order.PaymentAdapter
+      o.logistics_adapter = this.order.LogisticsAdapter
+      console.log("send>>>>>" , JSON.stringify(o));
       let cond = Struct.fromJavaScript(o);
-      console.log("cond>>>>", cond);
       let result = await this.$store.dispatch("order/create_Order", {
         condition: cond
       });
-      console.log("ssss", result);
       if (result.code === 0) {
         alert(result.data);
         return false;

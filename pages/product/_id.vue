@@ -207,9 +207,15 @@ export default {
       return name;
     },
     cartJoin() {
+      let p = this.product_info
       let data = {
-        normal: this.product_info.product_id,
+        normal: p.product_id,
         sku: this.specx,
+        name: { tw : p.name.tw },
+        price: p.reduce,
+        photo: { 
+          src: (p.photox.length === 0)? '/images/noprod.png' : `${process.env.IMG_URL}/${p.photox[0].src}` ,
+        },
         count: this.count
       };
       this._store({ act: "cart/add_cart", data: data });

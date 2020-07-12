@@ -6,8 +6,8 @@ export default {
     let metadata = { "x-4d-token": app.store.state.other.token };
     let method = "CreateOrder";
     let req = new app.orderpb.Order();
-    if (condition !== null) req.setCommodityList(condition)
-    // console.log("create_Order>>>",req.toObject())
+    if (condition !== null) req.setSelf(condition)
+    console.log("create_Order>>>",req.toObject())
     let product = await app.grpcAxios(app.$axios, method, metadata, req, (err, resp) => {
       console.log("create_Order 3>>>>>", resp)
       const data = app.sqlpb.Response.deserializeBinary(resp);

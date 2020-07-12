@@ -15,10 +15,10 @@ export default {
   //   }
   // },
   content: {
-    CarId: "carID",
-    PaymentAdapter: "zNAaSQgqXA",
-    LogisticsAdapter: "Su5Vvxkz6Q",
-    Logistics: {
+    car_id : "carID",
+    payment_adapter : "zNAaSQgqXA",
+    logistics_adapter : "Su5Vvxkz6Q",
+    logistics : {
       CVSStoreID: "006598",
       ReceiverName: "叫山雞",
       ReceiverPhone: "0912627090",
