@@ -59,6 +59,7 @@ export default {
   },
   mounted: async function() {
     await this.get_completeCar();
+    await this.get_lockCar();
   },
   methods: {
     // 初始
@@ -75,7 +76,7 @@ export default {
       return money;
     },
     // 將目前購物車 送出取得可套用活動相關資訊
-    async get_completeCar() {
+    get_completeCar: async function() {
       let data = {};
       let cart = JSON.parse(localStorage.getItem("cart"));
       let cart_info = this.$store.state.cart.info;
@@ -100,6 +101,23 @@ export default {
         this._store({ act: "cart/set_cart_info", data: cart_info });
         this._store({ act: "cart/set_cart", data: this.cart });
       }
+    },
+    get_lockCar: async function() {
+      let cart_info = this.$store.state.cart.info;
+      let cond = Struct.fromJavaScript({
+        car_id: cart_info.id
+      });
+
+      let result = await this.$store.dispatch("cart/get_lockCar", {
+        condition: cond
+      });
+
+      if (result.code === 200) {
+        console.log("lockcar:", result.data);
+      } else {
+        alert(result.data);
+      }
+      return true;
     }
   }
 };

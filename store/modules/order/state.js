@@ -17,6 +17,7 @@ export default {
   content: {
     car_id : "carID",
     payment_adapter : "zNAaSQgqXA",
+    payment : {} ,
     logistics_adapter : "Su5Vvxkz6Q",
     logistics : {
       CVSStoreID: "006598",

@@ -8,23 +8,32 @@ export class Customer extends jspb.Message {
   getCustomerId(): string;
   setCustomerId(value: string): void;
 
+  getBusinessId(): string;
+  setBusinessId(value: string): void;
+
+  getStoreId(): string;
+  setStoreId(value: string): void;
+
   getStatus(): number;
   setStatus(value: number): void;
 
-  getPhone(): string;
-  setPhone(value: string): void;
-
-  getPhoneVerify(): boolean;
-  setPhoneVerify(value: boolean): void;
+  getName(): string;
+  setName(value: string): void;
 
   getEmail(): string;
   setEmail(value: string): void;
 
+  getPhone(): string;
+  setPhone(value: string): void;
+
+  getPassword(): string;
+  setPassword(value: string): void;
+
+  getPhoneVerify(): boolean;
+  setPhoneVerify(value: boolean): void;
+
   getEmailVerify(): boolean;
   setEmailVerify(value: boolean): void;
-
-  getName(): string;
-  setName(value: string): void;
 
   getBirthday(): string;
   setBirthday(value: string): void;
@@ -32,16 +41,17 @@ export class Customer extends jspb.Message {
   getSex(): number;
   setSex(value: number): void;
 
-  getPassword(): string;
-  setPassword(value: string): void;
+  getZipCode(): string;
+  setZipCode(value: string): void;
 
-  getComeFrom(): string;
-  setComeFrom(value: string): void;
+  getAddress(): string;
+  setAddress(value: string): void;
 
-  getLink(): CustomerLink | undefined;
-  setLink(value?: CustomerLink): void;
-  hasLink(): boolean;
-  clearLink(): void;
+  getLevelId(): string;
+  setLevelId(value: string): void;
+
+  getIsReceive(): boolean;
+  setIsReceive(value: boolean): void;
 
   getLabelxMap(): jspb.Map<string, number>;
   clearLabelxMap(): void;
@@ -85,17 +95,21 @@ export class Customer extends jspb.Message {
 export namespace Customer {
   export type AsObject = {
     customerId: string,
+    businessId: string,
+    storeId: string,
     status: number,
-    phone: string,
-    phoneVerify: boolean,
-    email: string,
-    emailVerify: boolean,
     name: string,
+    email: string,
+    phone: string,
+    password: string,
+    phoneVerify: boolean,
+    emailVerify: boolean,
     birthday: string,
     sex: number,
-    password: string,
-    comeFrom: string,
-    link?: CustomerLink.AsObject,
+    zipCode: string,
+    address: string,
+    levelId: string,
+    isReceive: boolean,
     labelxMap: Array<[string, number]>,
     operator: string,
     createAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
