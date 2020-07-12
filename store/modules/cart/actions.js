@@ -51,7 +51,7 @@ export default {
       if (err !== null || data.getCode() != 0) {
         return { code: 0, data: data.getMessage() };
       }
-      console.log("get_lockCar>>>>",data.getAffectRow())
+      console.log("get_lockCar>>>>",data.getInsertId(),data.getResult())
       return { code: 200, data: data.getAffectRow() };
     });
 

@@ -64,16 +64,16 @@
                             @selected="delivery.selected=item.id"
                           />
                         </div>
-                        <button
+                        <!-- <button
                           type="button"
                           @click="get_cvsStore()"
                           class="l-btn pick-btn btn-block mt-3 ml-3"
-                        >選擇取貨門市</button>
+                        >選擇取貨門市</button>-->
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="from-group mb-3" v-if>
+                <div class="from-group mb-3">
                   <!-- 付款方式 -->
                   <div class="row">
                     <div class="col-md-2 float-left control-label">付款方式</div>
@@ -92,7 +92,7 @@
                   </div>
                 </div>
                 <!-- 卡號  -->
-                <div class="form-group mb-3">
+                <!-- <div class="form-group mb-3">
                   <div class="row">
                     <div class="col-md-2 float-left control-label">卡號</div>
                     <div class="col-md-10 float-left ">
@@ -105,18 +105,18 @@
                       <input data-index="3" maxlength="4" class="form-control ipt-cards d-inline-block" value />
                     </div>
                   </div>
-                </div>
+                </div>-->
                 <!-- 卡片背面後三碼  -->
-                <div class="form-group mb-3">
+                <!-- <div class="form-group mb-3">
                   <div class="row">
                     <div class="col-md-2 float-left control-label">卡片背面後三碼</div>
                     <div class="col-md-10 float-left ">
                       <input data-index="0" maxlength="4" class="form-control ipt-cards d-inline-block" value />
                     </div>
                   </div>
-                </div>
+                </div>-->
                 <!-- 有效期限  -->
-                <div class="form-group mb-3">
+                <!-- <div class="form-group mb-3">
                   <div class="row">
                     <div class="col-md-2 float-left control-label">有效期限</div>
                     <div class="col-md-2 float-left">
@@ -134,34 +134,34 @@
                     </div>
                     <div class="col-md-5 float-left control-label">年</div>
                   </div>
-                </div>
+                </div>-->
                 <!-- 持卡人姓名 -->
-                <div class="from-group mb-3">
+                <!-- <div class="from-group mb-3">
                   <div class="row">
                     <div class="col-md-2 float-left control-label">持卡人姓名</div>
                     <div class="col-md-10 float-left">
                       <input class="form-control" type="text" placeholder="" />
                     </div>
                   </div>
-                </div>
+                </div>-->
                 <!-- 連絡電話 -->
-                <div class="from-group mb-3">
+                <!-- <div class="from-group mb-3">
                   <div class="row">
                     <div class="col-md-2 float-left control-label">連絡電話</div>
                     <div class="col-md-10 float-left">
                       <input class="form-control" type="text" placeholder="" />
                     </div>
                   </div>
-                </div>
+                </div>-->
                 <!-- 備註 -->
-                <div class="from-group mb-3">
+                <!-- <div class="from-group mb-3">
                   <div class="row">
                     <div class="col-md-2 float-left control-label">備註</div>
                     <div class="col-md-10 float-left">
                       <input class="form-control" type="text" placeholder />
                     </div>
                   </div>
-                </div>
+                </div>-->
               </div>
             </div>
           </div>
@@ -220,8 +220,7 @@ export default {
         selected: 0,
         list: []
       },
-      render_id: "",
-
+      render_id: ""
     };
   },
   watch: {
@@ -250,7 +249,6 @@ export default {
 
     get_lockCar: async function() {
       let cart_info = this.$store.state.cart.info;
-      console.log("get_lockCar>>>>", cart_info);
       let cond = Struct.fromJavaScript({
         car_id: cart_info.id
       });
@@ -260,6 +258,7 @@ export default {
       });
 
       if (result.code === 200) {
+        console.log("lockcar:", result.data);
       } else {
         alert(result.data);
       }
@@ -314,10 +313,10 @@ export default {
     },
     // 選擇取貨門市
     get_cvsStore: async function() {
-      let id = this.delivery.list[this.delivery.selected].data.adapter_id ;
+      let id = this.delivery.list[this.delivery.selected].data.adapter_id;
       let redirect = `${process.env.REDIRECT_URL}/cart/step2`;
-      window.location = `${process.env.PAYMENT_URL}a=${id}&&redirect=${redirect}`
-    
+      window.location = `${process.env.PAYMENT_URL}a=${id}&&redirect=${redirect}`;
+
       // data.redirect = `${process.env.REDIRECT_URL}/cart/step2`;
       // let cond = Struct.fromJavaScript(data);
       // let resp = await this.$store.dispatch("order/get_cvsStore", {
@@ -336,37 +335,48 @@ export default {
       // }
     },
 
-    get_cvsStoreInfo: async function() {
-      let cond = Struct.fromJavaScript({
-        RenderID: this.render_id
-      });
-      let resp = await this.$store.dispatch("order/get_cvsStoreInfo", {
-        condition: cond
-      });
-      console.log("get_cvsStoreInfo>>>>>", resp);
-      if (resp.code == 0) {
-        alert(resp.data);
-        return;
-      } else {
-        let o = {
-          logistics_type: this.delivery.selected,
-          payment_type: this.cash.selected,
-          logistics: resp.data
-        };
-        this._store({ act: "order/update_order", data: o });
-      }
-    },
+    // get_cvsStoreInfo: async function() {
+    //   let cond = Struct.fromJavaScript({
+    //     RenderID: this.render_id
+    //   });
+    //   let resp = await this.$store.dispatch("order/get_cvsStoreInfo", {
+    //     condition: cond
+    //   });
+    //   console.log("get_cvsStoreInfo>>>>>", resp);
+    //   if (resp.code == 0) {
+    //     alert(resp.data);
+    //     return;
+    //   } else {
+    //     let o = {
+    //       logistics_type: this.delivery.selected,
+    //       payment_type: this.cash.selected,
+    //       logistics: resp.data
+    //     };
+    //     this._store({ act: "order/update_order", data: o });
+    //   }
+    // },
 
     toStep3: async function() {
       console.log("render id>>>", this.render_id);
-      if (this.render_id == "") return;
-      await this.get_cvsStoreInfo();
-      this.$router.push("/cart/step3");
+      // if (this.render_id == "") return;
+      // await this.get_cvsStoreInfo();
+      localStorage.setItem(
+        "order",
+        JSON.stringify({
+          LogisticsAdapter: this.delivery.list[this.delivery.selected].data.adapter_id,
+          PaymentAdapter: this.cash.list[this.cash.selected].data.adapter_id
+        })
+      );
+      this.$router.push({
+        path: "/cart/step3"
+      });
     }
   },
   mounted: async function() {
     this.loading(true);
-    console.log(this.$route.query)
+    console.log("query:", this.$route.query);
+    console.log("物流:", this.delivery);
+    console.log("cash:", this.cash);
     // ssr 過來此頁面 不動作 監聽觸發
     if (this.$store.state.cart.info.state == 1) {
       await this.get_lockCar();

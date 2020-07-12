@@ -33,22 +33,38 @@ export class Order extends jspb.Message {
   getState(): number;
   setState(value: number): void;
 
-  getPaymentType(): string;
-  setPaymentType(value: string): void;
+  getPaymentAdapter(): string;
+  setPaymentAdapter(value: string): void;
+
+  getPaymentService(): string;
+  setPaymentService(value: string): void;
+
+  getPaymentType(): number;
+  setPaymentType(value: number): void;
 
   getPaymentState(): number;
   setPaymentState(value: number): void;
 
-  getLogisticsType(): string;
-  setLogisticsType(value: string): void;
+  getPaymentCharge(): number;
+  setPaymentCharge(value: number): void;
+
+  getLogisticsAdapter(): string;
+  setLogisticsAdapter(value: string): void;
+
+  getLogisticsService(): string;
+  setLogisticsService(value: string): void;
+
+  getLogisticsType(): number;
+  setLogisticsType(value: number): void;
+
+  getLogisticsSubType(): number;
+  setLogisticsSubType(value: number): void;
 
   getLogisticsState(): number;
   setLogisticsState(value: number): void;
 
-  getReceiveAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
-  setReceiveAt(value?: google_protobuf_timestamp_pb.Timestamp): void;
-  hasReceiveAt(): boolean;
-  clearReceiveAt(): void;
+  getLogisticsCharge(): number;
+  setLogisticsCharge(value: number): void;
 
   getComeFrom(): number;
   setComeFrom(value: number): void;
@@ -65,23 +81,6 @@ export class Order extends jspb.Message {
   getOrderCharge(): number;
   setOrderCharge(value: number): void;
 
-  getPaymentCharge(): number;
-  setPaymentCharge(value: number): void;
-
-  getLogisticsCharge(): number;
-  setLogisticsCharge(value: number): void;
-
-  getReOrderId(): string;
-  setReOrderId(value: string): void;
-
-  getRemark(): string;
-  setRemark(value: string): void;
-
-  getCommodityList(): Array<car_pb.Commodity>;
-  setCommodityList(value: Array<car_pb.Commodity>): void;
-  clearCommodityList(): void;
-  addCommodity(value?: car_pb.Commodity, index?: number): car_pb.Commodity;
-
   getPayment(): Payment | undefined;
   setPayment(value?: Payment): void;
   hasPayment(): boolean;
@@ -91,6 +90,14 @@ export class Order extends jspb.Message {
   setLogistics(value?: Logistics): void;
   hasLogistics(): boolean;
   clearLogistics(): void;
+
+  getRemark(): string;
+  setRemark(value: string): void;
+
+  getCommodityList(): Array<car_pb.Commodity>;
+  setCommodityList(value: Array<car_pb.Commodity>): void;
+  clearCommodityList(): void;
+  addCommodity(value?: car_pb.Commodity, index?: number): car_pb.Commodity;
 
   getLabelxMap(): jspb.Map<string, number>;
   clearLabelxMap(): void;
@@ -141,23 +148,26 @@ export namespace Order {
     carId: string,
     couponId: string,
     state: number,
-    paymentType: string,
+    paymentAdapter: string,
+    paymentService: string,
+    paymentType: number,
     paymentState: number,
-    logisticsType: string,
+    paymentCharge: number,
+    logisticsAdapter: string,
+    logisticsService: string,
+    logisticsType: number,
+    logisticsSubType: number,
     logisticsState: number,
-    receiveAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+    logisticsCharge: number,
     comeFrom: number,
     count: number,
     amount: number,
     freight: number,
     orderCharge: number,
-    paymentCharge: number,
-    logisticsCharge: number,
-    reOrderId: string,
-    remark: string,
-    commodityList: Array<car_pb.Commodity.AsObject>,
     payment?: Payment.AsObject,
     logistics?: Logistics.AsObject,
+    remark: string,
+    commodityList: Array<car_pb.Commodity.AsObject>,
     labelxMap: Array<[string, number]>,
     operator: string,
     createAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,

@@ -65,7 +65,11 @@
               <div class="total-money">NT$2666</div>
             </div>
             <div class="col-md-12">
-              <nuxt-link tag="button" class="w-100 btn btn-outline-primary btn-sm" to="/cart/step2">下一步</nuxt-link>
+              <nuxt-link
+                tag="button"
+                class="w-100 btn btn-outline-primary btn-sm"
+                to="/cart/step2"
+              >下一步</nuxt-link>
             </div>
           </div>
         </div>
@@ -75,7 +79,7 @@
           <div v-for="item in purchase" class="card col-lg-3 col-md-3 col-xs-6 p-2">
             <Purchase />
           </div>
-        </div> -->
+        </div>-->
       </div>
     </section>
   </div>
@@ -90,7 +94,7 @@ import _values from "lodash/values";
 export default {
   data() {
     return {
-      imgesUrl: '',
+      imgesUrl: "",
       commodity: [],
       activity: [],
       purchase: [
@@ -121,7 +125,7 @@ export default {
   },
   async asyncData({ context, app, store, route }) {
     // todo:拉到store去
-    let data = {imgesUrl:process.env.IMG_URL};
+    let data = { imgesUrl: process.env.IMG_URL };
 
     return data;
   },
@@ -139,14 +143,19 @@ export default {
     }),
     // 將目前購物車 送出取得可套用活動相關資訊
     async get_completeCar() {
-      
       let data = {};
-      let cart = JSON.parse(localStorage.getItem('cart'))
+      let cart = JSON.parse(localStorage.getItem("cart"));
       let cart_info = this.$store.state.cart.info;
-
-      if(cart == null || cart_info.id == null ) return ;
+      let commodity = _values(cart).map(res => {
+        return {
+          count: res.count,
+          normal: res.normal,
+          sku: res.sku
+        };
+      });
+      if (cart == null || cart_info.id == null) return;
       let cond = Struct.fromJavaScript({
-        commodity: _values(cart)
+        commodity: commodity
       });
 
       let result = await this.$store.dispatch("cart/get_completeCar", {
@@ -154,25 +163,25 @@ export default {
         token: this.$store.state.other.token,
         condition: cond
       });
-      console.log("get_completeCar>>>>",result);
+      console.log("get_completeCar>>>>", result);
       if (result.code === 200) {
-        cart_info.state = 1
-        cart_info.id = result.data.car_id
-        this._store({ act: "cart/set_cart_info", data: cart_info });
+        cart_info = { state : 1 , id : result.data.car_id };
         this.commodity = result.data.commodity;
         this.activity = result.data.activity;
+        this._store({ act: "cart/set_cart_info", data: cart_info });
+        this._store({ act: "cart/set_cart", data: this.commodity });
       }
     },
     // 更新購物車
     async add_cart(o) {
       await this._store({ act: "cart/set_one_cart", data: o });
-      await this.get_completeCar()
+      await this.get_completeCar();
     },
     async del_cart(i) {
       this._store({ act: "cart/del_cart", data: this.commodity[i] });
       this.commodity.splice(i, 1);
-      await this.get_completeCar()
-    },
+      await this.get_completeCar();
+    }
   },
   //BEGIN--生命週期
   beforeCreate: function() {
@@ -184,10 +193,10 @@ export default {
   beforeMount: function() {
     //執行元素掛載之前。
   },
-  mounted:async function() {
+  mounted: async function() {
     //元素已掛載， el 被建立。
     this.loading(false);
-    await this.get_completeCar()
+    await this.get_completeCar();
     // let a =await this.get_findCar({token:this.$store.state.other.token})
     // console.log(a)
   },
