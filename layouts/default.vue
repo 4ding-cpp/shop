@@ -24,7 +24,7 @@ export default {
     ...mapActions({
       _store: "_store",
       get_findCar: "cart/get_findCar",
-      _store: "_store"
+      loading: "loading"
     }),
     ...mapMutations({
       set_token: "other/set_token"

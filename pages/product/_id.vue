@@ -58,7 +58,7 @@
                       <nuxt-link
                         tag="button"
                         class="w-100 checkout-btn  l-btn"
-                        :to="`/cart/${product_info.product_id}`"
+                        :to="`/cart/step1`"
                       >立即結帳</nuxt-link>
                     </div>
                   </div>

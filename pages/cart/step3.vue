@@ -66,7 +66,13 @@
                 >會員登入</button>
               </div>
               <div class="mt-2 mb-2">非會員購買</div>
-              <input class="form-control" type="text" v-model="customer.email" placeholder="連絡信箱" />
+              <input
+                class="form-control"
+                :class="{'is-invalid': validation.hasError('buyer.email')}"
+                type="text"
+                v-model="buyer.email"
+                placeholder="連絡信箱"
+              />
               <div class="hint-label mt-2">訂單通知會寄到此信箱，請您務必填入正確的 E-mail</div>
             </div>
             <!-- 訂單備註 -->
@@ -139,7 +145,8 @@
                   <div class="col-md-10 float-left mb-3">
                     <input
                       class="form-control"
-                      v-model="customer.name"
+                      v-model="buyer.name"
+                      :class="{'is-invalid': validation.hasError('buyer.name')}"
                       type="text"
                       placeholder="購買人姓名"
                     />
@@ -148,7 +155,8 @@
                   <div class="col-md-10 float-left mb-3">
                     <input
                       class="form-control"
-                      v-model="customer.phone"
+                      v-model="buyer.phone"
+                      :class="{'is-invalid': validation.hasError('buyer.phone')}"
                       type="text"
                       placeholder="購買人聯絡電話，例：0987654321"
                     />
@@ -159,6 +167,7 @@
             <!-- 收件人 -->
             <div class="row border p-3 mt-3">
               <h5>收件人資訊</h5>
+              <div class="form-check w-100 ml-3"></div>
               <div class="from-group mb-3">
                 <div class="row">
                   <div class="col-md-2 float-left control-label">姓名</div>
@@ -166,6 +175,7 @@
                     <input
                       class="form-control"
                       v-model="receiver.name"
+                      :class="{'is-invalid': validation.hasError('receiver.name')}"
                       type="text"
                       placeholder="收件人姓名"
                     />
@@ -176,6 +186,7 @@
                     <input
                       class="form-control"
                       v-model="receiver.phone"
+                      :class="{'is-invalid': validation.hasError('receiver.phone')}"
                       type="text"
                       placeholder="收件人聯絡電話，例：0987654321"
                     />
@@ -199,7 +210,7 @@
                       class="l-btn pick-btn btn-block ml-3"
                     >選擇取貨門市</button>
                   </div>
-
+                  <!-- 下方選項 -->
                   <div class="form-check w-100 ml-3">
                     <input class="form-check-input" type="checkbox" value id="defaultCheck1" />
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
@@ -221,15 +232,15 @@
                     </div>
                   </div>
                   <div class="form-check w-100 ml-3">
-                    <input class="form-check-input" type="checkbox" value id="defaultCheck1" />
+                    <input class="form-check-input" type="checkbox" value  />
                     <label class="form-check-label check-label" for="defaultCheck1">用上述資料直接註冊會員</label>
                   </div>
                   <div class="form-check w-100 ml-3">
-                    <input class="form-check-input" type="checkbox" value id="defaultCheck1" />
+                    <input class="form-check-input" type="checkbox" value  />
                     <label class="form-check-label check-label" for="defaultCheck1">同意會員責任規範及個資聲明</label>
                   </div>
                   <div class="form-check w-100 ml-3">
-                    <input class="form-check-input" type="checkbox" value id="defaultCheck1" />
+                    <input class="form-check-input" type="checkbox" value  />
                     <label
                       class="form-check-label check-label"
                       for="defaultCheck1"
@@ -260,80 +271,85 @@ export default {
   data() {
     return {
       order: {},
-      storeID: "" ,
+      storeID: "",
       invoice: 1,
       invoice_option: [
         { id: 1, title: "會員載具(個人)" },
         { id: 2, title: "公司用(統編)" },
         { id: 3, title: "手機載具" },
         { id: 4, title: "自然人憑證" },
-        { id: 5, title: "捐贈碼" }
+        { id: 5, title: "捐贈碼" },
       ],
-      rule_option: [
-        { id: 1, title: "取件人與購買人相同" },
-        { id: 2, title: "用上述資料直接註冊會員" },
-        { id: 3, title: "同意會員責任規範及個資聲明" },
-        {
-          id: 4,
-          title:
-            "為保障彼此之權益，賣家在收到您的訂單後仍保有決定是否接受訂單及出貨與否之權利"
-        }
-      ],
+
       // 購買人
-      customer: {
-        email: "",
-        phone: "",
-        name: ""
+      buyer: {
+        phone: "0900000000",
+        email: "BUYER01@gmail.com",
+        name: "BUYER01",
       },
       // 收件人
       receiver: {
         address: "",
-        phone: "",
-        name: ""
-      }
+        phone: "0912345678",
+        email: "RECEIVER01@gmail.com",
+        name: "RECEIVER01",
+        cvs_code: "",
+        cvs_type: "",
+        cvs_name: "",
+        cvs_address: "",
+      },
     };
+  },
+  validators: {
+    "receiver.name": function (value) {
+      return this.Validator.value(value).required();
+    },
+    "receiver.phone": function (value) {
+      return this.Validator.value(value).required().length(10);
+    },
+    "receiver.email": function (value) {
+      return this.Validator.value(value).required().email();
+    },
+
+    "buyer.name": function (value) {
+      return this.Validator.value(value).required();
+    },
+    "buyer.phone": function (value) {
+      return this.Validator.value(value).required().length(10);
+    },
+    "buyer.email": function (value) {
+      return this.Validator.value(value).required().email();
+    },
   },
   methods: {
     ...mapActions({
       loading: "loading",
-      _store: "_store"
+      _store: "_store",
     }),
-    goto: function(url) {
+    goto: function (url) {
       window.open(url, "註冊", "width=300,height=300");
     },
-    create_Order: async function() {
-      let query = {
-        Addr : '台北市中正區中山南路７號１樓' ,
-        Cate : '全家' ,
-        Code : '006598' ,
-        Name : '台醫店' ,
-        Tel : '02-24326001' ,
-      }
+    // 複製取件人
+    copyData: function () {},
+    create_Order: async function () {
       let o = this.$store.state.order.content;
-      o.car_id = this.$store.state.cart.info.id
-      o.payment_adapter = this.order.PaymentAdapter.id
-      o.logistics_adapter = this.order.LogisticsAdapter.id
-      o.other = {
-        receiver  : { 
-          name : 'AAAAA',
-          phone : '0912345678',
-          email : 'AAAAA@gmail.com',
-          cvs_code :query.Code , 
-          cvs_type :query.Cate , 
-          cvs_name :query.Name , 
-          cvs_address :query.Addr , 
-        }
-      };
-      console.log("send>>>>>" , JSON.stringify(o));
+      o.car_id = this.$store.state.cart.info.id;
+      o.payment_adapter = this.order.PaymentAdapter.id;
+      o.logistics_adapter = this.order.LogisticsAdapter.id;
+      o.other.receiver = this.receiver;
+      o.name = this.buyer.name;
+      o.email = this.buyer.email;
+      o.phone = this.buyer.phone;
+
       let cond = Struct.fromJavaScript(o);
       let result = await this.$store.dispatch("order/create_Order", {
-        condition: cond
+        condition: cond,
       });
       if (result.code === 0) {
         alert(result.data);
         return false;
-      }else{
-        alert(result.data);
+      } else {
+        console.log("createOrder OK:", result.data);
       }
 
       for (let i in result.data) {
@@ -341,7 +357,7 @@ export default {
         let o = {
           id: `${d.service}${d.service_type}${d.service_item}`,
           title:
-            d.remark != "" ? `${d.name.tw}<br>(${d.remark})` : `${d.name.tw}`
+            d.remark != "" ? `${d.name.tw}<br>(${d.remark})` : `${d.name.tw}`,
         };
         // 物流
         if (d.service_type == 2) this.home_list.push(o);
@@ -350,19 +366,17 @@ export default {
       return true;
     },
     // 選擇取貨門市
-    get_cvsStore: async function() {
+    get_cvsStore: async function () {
       let id = this.order.LogisticsAdapter.id;
       let service = this.order.LogisticsAdapter.service;
       let redirect = `${process.env.REDIRECT_URL}/cart/step3`;
       window.location = `${process.env.PAYMENT_URL}/logistics/${service}/storemap?a=${id}&&redirect=${redirect}`;
-    }
+    },
   },
-  created: function() {},
-  mounted: async function() {
+  created: function () {},
+  mounted: async function () {
     this.loading(true);
-    // ?Addr=台北市中正區中山南路７號１樓&Cate=全家&Code=006598&Name=台醫店&Tel=02-24326001
-    let query = this.$route.query ;
-    console.log("query:",query)
+    console.log("query:", this.$route.query);
     this.order = JSON.parse(localStorage.getItem("order"));
     // 檢查是否有物流金流資料 沒有返回
     if (
@@ -374,9 +388,14 @@ export default {
       localStorage.removeItem("order");
       return;
     }
+    //
+    this.receiver.cvs_code = this.$route.query.Code;
+    this.receiver.cvs_name = this.$route.query.Name;
+    this.receiver.cvs_type = this.$route.query.Cate;
+    this.receiver.cvs_address = this.$route.query.Addr;
 
     this.loading(false);
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>

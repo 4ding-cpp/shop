@@ -1,6 +1,8 @@
 console.log('plugins autoload')
 import Vue from 'vue'
-
+import SimpleVueValidation from 'simple-vue-validator';
+Vue.prototype.Validator =SimpleVueValidation.Validator;
+Vue.use(SimpleVueValidation);
 
 // use grpc
 import sql_pb from '@/assets/shoppb/sql_pb'
