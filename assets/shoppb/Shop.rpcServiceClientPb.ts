@@ -12,6 +12,7 @@ import * as grpcWeb from 'grpc-web';
 import * as pingpong_pb from './pingpong_pb';
 import * as sql_pb from './sql_pb';
 import * as customer_pb from './customer_pb';
+import * as product_pb from './product_pb';
 import * as car_pb from './car_pb';
 import * as activity$coupon_pb from './activity-coupon_pb';
 import * as adapter_pb from './adapter_pb';
@@ -191,6 +192,28 @@ export class ShopRPCClient {
       callback);
   }
 
+  methodInfoBrowseProduct = new grpcWeb.AbstractClientBase.MethodInfo(
+    sql_pb.Response,
+    (request: product_pb.Product) => {
+      return request.serializeBinary();
+    },
+    sql_pb.Response.deserializeBinary
+  );
+
+  browseProduct(
+    request: product_pb.Product,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.Error,
+               response: sql_pb.Response) => void) {
+    return this.client_.rpcCall(
+      this.hostname_ +
+        '/ding4.ShopRPC/BrowseProduct',
+      request,
+      metadata || {},
+      this.methodInfoBrowseProduct,
+      callback);
+  }
+
   methodInfoExchangeCoupon = new grpcWeb.AbstractClientBase.MethodInfo(
     sql_pb.Response,
     (request: activity$coupon_pb.Coupon) => {
@@ -232,6 +255,28 @@ export class ShopRPCClient {
       request,
       metadata || {},
       this.methodInfoFindCar,
+      callback);
+  }
+
+  methodInfoFindCoupon = new grpcWeb.AbstractClientBase.MethodInfo(
+    sql_pb.Response,
+    (request: sql_pb.Query) => {
+      return request.serializeBinary();
+    },
+    sql_pb.Response.deserializeBinary
+  );
+
+  findCoupon(
+    request: sql_pb.Query,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.Error,
+               response: sql_pb.Response) => void) {
+    return this.client_.rpcCall(
+      this.hostname_ +
+        '/ding4.ShopRPC/FindCoupon',
+      request,
+      metadata || {},
+      this.methodInfoFindCoupon,
       callback);
   }
 
@@ -364,28 +409,6 @@ export class ShopRPCClient {
       request,
       metadata || {},
       this.methodInfoChooseCVSStore,
-      callback);
-  }
-
-  methodInfoGetCVSStore = new grpcWeb.AbstractClientBase.MethodInfo(
-    sql_pb.Response,
-    (request: order_pb.Logistics) => {
-      return request.serializeBinary();
-    },
-    sql_pb.Response.deserializeBinary
-  );
-
-  getCVSStore(
-    request: order_pb.Logistics,
-    metadata: grpcWeb.Metadata | null,
-    callback: (err: grpcWeb.Error,
-               response: sql_pb.Response) => void) {
-    return this.client_.rpcCall(
-      this.hostname_ +
-        '/ding4.ShopRPC/GetCVSStore',
-      request,
-      metadata || {},
-      this.methodInfoGetCVSStore,
       callback);
   }
 
@@ -540,28 +563,6 @@ export class ShopRPCClient {
       request,
       metadata || {},
       this.methodInfoFindFreeback,
-      callback);
-  }
-
-  methodInfoFindExternal = new grpcWeb.AbstractClientBase.MethodInfo(
-    sql_pb.Response,
-    (request: sql_pb.Query) => {
-      return request.serializeBinary();
-    },
-    sql_pb.Response.deserializeBinary
-  );
-
-  findExternal(
-    request: sql_pb.Query,
-    metadata: grpcWeb.Metadata | null,
-    callback: (err: grpcWeb.Error,
-               response: sql_pb.Response) => void) {
-    return this.client_.rpcCall(
-      this.hostname_ +
-        '/ding4.ShopRPC/FindExternal',
-      request,
-      metadata || {},
-      this.methodInfoFindExternal,
       callback);
   }
 

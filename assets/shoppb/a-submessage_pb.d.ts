@@ -1,6 +1,7 @@
 import * as jspb from "google-protobuf"
 
 import * as seo_pb from './seo_pb';
+import * as google_protobuf_struct_pb from 'google-protobuf/google/protobuf/struct_pb';
 
 export class Rule extends jspb.Message {
   getAmount(): number;
@@ -66,10 +67,11 @@ export class CustomerTarget extends jspb.Message {
   getLevel(): string;
   setLevel(value: string): void;
 
-  getBirthdayList(): Array<number>;
-  setBirthdayList(value: Array<number>): void;
-  clearBirthdayList(): void;
-  addBirthday(value: number, index?: number): void;
+  getBirthday(): number;
+  setBirthday(value: number): void;
+
+  getRegister(): number;
+  setRegister(value: number): void;
 
   getItemsList(): Array<string>;
   setItemsList(value: Array<string>): void;
@@ -87,14 +89,17 @@ export class CustomerTarget extends jspb.Message {
 export namespace CustomerTarget {
   export type AsObject = {
     level: string,
-    birthdayList: Array<number>,
+    birthday: number,
+    register: number,
     itemsList: Array<string>,
   }
 }
 
 export class ProductTarget extends jspb.Message {
-  getClass(): string;
-  setClass(value: string): void;
+  getClassList(): Array<string>;
+  setClassList(value: Array<string>): void;
+  clearClassList(): void;
+  addClass(value: string, index?: number): void;
 
   getItemsList(): Array<string>;
   setItemsList(value: Array<string>): void;
@@ -111,30 +116,8 @@ export class ProductTarget extends jspb.Message {
 
 export namespace ProductTarget {
   export type AsObject = {
-    pb_class: string,
+    classList: Array<string>,
     itemsList: Array<string>,
-  }
-}
-
-export class Used extends jspb.Message {
-  getActivity(): number;
-  setActivity(value: number): void;
-
-  getCoupon(): number;
-  setCoupon(value: number): void;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): Used.AsObject;
-  static toObject(includeInstance: boolean, msg: Used): Used.AsObject;
-  static serializeBinaryToWriter(message: Used, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): Used;
-  static deserializeBinaryFromReader(message: Used, reader: jspb.BinaryReader): Used;
-}
-
-export namespace Used {
-  export type AsObject = {
-    activity: number,
-    coupon: number,
   }
 }
 
@@ -151,8 +134,8 @@ export class Image extends jspb.Message {
   getLink(): string;
   setLink(value: string): void;
 
-  getPage(): string;
-  setPage(value: string): void;
+  getIsBlank(): number;
+  setIsBlank(value: number): void;
 
   getSku(): string;
   setSku(value: string): void;
@@ -182,7 +165,7 @@ export namespace Image {
     alt: string,
     title: string,
     link: string,
-    page: string,
+    isBlank: number,
     sku: string,
     target?: ProductTarget.AsObject,
     type: string,
@@ -194,14 +177,19 @@ export class Layout extends jspb.Message {
   getType(): number;
   setType(value: number): void;
 
-  getTitle(): string;
-  setTitle(value: string): void;
+  getTitle(): google_protobuf_struct_pb.Value | undefined;
+  setTitle(value?: google_protobuf_struct_pb.Value): void;
+  hasTitle(): boolean;
+  clearTitle(): void;
 
   getLink(): string;
   setLink(value: string): void;
 
   getPage(): string;
   setPage(value: string): void;
+
+  getIsBlank(): boolean;
+  setIsBlank(value: boolean): void;
 
   getQuantity(): number;
   setQuantity(value: number): void;
@@ -213,6 +201,11 @@ export class Layout extends jspb.Message {
   setImageList(value: Array<Image>): void;
   clearImageList(): void;
   addImage(value?: Image, index?: number): Image;
+
+  getLayoutList(): Array<Layout>;
+  setLayoutList(value: Array<Layout>): void;
+  clearLayoutList(): void;
+  addLayout(value?: Layout, index?: number): Layout;
 
   getTarget(): ProductTarget | undefined;
   setTarget(value?: ProductTarget): void;
@@ -235,14 +228,145 @@ export class Layout extends jspb.Message {
 export namespace Layout {
   export type AsObject = {
     type: number,
-    title: string,
+    title?: google_protobuf_struct_pb.Value.AsObject,
     link: string,
     page: string,
+    isBlank: boolean,
     quantity: number,
     second: number,
     imageList: Array<Image.AsObject>,
+    layoutList: Array<Layout.AsObject>,
     target?: ProductTarget.AsObject,
     template?: seo_pb.Template.AsObject,
   }
+}
+
+export class StyleColor extends jspb.Message {
+  getBackground(): string;
+  setBackground(value: string): void;
+
+  getLogoStyle(): StyleColor.LogoStyle | undefined;
+  setLogoStyle(value?: StyleColor.LogoStyle): void;
+  hasLogoStyle(): boolean;
+  clearLogoStyle(): void;
+
+  getHeaderStyle(): StyleColor.HeaderStyle | undefined;
+  setHeaderStyle(value?: StyleColor.HeaderStyle): void;
+  hasHeaderStyle(): boolean;
+  clearHeaderStyle(): void;
+
+  getFooterStyle(): StyleColor.FooterStyle | undefined;
+  setFooterStyle(value?: StyleColor.FooterStyle): void;
+  hasFooterStyle(): boolean;
+  clearFooterStyle(): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): StyleColor.AsObject;
+  static toObject(includeInstance: boolean, msg: StyleColor): StyleColor.AsObject;
+  static serializeBinaryToWriter(message: StyleColor, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): StyleColor;
+  static deserializeBinaryFromReader(message: StyleColor, reader: jspb.BinaryReader): StyleColor;
+}
+
+export namespace StyleColor {
+  export type AsObject = {
+    background: string,
+    logoStyle?: StyleColor.LogoStyle.AsObject,
+    headerStyle?: StyleColor.HeaderStyle.AsObject,
+    footerStyle?: StyleColor.FooterStyle.AsObject,
+  }
+
+  export class LogoStyle extends jspb.Message {
+    getHight(): string;
+    setHight(value: string): void;
+
+    getWidth(): string;
+    setWidth(value: string): void;
+
+    getPaddingTop(): string;
+    setPaddingTop(value: string): void;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): LogoStyle.AsObject;
+    static toObject(includeInstance: boolean, msg: LogoStyle): LogoStyle.AsObject;
+    static serializeBinaryToWriter(message: LogoStyle, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): LogoStyle;
+    static deserializeBinaryFromReader(message: LogoStyle, reader: jspb.BinaryReader): LogoStyle;
+  }
+
+  export namespace LogoStyle {
+    export type AsObject = {
+      hight: string,
+      width: string,
+      paddingTop: string,
+    }
+  }
+
+
+  export class HeaderStyle extends jspb.Message {
+    getColor(): string;
+    setColor(value: string): void;
+
+    getBackground(): string;
+    setBackground(value: string): void;
+
+    getToolColor(): string;
+    setToolColor(value: string): void;
+
+    getToolBackground(): string;
+    setToolBackground(value: string): void;
+
+    getMobile(): string;
+    setMobile(value: string): void;
+
+    getMobileBackground(): string;
+    setMobileBackground(value: string): void;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): HeaderStyle.AsObject;
+    static toObject(includeInstance: boolean, msg: HeaderStyle): HeaderStyle.AsObject;
+    static serializeBinaryToWriter(message: HeaderStyle, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): HeaderStyle;
+    static deserializeBinaryFromReader(message: HeaderStyle, reader: jspb.BinaryReader): HeaderStyle;
+  }
+
+  export namespace HeaderStyle {
+    export type AsObject = {
+      color: string,
+      background: string,
+      toolColor: string,
+      toolBackground: string,
+      mobile: string,
+      mobileBackground: string,
+    }
+  }
+
+
+  export class FooterStyle extends jspb.Message {
+    getLabel(): string;
+    setLabel(value: string): void;
+
+    getColor(): string;
+    setColor(value: string): void;
+
+    getBackground(): string;
+    setBackground(value: string): void;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): FooterStyle.AsObject;
+    static toObject(includeInstance: boolean, msg: FooterStyle): FooterStyle.AsObject;
+    static serializeBinaryToWriter(message: FooterStyle, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): FooterStyle;
+    static deserializeBinaryFromReader(message: FooterStyle, reader: jspb.BinaryReader): FooterStyle;
+  }
+
+  export namespace FooterStyle {
+    export type AsObject = {
+      label: string,
+      color: string,
+      background: string,
+    }
+  }
+
 }
 

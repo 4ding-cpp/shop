@@ -15,8 +15,8 @@ export class WebPage extends jspb.Message {
   getName(): string;
   setName(value: string): void;
 
-  getUrl(): string;
-  setUrl(value: string): void;
+  getUrn(): string;
+  setUrn(value: string): void;
 
   getSeo(): seo_pb.SEO | undefined;
   setSeo(value?: seo_pb.SEO): void;
@@ -26,8 +26,8 @@ export class WebPage extends jspb.Message {
   getContent(): string;
   setContent(value: string): void;
 
-  getIndexPage(): string;
-  setIndexPage(value: string): void;
+  getDefaultLanguage(): string;
+  setDefaultLanguage(value: string): void;
 
   getIsErrorHandle(): boolean;
   setIsErrorHandle(value: boolean): void;
@@ -76,10 +76,10 @@ export namespace WebPage {
     pageId: string,
     storeId: string,
     name: string,
-    url: string,
+    urn: string,
     seo?: seo_pb.SEO.AsObject,
     content: string,
-    indexPage: string,
+    defaultLanguage: string,
     isErrorHandle: boolean,
     labelxMap: Array<[string, number]>,
     operator: string,
