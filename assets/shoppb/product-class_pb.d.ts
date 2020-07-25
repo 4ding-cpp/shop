@@ -22,6 +22,9 @@ export class ProductClass extends jspb.Message {
   hasName(): boolean;
   clearName(): void;
 
+  getUrn(): string;
+  setUrn(value: string): void;
+
   getSeo(): seo_pb.SEO | undefined;
   setSeo(value?: seo_pb.SEO): void;
   hasSeo(): boolean;
@@ -82,6 +85,7 @@ export namespace ProductClass {
     activityId: string,
     path: string,
     name?: google_protobuf_struct_pb.Value.AsObject,
+    urn: string,
     seo?: seo_pb.SEO.AsObject,
     photo?: a$submessage_pb.Image.AsObject,
     productList: Array<product_pb.Product.AsObject>,

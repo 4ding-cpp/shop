@@ -1,5 +1,6 @@
 import * as jspb from "google-protobuf"
 
+import * as seo_pb from './seo_pb';
 import * as sql_pb from './sql_pb';
 import * as a$submessage_pb from './a-submessage_pb';
 import * as google_protobuf_struct_pb from 'google-protobuf/google/protobuf/struct_pb';
@@ -30,6 +31,19 @@ export class Activity extends jspb.Message {
   hasName(): boolean;
   clearName(): void;
 
+  getUrn(): string;
+  setUrn(value: string): void;
+
+  getSeo(): seo_pb.SEO | undefined;
+  setSeo(value?: seo_pb.SEO): void;
+  hasSeo(): boolean;
+  clearSeo(): void;
+
+  getPhoto(): a$submessage_pb.Image | undefined;
+  setPhoto(value?: a$submessage_pb.Image): void;
+  hasPhoto(): boolean;
+  clearPhoto(): void;
+
   getRule(): a$submessage_pb.Rule | undefined;
   setRule(value?: a$submessage_pb.Rule): void;
   hasRule(): boolean;
@@ -50,11 +64,17 @@ export class Activity extends jspb.Message {
   hasTarget(): boolean;
   clearTarget(): void;
 
-  getIsEnable(): boolean;
-  setIsEnable(value: boolean): void;
+  getReached(): boolean;
+  setReached(value: boolean): void;
 
-  getUsedMap(): jspb.Map<string, a$submessage_pb.Used>;
+  getUsedMap(): jspb.Map<string, number>;
   clearUsedMap(): void;
+
+  getUseByCustomer(): number;
+  setUseByCustomer(value: number): void;
+
+  getUseByOrder(): number;
+  setUseByOrder(value: number): void;
 
   getLabelxMap(): jspb.Map<string, number>;
   clearLabelxMap(): void;
@@ -103,12 +123,17 @@ export namespace Activity {
     beginAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
     endAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
     name?: google_protobuf_struct_pb.Value.AsObject,
+    urn: string,
+    seo?: seo_pb.SEO.AsObject,
+    photo?: a$submessage_pb.Image.AsObject,
     rule?: a$submessage_pb.Rule.AsObject,
     now?: a$submessage_pb.Rule.AsObject,
     active?: a$submessage_pb.Active.AsObject,
     target?: a$submessage_pb.ProductTarget.AsObject,
-    isEnable: boolean,
-    usedMap: Array<[string, a$submessage_pb.Used.AsObject]>,
+    reached: boolean,
+    usedMap: Array<[string, number]>,
+    useByCustomer: number,
+    useByOrder: number,
     labelxMap: Array<[string, number]>,
     operator: string,
     createAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
@@ -162,10 +187,11 @@ export class Coupon extends jspb.Message {
   hasTarget(): boolean;
   clearTarget(): void;
 
-  getUsed(): google_protobuf_struct_pb.Value | undefined;
-  setUsed(value?: google_protobuf_struct_pb.Value): void;
-  hasUsed(): boolean;
-  clearUsed(): void;
+  getUsedMap(): jspb.Map<string, number>;
+  clearUsedMap(): void;
+
+  getIsUse(): number;
+  setIsUse(value: number): void;
 
   getLabelxMap(): jspb.Map<string, number>;
   clearLabelxMap(): void;
@@ -218,7 +244,8 @@ export namespace Coupon {
     rule?: a$submessage_pb.Rule.AsObject,
     active?: a$submessage_pb.Active.AsObject,
     target?: a$submessage_pb.CustomerTarget.AsObject,
-    used?: google_protobuf_struct_pb.Value.AsObject,
+    usedMap: Array<[string, number]>,
+    isUse: number,
     labelxMap: Array<[string, number]>,
     operator: string,
     createAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,

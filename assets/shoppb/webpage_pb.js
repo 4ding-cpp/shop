@@ -84,10 +84,10 @@ proto.ding4.WebPage.toObject = function(includeInstance, msg) {
     pageId: jspb.Message.getFieldWithDefault(msg, 1, ""),
     storeId: jspb.Message.getFieldWithDefault(msg, 2, ""),
     name: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    url: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    urn: jspb.Message.getFieldWithDefault(msg, 4, ""),
     seo: (f = msg.getSeo()) && seo_pb.SEO.toObject(includeInstance, f),
     content: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    indexPage: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    defaultLanguage: jspb.Message.getFieldWithDefault(msg, 7, ""),
     isErrorHandle: jspb.Message.getBooleanFieldWithDefault(msg, 8, false),
     labelxMap: (f = msg.getLabelxMap()) ? f.toObject(includeInstance, undefined) : [],
     operator: jspb.Message.getFieldWithDefault(msg, 10, ""),
@@ -147,7 +147,7 @@ proto.ding4.WebPage.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 4:
       var value = /** @type {string} */ (reader.readString());
-      msg.setUrl(value);
+      msg.setUrn(value);
       break;
     case 5:
       var value = new seo_pb.SEO;
@@ -160,7 +160,7 @@ proto.ding4.WebPage.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 7:
       var value = /** @type {string} */ (reader.readString());
-      msg.setIndexPage(value);
+      msg.setDefaultLanguage(value);
       break;
     case 8:
       var value = /** @type {boolean} */ (reader.readBool());
@@ -250,7 +250,7 @@ proto.ding4.WebPage.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getUrl();
+  f = message.getUrn();
   if (f.length > 0) {
     writer.writeString(
       4,
@@ -272,7 +272,7 @@ proto.ding4.WebPage.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getIndexPage();
+  f = message.getDefaultLanguage();
   if (f.length > 0) {
     writer.writeString(
       7,
@@ -394,10 +394,10 @@ proto.ding4.WebPage.prototype.setName = function(value) {
 
 
 /**
- * optional string url = 4;
+ * optional string urn = 4;
  * @return {string}
  */
-proto.ding4.WebPage.prototype.getUrl = function() {
+proto.ding4.WebPage.prototype.getUrn = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
@@ -406,7 +406,7 @@ proto.ding4.WebPage.prototype.getUrl = function() {
  * @param {string} value
  * @return {!proto.ding4.WebPage} returns this
  */
-proto.ding4.WebPage.prototype.setUrl = function(value) {
+proto.ding4.WebPage.prototype.setUrn = function(value) {
   return jspb.Message.setProto3StringField(this, 4, value);
 };
 
@@ -467,10 +467,10 @@ proto.ding4.WebPage.prototype.setContent = function(value) {
 
 
 /**
- * optional string index_page = 7;
+ * optional string default_language = 7;
  * @return {string}
  */
-proto.ding4.WebPage.prototype.getIndexPage = function() {
+proto.ding4.WebPage.prototype.getDefaultLanguage = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
 };
 
@@ -479,7 +479,7 @@ proto.ding4.WebPage.prototype.getIndexPage = function() {
  * @param {string} value
  * @return {!proto.ding4.WebPage} returns this
  */
-proto.ding4.WebPage.prototype.setIndexPage = function(value) {
+proto.ding4.WebPage.prototype.setDefaultLanguage = function(value) {
   return jspb.Message.setProto3StringField(this, 7, value);
 };
 

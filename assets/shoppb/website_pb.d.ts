@@ -18,6 +18,11 @@ export class Website extends jspb.Message {
   hasLogo(): boolean;
   clearLogo(): void;
 
+  getStyleColor(): a$submessage_pb.StyleColor | undefined;
+  setStyleColor(value?: a$submessage_pb.StyleColor): void;
+  hasStyleColor(): boolean;
+  clearStyleColor(): void;
+
   getFavicon(): a$submessage_pb.Image | undefined;
   setFavicon(value?: a$submessage_pb.Image): void;
   hasFavicon(): boolean;
@@ -42,6 +47,11 @@ export class Website extends jspb.Message {
   setLayoutList(value: Array<a$submessage_pb.Layout>): void;
   clearLayoutList(): void;
   addLayout(value?: a$submessage_pb.Layout, index?: number): a$submessage_pb.Layout;
+
+  getMenuList(): Array<a$submessage_pb.Layout>;
+  setMenuList(value: Array<a$submessage_pb.Layout>): void;
+  clearMenuList(): void;
+  addMenu(value?: a$submessage_pb.Layout, index?: number): a$submessage_pb.Layout;
 
   getLabelxMap(): jspb.Map<string, number>;
   clearLabelxMap(): void;
@@ -87,11 +97,13 @@ export namespace Website {
     storeId: string,
     style: number,
     logo?: a$submessage_pb.Image.AsObject,
+    styleColor?: a$submessage_pb.StyleColor.AsObject,
     favicon?: a$submessage_pb.Image.AsObject,
     seo?: seo_pb.SEO.AsObject,
     navList: Array<a$submessage_pb.Layout.AsObject>,
     footerList: Array<a$submessage_pb.Layout.AsObject>,
     layoutList: Array<a$submessage_pb.Layout.AsObject>,
+    menuList: Array<a$submessage_pb.Layout.AsObject>,
     labelxMap: Array<[string, number]>,
     operator: string,
     createAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
