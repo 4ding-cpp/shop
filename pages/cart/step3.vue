@@ -304,8 +304,8 @@ export default {
     create_Order: async function() {
       let o = this.$store.state.order.content;
       o.car_id = this.$store.state.cart.info.id
-      o.payment_adapter = this.order.PaymentAdapter
-      o.logistics_adapter = this.order.LogisticsAdapter
+      o.payment_adapter = this.order.PaymentAdapter.id
+      o.logistics_adapter = this.order.LogisticsAdapter.id
       console.log("send>>>>>" , JSON.stringify(o));
       let cond = Struct.fromJavaScript(o);
       let result = await this.$store.dispatch("order/create_Order", {
@@ -331,9 +331,10 @@ export default {
     },
     // 選擇取貨門市
     get_cvsStore: async function() {
-      let id = this.order.LogisticsAdapter;
+      let id = this.order.LogisticsAdapter.id;
+      let service = this.order.LogisticsAdapter.service;
       let redirect = `${process.env.REDIRECT_URL}/cart/step3`;
-      window.location = `${process.env.PAYMENT_URL}a=${id}&&redirect=${redirect}`;
+      window.location = `${process.env.PAYMENT_URL}/logistics/${service}/storemap?a=${id}&&redirect=${redirect}`;
     }
   },
   created: function() {},

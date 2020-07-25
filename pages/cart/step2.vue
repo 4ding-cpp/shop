@@ -357,14 +357,20 @@ export default {
     // },
 
     toStep3: async function() {
-      console.log("render id>>>", this.render_id);
+
       // if (this.render_id == "") return;
       // await this.get_cvsStoreInfo();
       localStorage.setItem(
         "order",
         JSON.stringify({
-          LogisticsAdapter: this.delivery.list[this.delivery.selected].data.adapter_id,
-          PaymentAdapter: this.cash.list[this.cash.selected].data.adapter_id
+          LogisticsAdapter: { 
+           id: this.delivery.list[this.delivery.selected].data.adapter_id , 
+           service: this.delivery.list[this.delivery.selected].data.service , 
+          },
+          PaymentAdapter: { 
+            id: this.cash.list[this.cash.selected].data.adapter_id ,
+            service: this.cash.list[this.cash.selected].data.service ,
+          } 
         })
       );
       this.$router.push({

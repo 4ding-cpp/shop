@@ -48,17 +48,19 @@
                     <ButtonSubAdd :count.sync="count" />
                   </div>
                   <div class="input-group">
-                    <button class="col-md-5 l-btn pick-btn btn-block mt-3" @click="cartJoin()">加入購物車</button>
-                    <!-- <nuxt-link
-                      tag="button"
-                      class="col-md-5 l-btn pick-btn btn-block mt-3"
-                      :to="`/cart/${product_info.product_id}`"
-                    >加入購物車</nuxt-link>-->
-                    <nuxt-link
-                      tag="button"
-                      class="col-md-5 l-btn checkout-btn mt-3 ml-3"
-                      :to="`/cart/${product_info.product_id}`"
-                    >立即結帳</nuxt-link>
+                    <div class="col-md-6 mt-3">
+                      <button
+                        class="w-100 btn-block pick-btn  l-btn"
+                        @click="cartJoin()"
+                      >加入購物車</button>
+                    </div>
+                    <div class="col-md-6 mt-3">
+                      <nuxt-link
+                        tag="button"
+                        class="w-100 checkout-btn  l-btn"
+                        :to="`/cart/${product_info.product_id}`"
+                      >立即結帳</nuxt-link>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -167,7 +169,6 @@ export default {
       page_info: { name: "熱門商品", key: "product", url: "/class/" }
     };
 
-
     let cond = new app.sqlpb.Condition();
     cond.setF("product_id").setV(route.params.id);
     let result = await store.dispatch("product/get_product", {
@@ -176,11 +177,11 @@ export default {
       condition: cond
     });
     if (result.code === 200 && result.data.length > 0) {
-      data.product_info = result.data.shift();  
+      data.product_info = result.data.shift();
       data.specx = Object.keys(data.product_info.specx)[0];
       data.page_info.url += data.product_info.link.class_id;
     }
-   
+
     return data;
   },
   watch: {
@@ -195,7 +196,7 @@ export default {
     // 初始
     ...mapActions({
       loading: "loading",
-      get_template:"other/get_template",
+      get_template: "other/get_template",
       _store: "_store"
     }),
     // get 規格名稱
@@ -207,26 +208,28 @@ export default {
       return name;
     },
     cartJoin() {
-      let p = this.product_info
+      let p = this.product_info;
       let data = {
         normal: p.product_id,
         sku: this.specx,
-        name: { tw : p.name.tw },
+        name: { tw: p.name.tw },
         price: p.reduce,
-        photo: { 
-          src: (p.photox.length === 0)? '/images/noprod.png' : `${process.env.IMG_URL}/${p.photox[0].src}` ,
+        photo: {
+          src:
+            p.photox.length === 0
+              ? "/images/noprod.png"
+              : `${process.env.IMG_URL}/${p.photox[0].src}`
         },
         count: this.count
       };
       this._store({ act: "cart/add_cart", data: data });
-      this.$toast.success('加入到購物車')
-    },
-
+      this.$toast.success("加入到購物車");
+    }
   },
   mounted: async function() {
     //元素已掛載， el 被建立。
     this.loading(false);
-    console.log("product_info>>>>",this.product_info)
+    console.log("product_info>>>>", this.product_info);
     // this.get_template('/Csp7Vk3EPg/template/yXxbn5AMuA')
   }
 };

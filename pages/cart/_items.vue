@@ -163,13 +163,13 @@ export default {
         token: this.$store.state.other.token,
         condition: cond
       });
-      console.log("get_completeCar>>>>", result);
+
       if (result.code === 200) {
         cart_info = { state : 1 , id : result.data.car_id };
         this.commodity = result.data.commodity;
         this.activity = result.data.activity;
         this._store({ act: "cart/set_cart_info", data: cart_info });
-        this._store({ act: "cart/set_cart", data: this.commodity });
+        // this._store({ act: "cart/set_cart", data: this.commodity });
       }
     },
     // 更新購物車

@@ -98,8 +98,12 @@ export default {
           id: result.data.car_id
         };
         this.cart = result.data.commodity;
+        let data = {}
+        for(let i in this.cart){
+          data[`${this.cart[i].normal}-${this.cart[i].sku}`] = this.cart[i]
+        }
         this._store({ act: "cart/set_cart_info", data: cart_info });
-        this._store({ act: "cart/set_cart", data: this.cart });
+        this._store({ act: "cart/set_cart", data: data });
       }
     },
     get_lockCar: async function() {
