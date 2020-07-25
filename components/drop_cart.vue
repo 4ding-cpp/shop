@@ -36,94 +36,101 @@ export default {
   props: {
     data: {
       active: Boolean,
-      default: function() {
+      default: function () {
         return false;
-      }
-    }
+      },
+    },
   },
   data() {
     return {
       active: this.active,
       cart: {},
-      IMG_URL: process.env.IMG_URL
+      IMG_URL: process.env.IMG_URL,
     };
   },
   watch: {
     "$store.state.cart.content": {
       handler(val) {
-        // do stuff
-        console.log("$store.state.cart.content",val);
+        this.cart = Object.assign({}, val)
       },
-      deep: true
-    }
+      deep: true,
+    },
   },
-  mounted: async function() {
-    await this.get_completeCar();
-    await this.get_lockCar();
+  mounted: async function () {
+    let list = ["/cart/step1", "/cart/step2"];
+    if (!list.includes(this.$route.path)) {
+      await this.get_completeCar();
+      await this.get_lockCar();
+    }
   },
   methods: {
     // 初始
     ...mapActions({
       loading: "loading",
-      _store: "_store"
+      _store: "_store",
     }),
     // 初始
     total() {
       let money = 0;
-      Object.keys(this.cart).forEach(k => {
+      Object.keys(this.cart).forEach((k) => {
         money += Number(this.cart[k].price) * Number(this.cart[k].count);
       });
       return money;
     },
     // 將目前購物車 送出取得可套用活動相關資訊
-    get_completeCar: async function() {
+    get_completeCar: async function () {
       let data = {};
       let cart = JSON.parse(localStorage.getItem("cart"));
       let cart_info = this.$store.state.cart.info;
 
       if (cart == null || cart_info.id == null) return;
       let cond = Struct.fromJavaScript({
-        commodity: _values(cart)
+        commodity: _values(cart),
       });
 
       let result = await this.$store.dispatch("cart/get_completeCar", {
         app: this,
         token: this.$store.state.other.token,
-        condition: cond
+        condition: cond,
       });
       console.log("get_completeCar>>>>", result);
       if (result.code === 200) {
         cart_info = {
           state: 1,
-          id: result.data.car_id
+          id: result.data.car_id,
         };
         this.cart = result.data.commodity;
-        let data = {}
-        for(let i in this.cart){
-          data[`${this.cart[i].normal}-${this.cart[i].sku}`] = this.cart[i]
+        let data = {};
+        for (let i in this.cart) {
+          data[`${this.cart[i].normal}-${this.cart[i].sku}`] = this.cart[i];
         }
         this._store({ act: "cart/set_cart_info", data: cart_info });
         this._store({ act: "cart/set_cart", data: data });
       }
     },
-    get_lockCar: async function() {
+    get_lockCar: async function () {
       let cart_info = this.$store.state.cart.info;
       let cond = Struct.fromJavaScript({
-        car_id: cart_info.id
+        car_id: cart_info.id,
       });
 
       let result = await this.$store.dispatch("cart/get_lockCar", {
-        condition: cond
+        condition: cond,
       });
 
       if (result.code === 200) {
         console.log("lockcar:", result.data);
+        cart_info = {
+          state: 2,
+          id: cart_info.id,
+        };
+        this._store({ act: "cart/set_cart_info", data: cart_info });
       } else {
         alert(result.data);
       }
       return true;
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

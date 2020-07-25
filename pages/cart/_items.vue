@@ -102,8 +102,8 @@ export default {
           image: "/images/prod01.jpg",
           name: "輕柔空氣感彩妝刷",
           price: "680",
-          offer: "249"
-        }
+          offer: "249",
+        },
       ],
       list: [
         {
@@ -111,16 +111,16 @@ export default {
           name: "歐美高衩深V透膚雕花連體衣",
           size: "S",
           price: "227",
-          num: "1"
+          num: "1",
         },
         {
           image: "/images/noprod.png",
           name: "歐美高衩深V透膚雕花連體衣",
           size: "S",
           price: "227",
-          num: "1"
-        }
-      ]
+          num: "1",
+        },
+      ],
     };
   },
   async asyncData({ context, app, store, route }) {
@@ -139,36 +139,45 @@ export default {
     // 初始
     ...mapActions({
       loading: "loading",
-      _store: "_store"
+      _store: "_store",
     }),
     // 將目前購物車 送出取得可套用活動相關資訊
     async get_completeCar() {
       let data = {};
       let cart = JSON.parse(localStorage.getItem("cart"));
       let cart_info = this.$store.state.cart.info;
-      let commodity = _values(cart).map(res => {
+      let commodity = _values(cart).map((res) => {
         return {
           count: res.count,
           normal: res.normal,
-          sku: res.sku
+          sku: res.sku,
         };
       });
       if (cart == null || cart_info.id == null) return;
       let cond = Struct.fromJavaScript({
-        commodity: commodity
+        commodity: commodity,
       });
 
       let result = await this.$store.dispatch("cart/get_completeCar", {
         app: this,
         token: this.$store.state.other.token,
-        condition: cond
+        condition: cond,
       });
 
       if (result.code === 200) {
-        cart_info = { state : 1 , id : result.data.car_id };
+        cart_info = { state: 1, id: result.data.car_id };
+        
         this.commodity = result.data.commodity;
         this.activity = result.data.activity;
-        this._store({ act: "cart/set_cart_info", data: cart_info });
+        let data = {};
+        for (let i in this.commodity) {
+          data[`${this.commodity[i].normal}-${this.commodity[i].sku}`] = this.commodity[i];
+        }
+        this._store({
+          act: "cart/set_cart_info",
+          data: { state: 1, id: result.data.car_id },
+        });
+        this._store({ act: "cart/set_cart", data: data });
         // this._store({ act: "cart/set_cart", data: this.commodity });
       }
     },
@@ -181,37 +190,37 @@ export default {
       this._store({ act: "cart/del_cart", data: this.commodity[i] });
       this.commodity.splice(i, 1);
       await this.get_completeCar();
-    }
+    },
   },
   //BEGIN--生命週期
-  beforeCreate: function() {
+  beforeCreate: function () {
     //實體初始化
   },
-  created: function() {
+  created: function () {
     //實體建立完成。資料 data 已可取得，但 el 屬性還未被建立。
   },
-  beforeMount: function() {
+  beforeMount: function () {
     //執行元素掛載之前。
   },
-  mounted: async function() {
+  mounted: async function () {
     //元素已掛載， el 被建立。
     this.loading(false);
     await this.get_completeCar();
     // let a =await this.get_findCar({token:this.$store.state.other.token})
     // console.log(a)
   },
-  beforeUpdate: function() {
+  beforeUpdate: function () {
     //當資料變化時被呼叫，還不會描繪 View。
   },
-  updated: function() {
+  updated: function () {
     //當資料變化時被呼叫，還不會描繪 View。
   },
-  beforeDestroy: function() {
+  beforeDestroy: function () {
     //實體還可使用。
   },
-  destroyed: function() {
+  destroyed: function () {
     //實體銷毀。
-  }
+  },
   //END--生命週期
 };
 </script>
