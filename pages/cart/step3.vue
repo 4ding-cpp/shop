@@ -302,10 +302,28 @@ export default {
       window.open(url, "註冊", "width=300,height=300");
     },
     create_Order: async function() {
+      let query = {
+        Addr : '台北市中正區中山南路７號１樓' ,
+        Cate : '全家' ,
+        Code : '006598' ,
+        Name : '台醫店' ,
+        Tel : '02-24326001' ,
+      }
       let o = this.$store.state.order.content;
       o.car_id = this.$store.state.cart.info.id
-      o.payment_adapter = this.order.PaymentAdapter
-      o.logistics_adapter = this.order.LogisticsAdapter
+      o.payment_adapter = this.order.PaymentAdapter.id
+      o.logistics_adapter = this.order.LogisticsAdapter.id
+      o.other = {
+        receiver  : { 
+          name : 'AAAAA',
+          phone : '0912345678',
+          email : 'AAAAA@gmail.com',
+          cvs_code :query.Code , 
+          cvs_type :query.Cate , 
+          cvs_name :query.Name , 
+          cvs_address :query.Addr , 
+        }
+      };
       console.log("send>>>>>" , JSON.stringify(o));
       let cond = Struct.fromJavaScript(o);
       let result = await this.$store.dispatch("order/create_Order", {
@@ -314,6 +332,8 @@ export default {
       if (result.code === 0) {
         alert(result.data);
         return false;
+      }else{
+        alert(result.data);
       }
 
       for (let i in result.data) {
@@ -331,16 +351,20 @@ export default {
     },
     // 選擇取貨門市
     get_cvsStore: async function() {
-      let id = this.order.LogisticsAdapter;
+      let id = this.order.LogisticsAdapter.id;
+      let service = this.order.LogisticsAdapter.service;
       let redirect = `${process.env.REDIRECT_URL}/cart/step3`;
-      window.location = `${process.env.PAYMENT_URL}a=${id}&&redirect=${redirect}`;
+      window.location = `${process.env.PAYMENT_URL}/logistics/${service}/storemap?a=${id}&&redirect=${redirect}`;
     }
   },
   created: function() {},
   mounted: async function() {
     this.loading(true);
-    console.log("query:", this.$route.query);
+    // ?Addr=台北市中正區中山南路７號１樓&Cate=全家&Code=006598&Name=台醫店&Tel=02-24326001
+    let query = this.$route.query ;
+    console.log("query:",query)
     this.order = JSON.parse(localStorage.getItem("order"));
+    // 檢查是否有物流金流資料 沒有返回
     if (
       this.order == null ||
       !this.order.hasOwnProperty("LogisticsAdapter") ||

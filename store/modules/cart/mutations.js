@@ -21,11 +21,14 @@ export default {
   },
   // 新增一筆購物車
   add_cart(state, o) {
-    if(!state.content[`${o.normal}-${o.sku}`] ){
-      state.content[`${o.normal}-${o.sku}`] = o
+    let content = state.content 
+    state.content = {}
+    if(!content[`${o.normal}-${o.sku}`] ){
+      content[`${o.normal}-${o.sku}`] = o
     }else{
-      state.content[`${o.normal}-${o.sku}`].count +=  Number(o.count) ;
+      content[`${o.normal}-${o.sku}`].count +=  Number(o.count) ;
     }
+    state.content = content 
     localStorage.setItem('cart',JSON.stringify(state.content))
   },
   // 設定某一筆購物車

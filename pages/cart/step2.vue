@@ -29,7 +29,7 @@
                       </div>
                     </button>
                   </div>
-                  <div class="col-md-6 pr-2 mb-3 shipping">
+                  <!-- <div class="col-md-6 pr-2 mb-3 shipping">
                     <button
                       type="button"
                       class="shipping-method"
@@ -47,7 +47,7 @@
                         </div>
                       </div>
                     </button>
-                  </div>
+                  </div> -->
                 </div>
                 <!-- 超商選項 -->
                 <div class="from-group mb-3">
@@ -64,11 +64,6 @@
                             @selected="delivery.selected=item.id"
                           />
                         </div>
-                        <!-- <button
-                          type="button"
-                          @click="get_cvsStore()"
-                          class="l-btn pick-btn btn-block mt-3 ml-3"
-                        >選擇取貨門市</button>-->
                       </div>
                     </div>
                   </div>
@@ -78,13 +73,22 @@
                   <div class="row">
                     <div class="col-md-2 float-left control-label">付款方式</div>
                     <div class="col-md-10 float-left">
-                      <div class="row">
+                      <div class="row" v-if="cash.show===true" >
                         <div v-for="(item,i) in cash.list" class="col-md-4 pr-2 mb-3">
                           <ButtonChoice
                             :title="item.title"
                             :free="free_shipping"
                             :active="cash.selected==item.id"
                             @selected="cash.selected=item.id"
+                          />
+                        </div>
+                      </div>
+                      <div class="row" v-if="cash.show===false" >
+                        <div class="col-md-4 pr-2 mb-3">
+                          <ButtonChoice
+                            title="取貨付款"
+                            :free="false"
+                            :active="true"
                           />
                         </div>
                       </div>
@@ -178,13 +182,15 @@
                 </li>
                 <li>
                   運費
-                  <span class="float-right">0</span>
+                  <span class="float-right">
+                    {{ total.fee_logistics }}
+                  </span>
                 </li>
                 <li>
                   應付總額
                   <span class="price float-right">
                     NT$
-                    <span class="total">489{{delivery.selected}}-{{cash.selected}}</span>
+                    <span class="total">{{total.money}}</span>
                   </span>
                 </li>
                 <li>
@@ -204,11 +210,17 @@
 <script>
 import { mapActions } from "vuex";
 import { Struct } from "google-protobuf/google/protobuf/struct_pb";
+
 export default {
   data() {
     return {
       forms: null,
       free_shipping: false,
+      //統計 運費 , 總金額
+      total:{
+        fee_logistics: 0,
+        money: 0,
+      },
       active: "store",
       // 物流
       delivery: {
@@ -217,6 +229,7 @@ export default {
       },
       // 金流
       cash: {
+        show:true,
         selected: 0,
         list: []
       },
@@ -234,7 +247,13 @@ export default {
         default:
           this.loading(false);
       }
-    }
+    },
+    // 監聽物流選擇
+    "delivery.selected": async function(after, before) {
+      let data = this.delivery.list[this.delivery.selected].data ;
+      this.total.fee_logistics = data.logistics_fee
+      this.cash.show = (data.payment_type == 6)? false : true ;
+    },
   },
   methods: {
     ...mapActions({
@@ -244,7 +263,7 @@ export default {
 
     switchType: function(type) {
       this.active = type;
-      this.active_type = "1";
+      // this.active_type = "1";
     },
 
     get_lockCar: async function() {
@@ -285,6 +304,10 @@ export default {
         };
         // 物流
         this.delivery.list.push(o);
+        if(i==0) {
+          this.total.fee_logistics = d.logistics_fee 
+          this.cash.show = (d.payment_type == 6 )? false : true ;
+        }
       }
       return true;
     },
@@ -316,55 +339,22 @@ export default {
       let id = this.delivery.list[this.delivery.selected].data.adapter_id;
       let redirect = `${process.env.REDIRECT_URL}/cart/step2`;
       window.location = `${process.env.PAYMENT_URL}a=${id}&&redirect=${redirect}`;
-
-      // data.redirect = `${process.env.REDIRECT_URL}/cart/step2`;
-      // let cond = Struct.fromJavaScript(data);
-      // let resp = await this.$store.dispatch("order/get_cvsStore", {
-      //   condition: cond
-      // });
-      // console.log("get_cvsStore>>>>>", resp);
-      // if (resp.code == 0) {
-      //   alert(resp.data);
-      //   return;
-      // } else {
-      //   const div = document.createElement("div");
-      //   div.innerHTML = resp.data;
-      //   document.body.append(div);
-      //   document.getElementById("__4dingForm").submit();
-      //   // dx;
-      // }
     },
 
-    // get_cvsStoreInfo: async function() {
-    //   let cond = Struct.fromJavaScript({
-    //     RenderID: this.render_id
-    //   });
-    //   let resp = await this.$store.dispatch("order/get_cvsStoreInfo", {
-    //     condition: cond
-    //   });
-    //   console.log("get_cvsStoreInfo>>>>>", resp);
-    //   if (resp.code == 0) {
-    //     alert(resp.data);
-    //     return;
-    //   } else {
-    //     let o = {
-    //       logistics_type: this.delivery.selected,
-    //       payment_type: this.cash.selected,
-    //       logistics: resp.data
-    //     };
-    //     this._store({ act: "order/update_order", data: o });
-    //   }
-    // },
 
     toStep3: async function() {
-      console.log("render id>>>", this.render_id);
-      // if (this.render_id == "") return;
-      // await this.get_cvsStoreInfo();
+
       localStorage.setItem(
         "order",
         JSON.stringify({
-          LogisticsAdapter: this.delivery.list[this.delivery.selected].data.adapter_id,
-          PaymentAdapter: this.cash.list[this.cash.selected].data.adapter_id
+          LogisticsAdapter: { 
+           id: this.delivery.list[this.delivery.selected].data.adapter_id , 
+           service: this.delivery.list[this.delivery.selected].data.service , 
+          },
+          PaymentAdapter: { 
+            id: (this.cash.show === true)? this.cash.list[this.cash.selected].data.adapter_id : '' ,
+            service: (this.cash.show === true)? this.cash.list[this.cash.selected].data.service : '' ,
+          } 
         })
       );
       this.$router.push({
@@ -380,6 +370,7 @@ export default {
     // ssr 過來此頁面 不動作 監聽觸發
     if (this.$store.state.cart.info.state == 1) {
       await this.get_lockCar();
+      // this._store({ act: "cart/set_cart_info", data: cart_info });
     }
 
     await this.get_logistics();
