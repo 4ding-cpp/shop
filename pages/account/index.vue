@@ -5,36 +5,81 @@
         <div class="content col-md-12" style="min-height:500px">
           <!-- 數據總覽 -->
           <section class="data-analytics row pb-5 pt-5">
-            <div class="memSumL col-md-2">
-              <div class="memSumL_b">
+            <div class="col-md-2">
+              <div class>
                 會員等級
                 <span class="pink"></span>
               </div>
-              <div class="memSumL_b2">VIP會員</div>
+              <div class>VIP會員</div>
             </div>
-            <div class="memSumL col-md-3">
-              <div class="memSumL_b">消費累積金額</div>
-              <div class="memSumL_b2">$ 5,332</div>
+            <div class="col-md-3">
+              <div class>消費累積金額</div>
+              <div class>$ 5,332</div>
             </div>
-            <div class="memSumL col-md-3">
-              <div class="memSumL_b">下階段升級差額</div>
-              <div class="memSumL_b2">$ 10,000</div>
+            <div class="col-md-3">
+              <div class>下階段升級差額</div>
+              <div class>$ 10,000</div>
             </div>
-            <div class="memSumL col-md-2">
-              <div class="memSumL_b">可用購物金</div>
-              <div class="memSumL_b2">0</div>
+            <div class="col-md-2">
+              <div class>可用購物金</div>
+              <div class>0</div>
             </div>
-            <div class="memSumL col-md-2" style="border-right: 0;">
-              <div class="memSumL_b">可使用優惠卷</div>
-              <div class="memSumL_b2">0張</div>
+            <div class="col-md-2" style="border-right: 0;">
+              <div class>可使用優惠卷</div>
+              <div class>0張</div>
             </div>
           </section>
-          <div class="row text-center">
+          <!-- 數據總覽 END -->
+          <!-- TAB LIST -->
+          <div class="row text-center pb-5">
             <ul class="nav nav-tabs col-md-12">
               <li class="nav-item" v-for="(item,i) in tab.list" @click="tab.selected=i">
-                <a class="nav-link" :class="{'active':tab.selected==i}" href="#">{{item.name}}</a>
+                <a
+                  class="nav-link"
+                  :class="{'active':tab.selected==i}"
+                  href="javascript: void(0)"
+                >{{item.name}}</a>
               </li>
             </ul>
+          </div>
+          <!-- TAB LIST END -->
+          <div class="row text-center">
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>訂購日期</th>
+                    <th>訂單編號</th>
+                    <th>付款方式</th>
+                    <th>取貨方式</th>
+                    <th>處理進度</th>
+                    <th>應付金額</th>
+                    <th>已付金額</th>
+                    <th>未付金額</th>
+                    <th>客服記錄</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Anna</td>
+                    <td>Pitt</td>
+                    <td>35</td>
+                    <td>New York</td>
+                    <td>1</td>
+                    <td>Anna</td>
+                    <td>Pitt</td>
+
+                    <td align="center">
+                      <span>
+                        <i class="fas fa-comment-dots"></i> 詢問
+                      </span> ｜
+                      <span class="">查看</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -151,4 +196,8 @@ li {
     border-color: #000;
   }
 }
+
+table th,table td {
+  white-space:nowrap;
+} 
 </style>
