@@ -354,8 +354,6 @@ export default {
         alert("form error:\n" + err.message.join("\n"));
         return;
       }
-      alert("OK");
-      return true;
 
       let o = { ...this.$store.state.order.content };
       o.car_id = this.$store.state.cart.info.id;
