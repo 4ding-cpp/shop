@@ -10,7 +10,7 @@
                 <nuxt-link tag="a" class="nav-link" to="/test">test</nuxt-link>
               </li>
               <li class="nav-item">
-                <nuxt-link tag="a" class="nav-link" to="/account/index">訂單查詢</nuxt-link>
+                <nuxt-link tag="a" class="nav-link" to="/account/">訂單查詢</nuxt-link>
               </li>
               <li class="nav-item">
                 <div class="dropdown">
