@@ -308,10 +308,10 @@ export default {
   },
   validators: {
     "receiver.name": function (value) {
-      return this.Validator.value(value).required();
+      return this.Validator.value(value).required('請選擇收件人姓名');
     },
     "receiver.phone": function (value) {
-      return this.Validator.value(value).required().length(10);
+      return this.Validator.value(value).required('請選擇收件人電話').length(10);
     },
     "receiver.email": function (value) {
       return this.Validator.value(value).required('請確認收件人聯絡信箱為必填').email('請確認收件人聯絡信箱')
@@ -322,28 +322,13 @@ export default {
     },
    
     "buyer.name": function (value) {
-      return this.Validator.value(value).in(['地球', '火星', '木星', '土星']);
-      // return this.Validator.custom(() => {
-      //   if (this.Validator.value(value).required().length(10)) {
-      //     return "請確認購買者姓名!!!";
-      //   }
-      // });
+     return this.Validator.value(value).required("請確認購買者姓名");
     },
     "buyer.phone": function (value) {
-      return this.Validator.value(value).required().length(10)
-      // return this.Validator.custom(() => {
-      //   if (this.Validator.value(value).required().length(10)) {
-      //     return "請確認購買者電話!!!";
-      //   }
-      // });
+      return this.Validator.value(value).required("請確認購買者電話").length(10)
     },
     "buyer.email": function (value) {
-      return this.Validator.value(value).required().email()
-      // return this.Validator.custom(() => {
-      //   if (this.Validator.value(value).required().email()) {
-      //     return "請確認購買者聯絡!!!";
-      //   }
-      // });
+      return this.Validator.value(value).required("請確認購買者信箱").email("請確認購買者信箱")
     },
   },
   methods: {

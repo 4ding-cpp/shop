@@ -1,5 +1,5 @@
 <template>
-  <div id="page"  v-if="data.other && data.other.hasOwnProperty('receiver')" >
+  <div id="page" v-if="data.other && data.other.hasOwnProperty('receiver')">
     <section class="content">
       <div class="container">
         <h1 class="text-center font-weight-bolder nav-tabs pb-3">訂購資訊</h1>
@@ -21,7 +21,7 @@
               <th>小計</th>
             </thead>
             <tbody>
-              <tr v-for="(item,i) in data.commodity" >
+              <tr v-for="(item,i) in data.commodity">
                 <td>{{item.name}}</td>
                 <td>{{item.sku}}</td>
                 <td>{{item.price}}</td>
@@ -70,34 +70,33 @@
             </tbody>
           </table>
 
-            <h5 class="font-weight-bolder">
-              <i class="fa-xs fas fa-edit"></i>&nbsp;收件人資料
-            </h5>
-            <table class="table">
-              <tbody>
-                <tr>
-                  <th style="width:160px">收件人姓名</th>
-                  <td>{{data.other.receiver.name}}</td>
-                </tr>
-                <tr>
-                  <th style="width:160px">收件人地址</th>
-                  <td>{{data.other.receiver.cvs_address}}</td>
-                </tr>
-                <tr>
-                  <th style="width:160px">取貨方式</th>
-                  <td>{{data.other.receiver.cvs_type}}</td>
-                </tr>
-                <tr>
-                  <th style="width:160px">發票種類</th>
-                  <td></td>
-                </tr>
-                <tr>
-                  <th style="width:160px">備註</th>
-                  <td>{{data.remark}}</td>
-                </tr>
-              </tbody>
-            </table>
-
+          <h5 class="font-weight-bolder">
+            <i class="fa-xs fas fa-edit"></i>&nbsp;收件人資料
+          </h5>
+          <table class="table">
+            <tbody>
+              <tr>
+                <th style="width:160px">收件人姓名</th>
+                <td>{{data.other.receiver.name}}</td>
+              </tr>
+              <tr>
+                <th style="width:160px">收件人地址</th>
+                <td>{{data.other.receiver.cvs_address}}</td>
+              </tr>
+              <tr>
+                <th style="width:160px">取貨方式</th>
+                <td>{{data.other.receiver.cvs_type}}</td>
+              </tr>
+              <tr>
+                <th style="width:160px">發票種類</th>
+                <td></td>
+              </tr>
+              <tr>
+                <th style="width:160px">備註</th>
+                <td>{{data.remark}}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
@@ -125,8 +124,6 @@ export default {
      * 找訂單
      */
     find_Order: async function () {
-      // let cond = new this.sqlpb.Condition();
-      // cond.setF("order_id").setV(this.$route.query.id);
       let o = { order_id: this.$route.query.id };
       let cond = Struct.fromJavaScript(o);
       let result = await this.$store.dispatch("order/find_Order", {
