@@ -57,7 +57,7 @@ export default {
     },
   },
   mounted: async function () {
-    let list = ["/cart/step1", "/cart/step2"];
+    let list = ["/cart/step1", "/cart/step2", "/cart/step3", "/cart/orderList"];
     if (!list.includes(this.$route.path)) {
       await this.get_completeCar();
       await this.get_lockCar();

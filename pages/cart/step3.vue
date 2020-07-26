@@ -170,6 +170,14 @@
               <div class="form-check w-100 ml-3"></div>
               <div class="from-group mb-3">
                 <div class="row">
+                  <div class="col-md-12 float-left control-label mb-3">
+                    <input class type="checkbox" value />
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
+                      <label class="form-check-label check-label" for="defaultCheck1">取件人與購買人相同</label>
+                    </a>
+                  </div>
+                </div>
+                <div class="row">
                   <div class="col-md-2 float-left control-label">姓名</div>
                   <div class="col-md-10 float-left mb-3">
                     <input
@@ -194,13 +202,14 @@
                       class="hint-label mt-2"
                     >*取貨通知將以此電話聯繫，請勿加入任何空格或符號，使用超商取貨請務必填寫10碼手機，如：0987654321</div>
                   </div>
-                  <div class="col-md-2 float-left control-label">地址</div>
+                  <div class="col-md-2 float-left control-label">聯絡信箱</div>
                   <div class="col-md-10 float-left mb-3">
                     <input
                       class="form-control"
-                      v-model="receiver.address"
+                      v-model="receiver.email"
+                      :class="{'is-invalid': validation.hasError('receiver.email')}"
                       type="text"
-                      placeholder="地址"
+                      placeholder="聯絡信箱"
                     />
                   </div>
                   <div class="col-md-12 float-left mb-3">
@@ -212,10 +221,6 @@
                   </div>
                   <!-- 下方選項 -->
                   <div class="form-check w-100 ml-3">
-                    <input class="form-check-input" type="checkbox" value id="defaultCheck1" />
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
-                      <label class="form-check-label check-label" for="defaultCheck1">取件人與購買人相同</label>
-                    </a>
                     <div class="collapse list-unstyled" id="homeSubmenu">
                       <div class="col-md-2 float-left control-label">姓名</div>
                       <div class="col-md-10 float-left mb-3">
@@ -232,15 +237,15 @@
                     </div>
                   </div>
                   <div class="form-check w-100 ml-3">
-                    <input class="form-check-input" type="checkbox" value  />
+                    <input class="form-check-input" type="checkbox" value />
                     <label class="form-check-label check-label" for="defaultCheck1">用上述資料直接註冊會員</label>
                   </div>
                   <div class="form-check w-100 ml-3">
-                    <input class="form-check-input" type="checkbox" value  />
+                    <input class="form-check-input" type="checkbox" value />
                     <label class="form-check-label check-label" for="defaultCheck1">同意會員責任規範及個資聲明</label>
                   </div>
                   <div class="form-check w-100 ml-3">
-                    <input class="form-check-input" type="checkbox" value  />
+                    <input class="form-check-input" type="checkbox" value />
                     <label
                       class="form-check-label check-label"
                       for="defaultCheck1"
@@ -253,6 +258,7 @@
                       class="col-md-5 l-btn checkout-btn"
                     >立即結帳</button>
                   </div>
+                  {{receiver}}
                 </div>
               </div>
             </div>
@@ -289,7 +295,7 @@ export default {
       },
       // 收件人
       receiver: {
-        address: "",
+        // address: "",
         phone: "0912345678",
         email: "RECEIVER01@gmail.com",
         name: "RECEIVER01",
@@ -308,17 +314,36 @@ export default {
       return this.Validator.value(value).required().length(10);
     },
     "receiver.email": function (value) {
-      return this.Validator.value(value).required().email();
+      return this.Validator.value(value).required('請確認收件人聯絡信箱為必填').email('請確認收件人聯絡信箱')
     },
 
+    "receiver.cvs_type,receiver.cvs_name,receiver.cvs_address,receiver.cvs_code": function (value) {
+      return this.Validator.value(value).required('請選擇取貨門市');
+    },
+   
     "buyer.name": function (value) {
-      return this.Validator.value(value).required();
+      return this.Validator.value(value).in(['地球', '火星', '木星', '土星']);
+      // return this.Validator.custom(() => {
+      //   if (this.Validator.value(value).required().length(10)) {
+      //     return "請確認購買者姓名!!!";
+      //   }
+      // });
     },
     "buyer.phone": function (value) {
-      return this.Validator.value(value).required().length(10);
+      return this.Validator.value(value).required().length(10)
+      // return this.Validator.custom(() => {
+      //   if (this.Validator.value(value).required().length(10)) {
+      //     return "請確認購買者電話!!!";
+      //   }
+      // });
     },
     "buyer.email": function (value) {
-      return this.Validator.value(value).required().email();
+      return this.Validator.value(value).required().email()
+      // return this.Validator.custom(() => {
+      //   if (this.Validator.value(value).required().email()) {
+      //     return "請確認購買者聯絡!!!";
+      //   }
+      // });
     },
   },
   methods: {
@@ -326,42 +351,47 @@ export default {
       loading: "loading",
       _store: "_store",
     }),
+    // 檢查表單
+    submit: async function () {
+      return this.$validate().then((success, e) => {
+        console.log(this.validation.allErrors());
+        return { res: success, message: this.validation.allErrors() };
+      });
+    },
     goto: function (url) {
       window.open(url, "註冊", "width=300,height=300");
     },
-    // 複製取件人
-    copyData: function () {},
+    // 複製購買人
+    copyBuyer: function () {},
     create_Order: async function () {
-      let o = this.$store.state.order.content;
+      let err = await this.submit();
+      if (!err.res) {
+        alert("form error:\n" + err.message.join("\n"));
+        return;
+      }
+      alert("OK");
+      return true;
+
+      let o = { ...this.$store.state.order.content };
       o.car_id = this.$store.state.cart.info.id;
       o.payment_adapter = this.order.PaymentAdapter.id;
       o.logistics_adapter = this.order.LogisticsAdapter.id;
       o.other.receiver = this.receiver;
-      o.name = this.buyer.name;
-      o.email = this.buyer.email;
-      o.phone = this.buyer.phone;
 
       let cond = Struct.fromJavaScript(o);
       let result = await this.$store.dispatch("order/create_Order", {
         condition: cond,
       });
-      if (result.code === 0) {
+
+      if (result.code === 0 || result.data == null) {
         alert(result.data);
         return false;
       } else {
-        console.log("createOrder OK:", result.data);
-      }
-
-      for (let i in result.data) {
-        let d = result.data[i];
-        let o = {
-          id: `${d.service}${d.service_type}${d.service_item}`,
-          title:
-            d.remark != "" ? `${d.name.tw}<br>(${d.remark})` : `${d.name.tw}`,
-        };
-        // 物流
-        if (d.service_type == 2) this.home_list.push(o);
-        else this.store_list.push(o);
+        // console.log("createOrder OK:", result.data);
+        let service = this.order.PaymentAdapter.service;
+        let redirect = `${process.env.REDIRECT_URL}/cart/orderList?id=${result.data}`;
+        let url = `${process.env.PAYMENT_URL}/payment/${service}/order/${result.data}?&redirect=${redirect}`;
+        window.location = url;
       }
       return true;
     },
@@ -370,7 +400,7 @@ export default {
       let id = this.order.LogisticsAdapter.id;
       let service = this.order.LogisticsAdapter.service;
       let redirect = `${process.env.REDIRECT_URL}/cart/step3`;
-      window.location = `${process.env.PAYMENT_URL}/logistics/${service}/storemap?a=${id}&&redirect=${redirect}`;
+      window.location = `${process.env.PAYMENT_URL}/logistics/${service}/storemap?a=${id}&redirect=${redirect}`;
     },
   },
   created: function () {},
@@ -389,10 +419,11 @@ export default {
       return;
     }
     //
-    this.receiver.cvs_code = this.$route.query.Code;
-    this.receiver.cvs_name = this.$route.query.Name;
-    this.receiver.cvs_type = this.$route.query.Cate;
-    this.receiver.cvs_address = this.$route.query.Addr;
+    let query = this.$route.query;
+    this.receiver.cvs_code = query.hasOwnProperty("Code") ? query.Code : "";
+    this.receiver.cvs_name = query.hasOwnProperty("Name") ? query.Name : "";
+    this.receiver.cvs_type = query.hasOwnProperty("Cate") ? query.Cate : "";
+    this.receiver.cvs_address = query.hasOwnProperty("Addr") ? query.Addr : "";
 
     this.loading(false);
   },

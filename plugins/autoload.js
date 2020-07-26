@@ -1,7 +1,10 @@
 console.log('plugins autoload')
 import Vue from 'vue'
 import SimpleVueValidation from 'simple-vue-validator';
-Vue.prototype.Validator =SimpleVueValidation.Validator;
+Vue.prototype.Validator = window.Validator = SimpleVueValidation.Validator;
+SimpleVueValidation.extendTemplates({
+  length: '長度必須大於{0} ',
+});
 Vue.use(SimpleVueValidation);
 
 // use grpc

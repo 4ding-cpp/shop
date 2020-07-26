@@ -17,6 +17,9 @@ export class Order extends jspb.Message {
   getCustomerId(): string;
   setCustomerId(value: string): void;
 
+  getName(): string;
+  setName(value: string): void;
+
   getEmail(): string;
   setEmail(value: string): void;
 
@@ -159,6 +162,7 @@ export namespace Order {
     storeId: string,
     salesId: string,
     customerId: string,
+    name: string,
     email: string,
     phone: string,
     isCustomer: boolean,
@@ -326,11 +330,6 @@ export class OrderOther extends jspb.Message {
   hasSender(): boolean;
   clearSender(): void;
 
-  getBuyer(): ContactInfo | undefined;
-  setBuyer(value?: ContactInfo): void;
-  hasBuyer(): boolean;
-  clearBuyer(): void;
-
   getReceiver(): ContactInfo | undefined;
   setReceiver(value?: ContactInfo): void;
   hasReceiver(): boolean;
@@ -355,7 +354,6 @@ export namespace OrderOther {
     cvsNo: string,
     logisticsNo: string,
     sender?: ContactInfo.AsObject,
-    buyer?: ContactInfo.AsObject,
     receiver?: ContactInfo.AsObject,
   }
 }

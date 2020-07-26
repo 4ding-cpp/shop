@@ -10,6 +10,7 @@
 import * as grpcWeb from 'grpc-web';
 
 import * as pingpong_pb from './pingpong_pb';
+import * as password_pb from './password_pb';
 import * as sql_pb from './sql_pb';
 import * as customer_pb from './customer_pb';
 import * as product_pb from './product_pb';
@@ -101,6 +102,94 @@ export class ShopRPCClient {
       request,
       metadata || {},
       this.methodInfoSignUp,
+      callback);
+  }
+
+  methodInfoWhoAmI = new grpcWeb.AbstractClientBase.MethodInfo(
+    sql_pb.Response,
+    (request: sql_pb.Query) => {
+      return request.serializeBinary();
+    },
+    sql_pb.Response.deserializeBinary
+  );
+
+  whoAmI(
+    request: sql_pb.Query,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.Error,
+               response: sql_pb.Response) => void) {
+    return this.client_.rpcCall(
+      this.hostname_ +
+        '/ding4.ShopRPC/WhoAmI',
+      request,
+      metadata || {},
+      this.methodInfoWhoAmI,
+      callback);
+  }
+
+  methodInfoChangePassword = new grpcWeb.AbstractClientBase.MethodInfo(
+    sql_pb.Response,
+    (request: password_pb.Password) => {
+      return request.serializeBinary();
+    },
+    sql_pb.Response.deserializeBinary
+  );
+
+  changePassword(
+    request: password_pb.Password,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.Error,
+               response: sql_pb.Response) => void) {
+    return this.client_.rpcCall(
+      this.hostname_ +
+        '/ding4.ShopRPC/ChangePassword',
+      request,
+      metadata || {},
+      this.methodInfoChangePassword,
+      callback);
+  }
+
+  methodInfoChangeInfo = new grpcWeb.AbstractClientBase.MethodInfo(
+    sql_pb.Response,
+    (request: customer_pb.Customer) => {
+      return request.serializeBinary();
+    },
+    sql_pb.Response.deserializeBinary
+  );
+
+  changeInfo(
+    request: customer_pb.Customer,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.Error,
+               response: sql_pb.Response) => void) {
+    return this.client_.rpcCall(
+      this.hostname_ +
+        '/ding4.ShopRPC/ChangeInfo',
+      request,
+      metadata || {},
+      this.methodInfoChangeInfo,
+      callback);
+  }
+
+  methodInfoFindSign = new grpcWeb.AbstractClientBase.MethodInfo(
+    sql_pb.Response,
+    (request: sql_pb.Query) => {
+      return request.serializeBinary();
+    },
+    sql_pb.Response.deserializeBinary
+  );
+
+  findSign(
+    request: sql_pb.Query,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.Error,
+               response: sql_pb.Response) => void) {
+    return this.client_.rpcCall(
+      this.hostname_ +
+        '/ding4.ShopRPC/FindSign',
+      request,
+      metadata || {},
+      this.methodInfoFindSign,
       callback);
   }
 

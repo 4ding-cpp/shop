@@ -277,14 +277,17 @@ export namespace StyleColor {
   }
 
   export class LogoStyle extends jspb.Message {
-    getHight(): string;
-    setHight(value: string): void;
+    getHeight(): string;
+    setHeight(value: string): void;
 
     getWidth(): string;
     setWidth(value: string): void;
 
     getPaddingTop(): string;
     setPaddingTop(value: string): void;
+
+    getNavTop(): string;
+    setNavTop(value: string): void;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): LogoStyle.AsObject;
@@ -296,9 +299,10 @@ export namespace StyleColor {
 
   export namespace LogoStyle {
     export type AsObject = {
-      hight: string,
+      height: string,
       width: string,
       paddingTop: string,
+      navTop: string,
     }
   }
 
