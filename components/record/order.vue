@@ -97,7 +97,7 @@ export default {
         pageLimit: pageLimit,
       });
       this.page.loading = false;
-      console.log(page)
+      console.log(page);
       if (result.code === 0) {
         alert(result.data);
         return false;
@@ -138,3 +138,9 @@ export default {
   //END--生命週期
 };
 </script>
+<style lang="scss" scoped>
+.table-responsive {
+  height: 100vh;
+  overflow-y: hidden;
+}
+</style>
