@@ -523,6 +523,28 @@ export class ShopRPCClient {
       callback);
   }
 
+  methodInfoCompleteOrder = new grpcWeb.AbstractClientBase.MethodInfo(
+    sql_pb.Response,
+    (request: order_pb.Order) => {
+      return request.serializeBinary();
+    },
+    sql_pb.Response.deserializeBinary
+  );
+
+  completeOrder(
+    request: order_pb.Order,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.Error,
+               response: sql_pb.Response) => void) {
+    return this.client_.rpcCall(
+      this.hostname_ +
+        '/ding4.ShopRPC/CompleteOrder',
+      request,
+      metadata || {},
+      this.methodInfoCompleteOrder,
+      callback);
+  }
+
   methodInfoCancelOrder = new grpcWeb.AbstractClientBase.MethodInfo(
     sql_pb.Response,
     (request: order_pb.Order) => {
@@ -564,6 +586,28 @@ export class ShopRPCClient {
       request,
       metadata || {},
       this.methodInfoFindOrder,
+      callback);
+  }
+
+  methodInfoDetailOrder = new grpcWeb.AbstractClientBase.MethodInfo(
+    sql_pb.Response,
+    (request: order_pb.Order) => {
+      return request.serializeBinary();
+    },
+    sql_pb.Response.deserializeBinary
+  );
+
+  detailOrder(
+    request: order_pb.Order,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.Error,
+               response: sql_pb.Response) => void) {
+    return this.client_.rpcCall(
+      this.hostname_ +
+        '/ding4.ShopRPC/DetailOrder',
+      request,
+      metadata || {},
+      this.methodInfoDetailOrder,
       callback);
   }
 

@@ -86,6 +86,12 @@ export class Order extends jspb.Message {
   getLogisticsSubType(): number;
   setLogisticsSubType(value: number): void;
 
+  getInTimeout(): boolean;
+  setInTimeout(value: boolean): void;
+
+  getReturnStaus(): number;
+  setReturnStaus(value: number): void;
+
   getPickupAt(): string;
   setPickupAt(value: string): void;
 
@@ -185,6 +191,8 @@ export namespace Order {
     logisticsService: string,
     logisticsType: number,
     logisticsSubType: number,
+    inTimeout: boolean,
+    returnStaus: number,
     pickupAt: string,
     closeAt: string,
     payAt: string,
@@ -359,6 +367,15 @@ export namespace OrderOther {
 }
 
 export class OrderBatch extends jspb.Message {
+  getState(): number;
+  setState(value: number): void;
+
+  getPaymentState(): number;
+  setPaymentState(value: number): void;
+
+  getLogisticsState(): number;
+  setLogisticsState(value: number): void;
+
   getOrderList(): Array<Order>;
   setOrderList(value: Array<Order>): void;
   clearOrderList(): void;
@@ -379,6 +396,9 @@ export class OrderBatch extends jspb.Message {
 
 export namespace OrderBatch {
   export type AsObject = {
+    state: number,
+    paymentState: number,
+    logisticsState: number,
     orderList: Array<Order.AsObject>,
     self?: google_protobuf_struct_pb.Struct.AsObject,
   }
