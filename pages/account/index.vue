@@ -60,6 +60,9 @@ export default {
   data: function () {
     // 資料
     return {
+      page:{
+        loading: true,
+      },
       tab: {
         selected: 0,
         list: [

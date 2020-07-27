@@ -1,5 +1,6 @@
 <template>
   <div class="table-responsive">
+    <Loading :data.sync="page" />
     <table class="table table-bordered">
       <thead>
         <tr>
@@ -14,7 +15,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item,i) in list  " >
+        <tr v-for="(item,i) in list  ">
           <td>{{ item.create_at }}</td>
           <td>{{ item.order_id }}</td>
           <td>{{ item.payment_type }}</td>
@@ -26,11 +27,22 @@
             <span>
               <i class="fas fa-comment-dots"></i> 詢問
             </span> ｜
-            <nuxt-link tag="span" class="" :to="`/cart/orderList?id=${item.order_id}`">查看</nuxt-link>
+            <nuxt-link tag="span" class :to="`/cart/orderList?id=${item.order_id}`">查看</nuxt-link>
           </td>
         </tr>
       </tbody>
     </table>
+    <section class="content">
+      <div class="container">
+        <paginate
+          :page-count="page.total"
+          :containerClass="'pagination'"
+          :prev-text="'<'"
+          :next-text="'>'"
+          :click-handler="clickCallback"
+        ></paginate>
+      </div>
+    </section>
   </div>
 </template>
 <script>
@@ -43,6 +55,12 @@ export default {
     // 資料
     return {
       list: [],
+      page: {
+        loading: true,
+        total: 0,
+        now: 1,
+        size: 10,
+      },
     };
   },
   watch: {
@@ -58,18 +76,34 @@ export default {
       _store: "_store",
     }),
     /**
+     * clickCallback
+     */
+    clickCallback: async function (pageNum) {
+      console.log("clickCallback", pageNum);
+      this.page.now = pageNum;
+      this.complete_Order();
+    },
+    /**
      * 找訂單
      */
     complete_Order: async function () {
+      this.page.loading = true;
+      let pageLimit = new this.sqlpb.PageLimit();
+      pageLimit.setPageIndex(this.page.now).setPageSize(this.page.size);
+      let Condition = new this.sqlpb.Condition();
+
       let result = await this.$store.dispatch("order/find_Order", {
         condition: null,
+        pageLimit: pageLimit,
       });
-
+      this.page.loading = false;
+      console.log(page)
       if (result.code === 0) {
         alert(result.data);
         return false;
       } else {
-        console.log(">>>>>>>>",result.data);
+        console.log(">>>>>>>>", result.limit.length / result.limit.pageSize);
+        this.page.total = parseInt(result.limit.length / result.limit.pageSize);
         this.list = result.data;
       }
       return true;
@@ -87,7 +121,7 @@ export default {
   },
   mounted: function () {
     //元素已掛載， el 被建立。
-    this.complete_Order()
+    this.complete_Order();
   },
   beforeUpdate: function () {
     //當資料變化時被呼叫，還不會描繪 View。

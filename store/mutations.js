@@ -18,6 +18,6 @@ export default {
     },
     // token
     set_loading(state, o) {
-        state.loading = o
+        state.act.loading = o
     },
 }

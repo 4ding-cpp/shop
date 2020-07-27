@@ -27,7 +27,8 @@
     "node-fetch": "^2.6.0",
     "nuxt": "^2.0.0",
     "simple-vue-validator": "^0.16.0",
-    "sprintf-js": "^1.1.2"
+    "sprintf-js": "^1.1.2",
+    "vuejs-paginate": "^2.1.0"
   },
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.27",

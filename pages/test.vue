@@ -1,26 +1,16 @@
 <template>
   <div id="page">
     <section class="content">
-       <div class="layout-form">
-    <div class="form-group" :class="{error: validation.hasError('email')}">
-      <div class="label">* Email</div>
-      <div class="content"><input type="text" class="form-control" v-model="email"/></div>
-      <div class="message">{{ validation.firstError('email') }}</div>
-    </div>
-    <div class="form-group">
-      <div class="actions">
-        <button type="button" class="btn btn-primary" @click="submit">Submit</button>
+      <div class="container">
+        <paginate :pageCount="10" :containerClass="'pagination'" :clickHandler="clickCallback"></paginate>
       </div>
-    </div>
-  </div>
     </section>
   </div>
 </template>
 <script>
 import { mapActions } from "vuex";
 
-
-  // Vue.use(SimpleVueValidation);
+// Vue.use(SimpleVueValidation);
 export default {
   name: "",
   props: {},
@@ -41,21 +31,23 @@ export default {
     ...mapActions({
       loading: "loading",
     }),
+    clickCallback: function (page) {
+      console.log(page);
+    },
     submit: function () {
-        this.$validate()
-          .then(function (success) {
-            if (success) {
-              alert('Validation succeeded!');
-            }
-          });
-      }
+      this.$validate().then(function (success) {
+        if (success) {
+          alert("Validation succeeded!");
+        }
+      });
+    },
   },
   validators: {
-      email: function (value) {
-        return this.Validator.value(value).required().email();
-      }
+    email: function (value) {
+      return this.Validator.value(value).required().email();
     },
- 
+  },
+
   //BEGIN--生命週期
   beforeCreate: function () {
     //實體初始化
@@ -85,3 +77,83 @@ export default {
   //END--生命週期
 };
 </script>
+
+<style lang="scss">
+//
+// Pagination (multiple pages)
+// --------------------------------------------------
+// .pagination {
+//   display: inline-block;
+//   padding-left: 0;
+//   margin: 20px 0;
+//   border-radius: 4px;
+
+//   > li {
+//     display: inline; // Remove list-style and block-level defaults
+//     > a,
+//     > span {
+//       position: relative;
+//       float: left;
+//       padding: 6px 12px;
+//       margin-left: -1px;
+//       line-height: 1.42857143;
+//       color: #337ab7;
+//       text-decoration: none;
+//       background-color: #fff;
+//       border: 1px solid #ddd;
+//       margin-left: -1px;
+//     }
+//     &:first-child {
+//       > a,
+//       > span {
+//         margin-left: 0;
+//         border-top-left-radius: 4px;
+//       }
+//     }
+//     &:last-child {
+//       > a,
+//       > span {
+//         border-bottom-left-radius: 4px;
+//       }
+//     }
+//   }
+
+//   > li > a,
+//   > li > span {
+//     &:hover,
+//     &:focus {
+//       z-index: 3;
+//       color: #23527c;
+//       background-color: #eee;
+//       border-color: #ddd;
+//     }
+//   }
+
+//   > .active > a,
+//   > .active > span {
+//     &,
+//     &:hover,
+//     &:focus {
+//       z-index: 2;
+//       color: #fff;
+//       cursor: default;
+//       background-color: #337ab7;
+//       border-color: #337ab7;
+//     }
+//   }
+
+//   > .disabled {
+//     > span,
+//     > span:hover,
+//     > span:focus,
+//     > a,
+//     > a:hover,
+//     > a:focus {
+//       color: #fff;
+//       background-color: #337ab7;
+//       border-color: #337ab7;
+//       cursor: point;
+//     }
+//   }
+// }
+</style>

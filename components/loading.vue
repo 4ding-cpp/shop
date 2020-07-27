@@ -1,5 +1,6 @@
 <template>
-  <div class="onloading" :class="{'active':$store.state.loading===true,'anim-opacity2':$store.state.loading===false }">
+<div class="onloading" :class="{'active':data.loading===true,'anim-opacity2':data.loading===false }">
+  <!-- <div class="onloading" :class="{'active':show===true,'anim-opacity2':show===false }"> -->
   <!-- <div class="onloading" :class="{'active':show===true,'anim-opacity2':show===false }"> -->
     <div class>
       <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
@@ -9,10 +10,10 @@
 <script>
 export default {
   props: {
-    show: {
-      type: Boolean,
+    data: {
+      type: Object,
       default: function() {
-        return true;
+        return this.$store.state.act;
       }
     }
   },

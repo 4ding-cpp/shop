@@ -20,3 +20,5 @@ import grpcAxios from '@/plugins/grpc-axios'
 Vue.prototype.grpcAxios = grpcAxios ;
 import grpcFetch from '@/plugins/grpc-fetch'
 Vue.prototype.grpcFetch = grpcFetch ;
+import Paginate from 'vuejs-paginate'
+Vue.component('paginate', Paginate)

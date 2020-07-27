@@ -16,7 +16,7 @@ export default {
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
     ],
     script: [
       { src: 'https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js' },
@@ -38,6 +38,7 @@ export default {
   ** Global CSS
   */
   css: [
+    '~/assets/css/pagination.3.3.5.css',
     '~/assets/css/bootstrap.min.css',
     '~/assets/css/swiper.min.css',
     '~/assets/css/aos.css',

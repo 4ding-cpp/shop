@@ -50,19 +50,23 @@ export default {
    * @param {*} context 
    * @param {*} param1 
    */
-  async find_Order(context, { condition = null }) {
+  async find_Order(context, { condition , pageLimit }) {
     let app = this.app
     let metadata = { "x-4d-token": app.store.state.other.token };
     let method = "FindOrder";
-    let req = new app.orderpb.Order();
-    if (condition !== null) req.setSelf(condition)
+    let req = new app.sqlpb.Query();
+    if (condition !== null) req.addCondition(condition)
+    if (pageLimit !== null){ 
+      req.setPageLimit(pageLimit)
+      console.log("pageLimit:",req.toObject())
+    }
     let product = await app.grpcAxios(app.$axios, method, metadata, req, (err, resp) => {
       const data = app.sqlpb.Response.deserializeBinary(resp);
       // todo:錯誤時候會跑兩次!?
       if (err !== null || data.getCode() != 0) {
         return { code: 0, data: `[${data.getCode()}] ${data.getMessage()} ` };
       }
-      return { code: 200, data: data.getResult().toJavaScript() };
+      return { code: 200, data: data.getResult().toJavaScript(),limit:data.getPagelimit().toObject() };
     });
 
     return product;

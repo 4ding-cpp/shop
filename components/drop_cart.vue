@@ -51,7 +51,7 @@ export default {
   watch: {
     "$store.state.cart.content": {
       handler(val) {
-        this.cart = Object.assign({}, val)
+        this.cart = Object.assign({}, val);
       },
       deep: true,
     },
@@ -82,8 +82,8 @@ export default {
       let data = {};
       let cart = JSON.parse(localStorage.getItem("cart"));
       let cart_info = this.$store.state.cart.info;
+      if (cart == "" || cart_info.id == "") return;
 
-      if (cart == null || cart_info.id == null) return;
       let cond = Struct.fromJavaScript({
         commodity: _values(cart),
       });
@@ -93,7 +93,7 @@ export default {
         token: this.$store.state.other.token,
         condition: cond,
       });
-      console.log("get_completeCar>>>>", result);
+     
       if (result.code === 200) {
         cart_info = {
           state: 1,
@@ -110,6 +110,7 @@ export default {
     },
     get_lockCar: async function () {
       let cart_info = this.$store.state.cart.info;
+      if (cart_info.id == "") return;
       let cond = Struct.fromJavaScript({
         car_id: cart_info.id,
       });

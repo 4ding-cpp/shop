@@ -4,5 +4,8 @@ export default {
     //
     lang: '',
     query: [],
+    act : {
+        loading: true 
+    },
     loading: true,
 }
