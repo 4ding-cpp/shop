@@ -123,10 +123,10 @@ export default {
     /**
      * 找訂單
      */
-    find_Order: async function () {
+    complete_Order: async function () {
       let o = { order_id: this.$route.query.id };
       let cond = Struct.fromJavaScript(o);
-      let result = await this.$store.dispatch("order/find_Order", {
+      let result = await this.$store.dispatch("order/complete_Order", {
         condition: cond,
       });
 
@@ -152,7 +152,7 @@ export default {
       this.$router.push("/");
       return;
     }
-    await this.find_Order();
+    await this.complete_Order();
     this.loading(false);
   },
 };

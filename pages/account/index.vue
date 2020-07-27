@@ -44,42 +44,7 @@
           </div>
           <!-- TAB LIST END -->
           <div class="row text-center">
-            <div class="table-responsive">
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>訂購日期</th>
-                    <th>訂單編號</th>
-                    <th>付款方式</th>
-                    <th>取貨方式</th>
-                    <th>處理進度</th>
-                    <th>應付金額</th>
-                    <th>已付金額</th>
-                    <th>未付金額</th>
-                    <th>客服記錄</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Anna</td>
-                    <td>Pitt</td>
-                    <td>35</td>
-                    <td>New York</td>
-                    <td>1</td>
-                    <td>Anna</td>
-                    <td>Pitt</td>
-
-                    <td align="center">
-                      <span>
-                        <i class="fas fa-comment-dots"></i> 詢問
-                      </span> ｜
-                      <span class="">查看</span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <RecordOrder />
           </div>
         </div>
       </div>
@@ -100,7 +65,7 @@ export default {
         list: [
           { key: "order_record", name: "訂單記錄查詢" },
           { key: "favorte_list", name: "商品追蹤清單" },
-          { key: "favorte_list", name: "購物金使用紀錄" },
+          { key: "favorte_list", name: "優惠卷清單" },
           { key: "favorte_list", name: "優惠卷使用紀錄" },
           { key: "prod_record", name: "商品詢問紀錄" },
           { key: "acc_edit", name: "個人資料修改" },
@@ -197,7 +162,8 @@ li {
   }
 }
 
-table th,table td {
-  white-space:nowrap;
-} 
+table th,
+table td {
+  white-space: nowrap;
+}
 </style>

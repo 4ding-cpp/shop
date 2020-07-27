@@ -22,8 +22,12 @@ export default {
     return product;
   },
 
-  // 建立訂單
-  async find_Order(context, { condition = null }) {
+  /**
+   * 建立訂單
+   * @param {*} context 
+   * @param {*} param1 
+   */
+  async complete_Order(context, { condition = null }) {
     let app = this.app
     let metadata = { "x-4d-token": app.store.state.other.token };
     let method = "CompleteOrder";
@@ -31,7 +35,29 @@ export default {
     if (condition !== null) req.setSelf(condition)
     let product = await app.grpcAxios(app.$axios, method, metadata, req, (err, resp) => {
       const data = app.sqlpb.Response.deserializeBinary(resp);
-      console.log("find_Order 2>>>>>",data.getCode(),data.getInsertId(),data.getAffectRow())
+
+      // todo:錯誤時候會跑兩次!?
+      if (err !== null || data.getCode() != 0) {
+        return { code: 0, data: `[${data.getCode()}] ${data.getMessage()} ` };
+      }
+      return { code: 200, data: data.getResult().toJavaScript() };
+    });
+
+    return product;
+  },
+  /**
+   * 消費紀錄
+   * @param {*} context 
+   * @param {*} param1 
+   */
+  async find_Order(context, { condition = null }) {
+    let app = this.app
+    let metadata = { "x-4d-token": app.store.state.other.token };
+    let method = "FindOrder";
+    let req = new app.orderpb.Order();
+    if (condition !== null) req.setSelf(condition)
+    let product = await app.grpcAxios(app.$axios, method, metadata, req, (err, resp) => {
+      const data = app.sqlpb.Response.deserializeBinary(resp);
       // todo:錯誤時候會跑兩次!?
       if (err !== null || data.getCode() != 0) {
         return { code: 0, data: `[${data.getCode()}] ${data.getMessage()} ` };

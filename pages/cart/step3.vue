@@ -366,11 +366,11 @@ export default {
         condition: cond,
       });
 
-      if (result.code === 0 || result.data == null) {
+      if (result.code === 0 || result.data == "") {
         alert(result.data);
         return false;
       } else {
-        // console.log("createOrder OK:", result.data);
+        alert("createOrder OK:", result.data);
         let service = this.order.PaymentAdapter.service;
         let redirect = `${process.env.REDIRECT_URL}/cart/orderList?id=${result.data}`;
         let url = `${process.env.PAYMENT_URL}/payment/${service}/order/${result.data}?&redirect=${redirect}`;
