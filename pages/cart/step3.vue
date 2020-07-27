@@ -308,27 +308,37 @@ export default {
   },
   validators: {
     "receiver.name": function (value) {
-      return this.Validator.value(value).required('請選擇收件人姓名');
+      return this.Validator.value(value).required("請選擇收件人姓名");
     },
     "receiver.phone": function (value) {
-      return this.Validator.value(value).required('請選擇收件人電話').length(10);
+      return this.Validator.value(value)
+        .required("請選擇收件人電話")
+        .length(10);
     },
     "receiver.email": function (value) {
-      return this.Validator.value(value).required('請確認收件人聯絡信箱為必填').email('請確認收件人聯絡信箱')
+      return this.Validator.value(value)
+        .required("請確認收件人聯絡信箱為必填")
+        .email("請確認收件人聯絡信箱");
     },
 
-    "receiver.cvs_type,receiver.cvs_name,receiver.cvs_address,receiver.cvs_code": function (value) {
-      return this.Validator.value(value).required('請選擇取貨門市');
+    "receiver.cvs_type,receiver.cvs_name,receiver.cvs_address,receiver.cvs_code": function (
+      value
+    ) {
+      return this.Validator.value(value).required("請選擇取貨門市");
     },
-   
+
     "buyer.name": function (value) {
-     return this.Validator.value(value).required("請確認購買者姓名");
+      return this.Validator.value(value).required("請確認購買者姓名");
     },
     "buyer.phone": function (value) {
-      return this.Validator.value(value).required("請確認購買者電話").length(10)
+      return this.Validator.value(value)
+        .required("請確認購買者電話")
+        .length(10);
     },
     "buyer.email": function (value) {
-      return this.Validator.value(value).required("請確認購買者信箱").email("請確認購買者信箱")
+      return this.Validator.value(value)
+        .required("請確認購買者信箱")
+        .email("請確認購買者信箱");
     },
   },
   methods: {
@@ -370,9 +380,14 @@ export default {
         alert(result.data);
         return false;
       } else {
-        alert("createOrder OK:", result.data);
+        console.log("xxx" + result.data + "xxx");
+        alert("createOrder OK:" + result.data);
         let service = this.order.PaymentAdapter.service;
-        let redirect = `${process.env.REDIRECT_URL}/cart/orderList?id=${result.data}`;
+        if (service == "") {
+          this.$router.push(`/cart/orderList?id=${result.data}`);
+          return true;
+        }
+         let redirect = `${process.env.REDIRECT_URL}/cart/orderList?id=${result.data}`;
         let url = `${process.env.PAYMENT_URL}/payment/${service}/order/${result.data}?&redirect=${redirect}`;
         window.location = url;
       }
