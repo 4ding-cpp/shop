@@ -60,7 +60,9 @@ export default {
   },
   mounted: function () {
     //元素已掛載， el 被建立。
-    this.loading(false);
+    setTimeout(() => {
+      this.loading(false);
+    }, 3000);
   },
   beforeUpdate: function () {
     //當資料變化時被呼叫，還不會描繪 View。

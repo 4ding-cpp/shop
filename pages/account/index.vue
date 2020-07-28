@@ -44,7 +44,7 @@
           </div>
           <!-- TAB LIST END -->
           <div class="row text-center">
-            <RecordOrder />
+            <components :is="tab.list[tab.selected].module" />
           </div>
         </div>
       </div>
@@ -66,12 +66,12 @@ export default {
       tab: {
         selected: 0,
         list: [
-          { key: "order_record", name: "訂單記錄查詢" },
-          { key: "favorte_list", name: "商品追蹤清單" },
-          { key: "favorte_list", name: "優惠卷清單" },
-          { key: "favorte_list", name: "優惠卷使用紀錄" },
-          { key: "prod_record", name: "商品詢問紀錄" },
-          { key: "acc_edit", name: "個人資料修改" },
+          { key: "order_record", name: "訂單記錄查詢" , module:"RecordOrder" },
+          { key: "favorte_list", name: "商品追蹤清單" , module:"RecordOrder"  },
+          { key: "favorte_list", name: "優惠卷清單" , module:"RecordCoupon"  },
+          { key: "favorte_list", name: "優惠卷使用紀錄" , module:"RecordOrder"  },
+          { key: "prod_record", name: "商品詢問紀錄" , module:"RecordOrder"  },
+          { key: "acc_edit", name: "個人資料修改" , module:"AccountEdit"  },
         ],
       },
     };

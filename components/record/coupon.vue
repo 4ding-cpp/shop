@@ -4,14 +4,12 @@
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th>訂購日期</th>
-          <th>訂單編號</th>
-          <th>付款方式</th>
-          <th>取貨方式</th>
-          <th>處理進度</th>
-          <th>應付金額</th>
-          <th>運費金額</th>
-          <th>客服記錄</th>
+          <th>優惠卷名稱</th>
+          <th>獲得金額</th>
+          <th>開始期限</th>
+          <th>截止期限</th>
+          <th>狀態</th>
+          <th>活動備註</th>
         </tr>
       </thead>
       <tbody>
@@ -22,13 +20,6 @@
           <td>{{ item.payment_state }}</td>
           <td>{{ item.state }}</td>
           <td>{{ item.amount }}</td>
-          <td>{{ item.freight }}</td>
-          <td align="center">
-            <span>
-              <i class="fas fa-comment-dots"></i> 詢問
-            </span> ｜
-            <nuxt-link tag="span" class :to="`/cart/orderList?id=${item.order_id}`">查看</nuxt-link>
-          </td>
         </tr>
       </tbody>
     </table>
