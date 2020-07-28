@@ -1,7 +1,56 @@
 <template>
   <div class="table-responsive">
-    <Loading :data.sync="page" />
-
+    <!-- <Loading :data.sync="page" /> -->
+    <table class="table">
+      <thead>
+        <tr>
+          <th>所在地</th>
+          <td>
+            <label>
+              <input type="radio" value="taiwan" /> 臺灣
+            </label>
+            <label class>
+              <input type="radio" value="other" /> 其他
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <th class align="center">出生年月日</th>
+          <td>
+            西元
+            <select>
+              <option value>請選擇</option>
+              <option value="2020">2020</option>
+            </select> 年
+            <select>
+              <option value>請選擇</option>
+              <option value="01">01</option>
+              <option value="02">02</option>
+            </select> 月
+            <select>
+              <option value>請選擇</option>
+              <option value="01">01</option>
+              <option value="02">02</option>
+              <option value="03">03</option>
+            </select> 日
+          </td>
+        </tr>
+        <tr>
+          <th class align="center">電子報</th>
+          <td>
+            <label>
+              <input type="checkbox" value="true" /> 訂閱電子報
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td  colspan="2"  class>
+            <!-- <button type="button">Submit</button> -->
+            <button type="button" class="btn btn-outline-danger">Success</button>
+          </td>
+        </tr>
+      </thead>
+    </table>
   </div>
 </template>
 <script>
@@ -32,7 +81,6 @@ export default {
       loading: "loading",
       _store: "_store",
     }),
-   
   },
   //BEGIN--生命週期
   beforeCreate: function () {
@@ -66,5 +114,21 @@ export default {
 .table-responsive {
   height: 100vh;
   overflow-y: hidden;
+}
+table {
+  width: 100%;
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 40px;
+  border: #eae8e8 1px solid;
+  & th {
+    background: #f4cccc;
+  }
+  & td:nth-child(2),
+  & th:nth-child(2) {
+    text-align: left;
+    width: 70%;
+    background: #fff;
+  }
 }
 </style>

@@ -24,7 +24,7 @@
           <td>{{ item.amount }}</td>
           <td>{{ item.freight }}</td>
           <td align="center">
-            <span>
+            <span @click="test">
               <i class="fas fa-comment-dots"></i> 詢問
             </span> ｜
             <nuxt-link tag="span" class :to="`/cart/orderList?id=${item.order_id}`">查看</nuxt-link>
@@ -76,6 +76,9 @@ export default {
       loading: "loading",
       _store: "_store",
     }),
+    test(){
+      this.$modal.show('example')
+    },
     /**
      * clickCallback
      */
@@ -91,8 +94,6 @@ export default {
       this.page.loading = true;
       let pageLimit = new this.sqlpb.PageLimit();
       pageLimit.setPageIndex(this.page.now).setPageSize(this.page.size);
-      let Condition = new this.sqlpb.Condition();
-
       let result = await this.$store.dispatch("order/find_Order", {
         condition: null,
         pageLimit: pageLimit,
@@ -103,7 +104,8 @@ export default {
         alert(result.data);
         return false;
       } else {
-        this.page.total = parseInt(result.limit.length / result.limit.pageSize);
+        let total = parseInt(result.limit.length / result.limit.pageSize) 
+        this.page.total = (total == 0)? 1 : total;
         this.list = result.data;
       }
       return true;

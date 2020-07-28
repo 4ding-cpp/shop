@@ -44,6 +44,7 @@ export default {
     '~/assets/css/aos.css',
     '~/assets/css/style.scss',
     '~/assets/layout.scss',
+    '~/assets/input.scss',
     '~/assets/transition.css'
   ],
   /*

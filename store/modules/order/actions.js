@@ -72,6 +72,31 @@ export default {
     return product;
   },
 
+  /**
+   * 優惠卷清單
+   * @param {*} context 
+   * @param {*} param1 
+   */
+  async find_Coupon(context, { condition , pageLimit }) {
+    let app = this.app
+    let metadata = { "x-4d-token": app.store.state.other.token };
+    let method = "FindCoupon";
+    let req = new app.sqlpb.Query();
+    if (condition !== null) req.addCondition(condition)
+    if (pageLimit !== null) req.setPageLimit(pageLimit)
+    let product = await app.grpcAxios(app.$axios, method, metadata, req, (err, resp) => {
+      const data = app.sqlpb.Response.deserializeBinary(resp);
+      // todo:錯誤時候會跑兩次!?
+      if (err !== null || data.getCode() != 0) {
+        return { code: 0, data: `[${data.getCode()}] ${data.getMessage()} ` };
+      }
+      return { code: 200, data: data.getResult().toJavaScript(),limit:data.getPagelimit().toObject() };
+    });
+
+    return product;
+  },
+
+
   // 取得超商門市資訊
   async get_cvsStoreInfo(context, { condition = null }) {
     let app = this.app

@@ -31,8 +31,8 @@
           </section>
           <!-- 數據總覽 END -->
           <!-- TAB LIST -->
-          <div class="row text-center pb-5">
-            <ul class="nav nav-tabs col-md-12">
+          <div class="row text-center pb-4  col-md-12 table-responsive">
+            <ul class="nav nav-tabs w-100">
               <li class="nav-item" v-for="(item,i) in tab.list" @click="tab.selected=i">
                 <a
                   class="nav-link"
@@ -43,9 +43,14 @@
             </ul>
           </div>
           <!-- TAB LIST END -->
-          <div class="row text-center">
+
+          <div class="row text-center col-md-12">
             <components :is="tab.list[tab.selected].module" />
           </div>
+
+          <modal name="example" height="auto" :draggable="true">
+            <div>123</div>
+          </modal>
         </div>
       </div>
     </section>
@@ -60,18 +65,17 @@ export default {
   data: function () {
     // 資料
     return {
-      page:{
+      page: {
         loading: true,
       },
       tab: {
         selected: 0,
         list: [
-          { key: "order_record", name: "訂單記錄查詢" , module:"RecordOrder" },
-          { key: "favorte_list", name: "商品追蹤清單" , module:"RecordOrder"  },
-          { key: "favorte_list", name: "優惠卷清單" , module:"RecordCoupon"  },
-          { key: "favorte_list", name: "優惠卷使用紀錄" , module:"RecordOrder"  },
-          { key: "prod_record", name: "商品詢問紀錄" , module:"RecordOrder"  },
-          { key: "acc_edit", name: "個人資料修改" , module:"AccountEdit"  },
+          { key: "order_record", name: "訂單記錄查詢", module: "RecordOrder" },
+          { key: "favorte_list", name: "商品追蹤清單", module: "Nofinish" },
+          { key: "favorte_list", name: "優惠卷清單", module: "RecordCoupon" },
+          { key: "prod_record", name: "商品詢問紀錄", module: "Nofinish" },
+          { key: "acc_edit", name: "個人資料修改", module: "AccountEdit" },
         ],
       },
     };

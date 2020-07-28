@@ -1,10 +1,18 @@
 <template>
   <div class="table-responsive">
     <Loading :data.sync="page" />
+    <div class="row text-center pb-4 col-md-12">
+      <select class  v-model="is_used" @change="find_list();" >
+        <option value="">全部</option>
+        <option value="1">已使用</option>
+        <option value="0">未使用</option>
+      </select>
+    </div>
     <table class="table table-bordered">
       <thead>
         <tr>
           <th>優惠卷名稱</th>
+          <th>訂單編號</th>
           <th>獲得金額</th>
           <th>開始期限</th>
           <th>截止期限</th>
@@ -14,12 +22,13 @@
       </thead>
       <tbody>
         <tr v-for="(item,i) in list  ">
-          <td>{{ item.create_at }}</td>
-          <td>{{ item.order_id }}</td>
-          <td>{{ item.payment_type }}</td>
-          <td>{{ item.payment_state }}</td>
-          <td>{{ item.state }}</td>
-          <td>{{ item.amount }}</td>
+          <td>{{ item.name.tw }}</td>
+          <td></td>
+          <td>{{ getDiscount(item.active) }}</td>
+          <td>{{ item.begin_at }}</td>
+          <td>{{ item.end_at }}</td>
+          <td>{{ item.is_use > 0 ? "已使用" : "未使用" }}</td>
+          <td v-html="getRule(item.rule)"></td>
         </tr>
       </tbody>
     </table>
@@ -46,6 +55,7 @@ export default {
     // 資料
     return {
       list: [],
+      is_used:"" ,
       // 頁簽相關
       page: {
         loading: true,
@@ -68,6 +78,30 @@ export default {
       _store: "_store",
     }),
     /**
+     * 回傳折抵資訊
+     */
+    getDiscount: function (item) {
+      if (item.reduce) {
+        return `折抵 NT${item.reduce}`;
+      }
+      if (item.discount) {
+        return `打${item.discount}折`;
+      }
+    },
+    /**
+     *
+     */
+    getRule: function (item) {
+      let text = [];
+      if (item.amount) {
+        text.push(`購物金滿NT${item.amount}`);
+      }
+      if (item.count) {
+        text.push(`購物滿${item.count}件`);
+      }
+      return text.join("<br>");
+    },
+    /**
      * clickCallback
      */
     clickCallback: async function (pageNum) {
@@ -82,10 +116,10 @@ export default {
       this.page.loading = true;
       let pageLimit = new this.sqlpb.PageLimit();
       pageLimit.setPageIndex(this.page.now).setPageSize(this.page.size);
-      let Condition = new this.sqlpb.Condition();
-
-      let result = await this.$store.dispatch("order/find_Order", {
-        condition: null,
+      let cond = new this.sqlpb.Condition();
+      cond.setF("is_use").setV(this.is_used)
+      let result = await this.$store.dispatch("order/find_Coupon", {
+        condition: cond,
         pageLimit: pageLimit,
       });
       this.page.loading = false;
@@ -94,7 +128,9 @@ export default {
         alert(result.data);
         return false;
       } else {
-        this.page.total = parseInt(result.limit.length / result.limit.pageSize);
+        console.log(result);
+        let total = parseInt(result.limit.length / result.limit.pageSize);
+        this.page.total = total == 0 ? 1 : total;
         this.list = result.data;
       }
       return true;
