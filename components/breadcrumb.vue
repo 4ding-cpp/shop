@@ -9,7 +9,7 @@
       <li class="breadcrumb-item">
         <nuxt-link tag="a" class="" :to="data.url">{{data.name}}</nuxt-link>
       </li>
-      <li class="breadcrumb-item active" aria-current="page">{{$route.params.id}}</li>
+      <li class="breadcrumb-item active" aria-current="page">{{data.prod}}</li>
     </ol>
   </nav>
 </template>

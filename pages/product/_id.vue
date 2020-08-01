@@ -166,7 +166,7 @@ export default {
   async asyncData({ context, app, store, route, redirect }) {
     if (typeof route.params.id !== "string") redirect.go(-1);
     let data = {
-      page_info: { name: "熱門商品", key: "product", url: "/class/" }
+      page_info: { name: "熱門商品", key: "product", url: "/class/" ,prod:"" }
     };
 
     let cond = new app.sqlpb.Condition();
@@ -180,6 +180,7 @@ export default {
       data.product_info = result.data.shift();
       data.specx = Object.keys(data.product_info.specx)[0];
       data.page_info.url += data.product_info.link.class_id;
+      data.page_info.prod = data.product_info.name.tw;
     }
 
     return data;

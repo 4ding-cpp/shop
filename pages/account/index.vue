@@ -123,7 +123,7 @@ export default {
   //END--生命週期
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 // 數據總覽
 .data-analytics {
   & > div {

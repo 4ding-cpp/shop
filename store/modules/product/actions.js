@@ -42,13 +42,13 @@ export default {
     let req = new app.sqlpb.Query();
     if (condition !== null) req.addCondition(condition)
     let product = await app.grpcAxios(app.$axios,method, metadata, req, (err, resp) => {
-     
+      const data = app.sqlpb.Response.deserializeBinary(resp);
       // todo:錯誤時候會跑兩次!?
-      if (err !== null) {
+      if (err !== null || data.getCode() != 0) {
         return { code: 0, data: `[${data.getCode()}] ${data.getMessage()} ` };
       }
-      const data = app.sqlpb.Response.deserializeBinary(resp);
-      // console.log( "get_product>>>",data.getResult().toJavaScript())
+      
+      console.log( "get_product>>>",data.getResult().toJavaScript())
       return { code: 200, data: data.getResult().toJavaScript() };
     });
     return product;

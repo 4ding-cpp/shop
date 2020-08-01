@@ -57,7 +57,7 @@
                         >立即結帳</nuxt-link>
                       </div>
                     </div>
-                  </div> -->
+                  </div>-->
                 </div>
               </li>
               <li class="nav-item">
@@ -85,8 +85,10 @@
         </button>
         <div class="navbar-collapse justify-content-center collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
-            <li class="nav-item" v-for="(item,i) in menu">
-              <nuxt-link tag="a" class="nav-link" :to="`/class/${item.target.class}`">{{item.title}}</nuxt-link>
+            <li class="nav-item" v-for="(item,i) in nav">
+              <nuxt-link v-if="item.title.tw === '所有商品' " tag="a" class="nav-link" :to="`/class/?prod=${item.title.tw}`">{{item.title.tw}}</nuxt-link>
+              <nuxt-link v-else-if="item.target.class" tag="a" class="nav-link" :to="`/class/${item.target.class[0]}?prod=${item.title.tw}`">{{item.title.tw}}</nuxt-link>
+              <nuxt-link v-else-if="item.page" tag="a" class="nav-link" :to="`/pages/${item.page}`">{{item.title.tw}}</nuxt-link>
             </li>
           </ul>
         </div>
@@ -102,37 +104,37 @@ export default {
   data() {
     return {
       active: false,
-      menu: [],
+      nav: [],
       left: [
         { title: "優勢特色", link: "/home" },
         { title: "系統簡介", link: "/introduction" },
         { title: "計畫費用", link: "/cost" },
-        { title: "常見問題", link: "/question" }
+        { title: "常見問題", link: "/question" },
       ],
       right: [
-        { title: "開通帳號", link: "/registered" }
+        { title: "開通帳號", link: "/registered" },
         // { title: "登入", link: "/login" }
-      ]
+      ],
     };
   },
   // 監聽,當路由發生變化的時候執行
   watch: {
     "$store.state.web.style"(status) {
       console.log("watch header");
-      this.menu = this.get_headers();
-    }
+      this.nav = this.get_headerNav();
+    },
   },
   methods: {
     ...mapGetters({
-      get_headers: "web/get_headers"
+      get_headerNav: "web/get_headerNav",
     }),
-    toggleShow(){
-      this.active = !this.active
-    }
+    toggleShow() {
+      this.active = !this.active;
+    },
   },
   created() {
-    this.menu = this.get_headers();
-  }
+    this.nav = this.get_headerNav();
+  },
 };
 </script>
 <style lang="scss" scoped>

@@ -15,6 +15,36 @@
           </td>
         </tr>
         <tr>
+          <th>電子郵件</th>
+          <td>
+            <label>xxxxxxxx</label>
+          </td>
+        </tr>
+        <tr>
+          <th>設定密碼</th>
+          <td>
+            <input type="password" value="66666" />
+          </td>
+        </tr>
+        <tr>
+          <th>密碼確認</th>
+          <td>
+            <input type="password" value="66666" />
+          </td>
+        </tr>
+        <tr>
+          <th>中文姓名</th>
+          <td>
+            <input type="text" value="test" />
+            <label>
+              <input type="radio" value="taiwan" /> 臺灣
+            </label>
+            <label class>
+              <input type="radio" value="other" /> 其他
+            </label>
+          </td>
+        </tr>
+        <tr>
           <th class align="center">出生年月日</th>
           <td>
             西元
@@ -36,6 +66,21 @@
           </td>
         </tr>
         <tr>
+          <th class align="center">出生年月日</th>
+          <td>
+            <select>
+              <option value>縣市</option>
+              <option value="2020">台中</option>
+            </select> 
+            <select>
+              <option value>鄉鎮市區</option>
+              <option value="01">A區</option>
+            </select> 
+            <input class="w-25" type="text" placeholder="郵遞區" />
+            <input type="text" placeholder="地址" />
+          </td>
+        </tr>
+        <tr>
           <th class align="center">電子報</th>
           <td>
             <label>
@@ -44,7 +89,7 @@
           </td>
         </tr>
         <tr>
-          <td  colspan="2"  class>
+          <td colspan="2" class>
             <!-- <button type="button">Submit</button> -->
             <button type="button" class="btn btn-outline-danger">Success</button>
           </td>

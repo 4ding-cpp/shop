@@ -41,13 +41,15 @@ export default {
   },
   async asyncData({ context, app, store, route }) {
     let data = {
-      page_info: { name: "熱門分類", url: "" }
+      page_info: { name: "熱門分類", url: "" , prod:route.query.prod  }
     };
-
-
     // 搜尋該分類的產品列表
-    let cond = new app.sqlpb.Condition();
-    cond.setO(10).setV(route.params.id);
+    let cond = null
+    if( route.params.id !== undefined ){
+      cond = new app.sqlpb.Condition(); 
+      cond.setO(10).setV(route.params.id);
+    }
+
     let result = await store.dispatch("product/get_product", {
       app: app,
       token: store.state.other.token,
