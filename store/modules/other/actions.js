@@ -4,7 +4,7 @@ export default {
   async get_token(context, o) {
     const token = await this.$axios.$get(`${process.env.TOKEN_URL}/guest`);
     context.commit("set_token", token)
-    console.log("token:",token)
+    console.log("token:", token)
     return token;
   },
   async get_template(context, url) {
@@ -12,7 +12,4 @@ export default {
     console.log(html)
     return html
   },
-
-  
-
 }

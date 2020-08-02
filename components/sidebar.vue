@@ -8,10 +8,11 @@
             v-if="item.page"
             tag="a"
             class="dropdown-toggle"
-            :to="`/pages/`"
+            :to="`/pages/${item.page}`"
           >{{item.title.tw}}</nuxt-link>
+          <!-- 其他選項 -->
           <a
-            v-else-if="item.class"
+            v-if="item.class"
             :href="`#Submenu`+i"
             data-toggle="collapse"
             class="dropdown-toggle"

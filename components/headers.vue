@@ -25,7 +25,7 @@
                   >
                     <!-- <nuxt-link tag="a"  class="nav-link" to="/cart/123">購物車</nuxt-link> -->
                     購物車
-                     <span class="badge badge-primary badge-pill">12</span>
+                    <span class="badge badge-primary badge-pill">{{cart_total}}</span>
                   </a>
                   <DropCart :active.sync="active" />
                   <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -87,9 +87,24 @@
         <div class="navbar-collapse justify-content-center collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
             <li class="nav-item" v-for="(item,i) in nav">
-              <nuxt-link v-if="item.title.tw === '所有商品' " tag="a" class="nav-link" :to="`/class/?prod=${item.title.tw}`">{{item.title.tw}}</nuxt-link>
-              <nuxt-link v-else-if="item.target.class" tag="a" class="nav-link" :to="`/class/${item.target.class[0]}?prod=${item.title.tw}`">{{item.title.tw}}</nuxt-link>
-              <nuxt-link v-else-if="item.page" tag="a" class="nav-link" :to="`/pages/${item.page}`">{{item.title.tw}}</nuxt-link>
+              <nuxt-link
+                v-if="item.title.tw === '所有商品' "
+                tag="a"
+                class="nav-link"
+                :to="`/class/?prod=${item.title.tw}`"
+              >{{item.title.tw}}</nuxt-link>
+              <nuxt-link
+                v-else-if="item.target.class"
+                tag="a"
+                class="nav-link"
+                :to="`/class/${item.target.class[0]}?prod=${item.title.tw}`"
+              >{{item.title.tw}}</nuxt-link>
+              <nuxt-link
+                v-else-if="item.page"
+                tag="a"
+                class="nav-link"
+                :to="`/pages/${item.page}`"
+              >{{item.title.tw}}</nuxt-link>
             </li>
           </ul>
         </div>
@@ -106,6 +121,7 @@ export default {
     return {
       active: false,
       nav: [],
+      cart_total: 0, //購物車數量
       left: [
         { title: "優勢特色", link: "/home" },
         { title: "系統簡介", link: "/introduction" },
@@ -126,7 +142,10 @@ export default {
     },
     "$store.state.cart.content": {
       handler(val) {
-        console.log("val",val)
+        this.cart_total = 0 ;
+        for (let i in val) {
+          this.cart_total += Number(val[i].count)
+        }
       },
       deep: true,
     },

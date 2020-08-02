@@ -1,7 +1,11 @@
 <template>
   <div id="page">
     <section class="content">
-      <div class="container">page</div>
+      <div class="container">
+        <template v-for="(item,i) in content">
+          <section class="row" v-html="item.content"></section>
+        </template>
+      </div>
     </section>
     <Footers />
   </div>
@@ -14,17 +18,23 @@ export default {
   data: function () {
     // 資料
     return {
-      product_list: [], //
-      page_info: {},
+      content: [], //
     };
   },
   async asyncData({ context, app, store, route }) {
     // 搜尋該分類的產品列表
-    let cond = null
-    if( route.params.id !== undefined ){
-      cond = new app.sqlpb.Condition(); 
-      cond.setO(10).setV(route.params.id);
-    }
+    if (route.params.id === undefined) return;
+    let data = { content: "" };
+    let cond = new app.sqlpb.Condition();
+    cond.setF("page_id").setV(route.params.id);
+    let result = await store.dispatch("web/get_WebPage", {
+      app: app,
+      token: store.state.other.token,
+      condition: cond,
+    });
+    console.log("page>>>", result);
+    if (result.code == 200) data.content = result.data;
+    return data;
   },
   async fetch({ store, $axios, app }) {},
   watch: {

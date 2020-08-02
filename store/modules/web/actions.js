@@ -1,7 +1,7 @@
 
 export default {
   // 商品列表
-  async get_website(context, {  token, condition = null }) {
+  async get_website(context, { token, condition = null }) {
 
     let app = this.app
     let metadata = { "x-4d-token": token };
@@ -14,7 +14,7 @@ export default {
       if (err !== null) {
         return { code: 0, data: `[${data.getCode()}] ${data.getMessage()} ` };
       }
-    
+
       const data = app.sqlpb.Response.deserializeBinary(resp);
       context.commit("set_style", data.getResult().toJavaScript());
       return { code: 200, data: data.getResult().toJavaScript() };
@@ -27,18 +27,18 @@ export default {
    * @param {*} context 
    * @param {*} param1 
    */
-  async init_layout(context, { token , layout }) {
+  async init_layout(context, { token, layout }) {
     let app = this.app
     let store = this.app.store
 
-    let len = layout.length ;
+    let len = layout.length;
     for (let i = 0; i < len; i++) {
       let result = layout[i]
       // 只處理商品輪播 && 商品列表 
       if (result.type != 2) continue;
-      
+
       // 收到商品ID 再送API 取商品詳細資訊
-      if( (result.target).hasOwnProperty('items') ){
+      if ((result.target).hasOwnProperty('items')) {
         let response = await store.dispatch("web/sortType2Items", {
           product: result.target.items,
         });
@@ -54,7 +54,7 @@ export default {
    * @param {*} context 
    * @param {*} param1 
    */
-  async init_menu(context, { token , menu }) {
+  async init_menu(context, { token, menu }) {
     let app = this.app
     let store = this.app.store
 
@@ -69,7 +69,7 @@ export default {
           let classId = result.target.class[j];
           let cond = new app.sqlpb.Condition();
           cond.setF("class_id").setV(classId);
-          let resp = await store.dispatch("product/get_productClass",{
+          let resp = await store.dispatch("product/get_productClass", {
             app: app,
             token: token,
             condition: cond,
@@ -86,17 +86,17 @@ export default {
    * TYPE=2  商品列表
    * 收到的是分類館(result.target.class)
    */
-  async sortType2Class(context, { }){
+  async sortType2Class(context, { }) {
 
   },
   /**
    * TYPE=2  商品列表
    * 收到的是商品ID(result.target.items)
    */
-  async sortType2Items(context, { product }){
+  async sortType2Items(context, { product }) {
     let app = this.app
     let store = this.app.store
-   
+
     let cond = new app.sqlpb.Condition();
     cond.setF('product_id').setO(5).setSList(product)
     let response = await store.dispatch("product/get_product", {
@@ -104,7 +104,28 @@ export default {
       token: store.state.other.token,
       condition: cond
     });
-    return response ;
+    return response;
   },
+  /**
+     * 
+     * @param {*} context 
+     * @param {*} param1 
+     */
+  async get_WebPage(context, { condition = null }) {
+    let app = this.app
+    let metadata = { "x-4d-token": app.store.state.other.token };
+    let method = "FindWebPage";
+    let req = new app.sqlpb.Query();
+    if (condition !== null) req.addCondition(condition)
+    let product = await app.grpcAxios(app.$axios, method, metadata, req, (err, resp) => {
+      const data = app.sqlpb.Response.deserializeBinary(resp);
+      // todo:錯誤時候會跑兩次!?
+      if (err !== null || data.getCode() != 0) {
+        return { code: 0, data: `[${data.getCode()}] ${data.getMessage()} ` };
+      }
+      return { code: 200, data: data.getResult().toJavaScript() };
+    });
 
+    return product;
+  },
 }
