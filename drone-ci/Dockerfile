@@ -1,6 +1,6 @@
 FROM nginx:stable-alpine
-ARG SERVER_HOST=https://shop.4ding.site
-ENV SERVER_HOST=${SERVER_HOST}}
 COPY dist /usr/share/nginx/html/dist
 COPY drone-ci/nginx.conf /etc/nginx/conf.d/default.conf
+RUN if [ $NORMAL_SERVICE_PORT_WEB1=="" ];then export NORMAL_SERVICE_PORT_WEB1=80;fi && \
+    sed -i 's/NGINX_PORT/'$NORMAL_SERVICE_PORT_WEB1'/g' /etc/nginx/conf.d/default.conf
 CMD [ "nginx", "-g", "daemon off;" ]
