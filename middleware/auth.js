@@ -16,6 +16,7 @@ export default async function ({ app, route, store, redirect }) {
   }
   await store.commit('other/set_token', token)
 
+  console.log("auth:",app.store.getState)
   // 首頁相關
   let result = await store.dispatch("web/get_website", {
     token: token,
@@ -23,9 +24,14 @@ export default async function ({ app, route, store, redirect }) {
   });
   if (result.data && result.data.length !== 0) {
     // 搜尋該分類的產品列表
-    let res = await store.dispatch("web/init_layout", {
+    await store.dispatch("web/init_layout", {
       token: token ,
       layout: result.data[0].layout,
+    });
+    // 搜尋該分類的產品列表
+    await store.dispatch("web/init_menu", {
+      token: token ,
+      menu: result.data[0].menu,
     });
   }
 

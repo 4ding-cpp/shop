@@ -48,6 +48,40 @@ export default {
     context.commit("set_home_layout", layout);
     return layout
   },
+
+  /**
+   * 拿到首頁資訊 整理資料
+   * @param {*} context 
+   * @param {*} param1 
+   */
+  async init_menu(context, { token , menu }) {
+    let app = this.app
+    let store = this.app.store
+
+    for (let i in menu) {
+      let result = menu[i];
+      if (
+        result.target.hasOwnProperty("class") &&
+        result.target.class.length > 0
+      ) {
+        let tempClass = []; //
+        for (let j in result.target.class) {
+          let classId = result.target.class[j];
+          let cond = new app.sqlpb.Condition();
+          cond.setF("class_id").setV(classId);
+          let resp = await store.dispatch("product/get_productClass",{
+            app: app,
+            token: token,
+            condition: cond,
+          });
+          if (resp.code == 200) tempClass.push(resp.data.shift());
+        }
+        menu[i] = { ...menu[i], class: tempClass };
+      }
+    }
+    context.commit("set_menu", menu);
+  },
+
   /**
    * TYPE=2  商品列表
    * 收到的是分類館(result.target.class)

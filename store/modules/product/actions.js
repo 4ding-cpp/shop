@@ -61,6 +61,7 @@ export default {
     let method = "FindProductClass";
     let req = new app.sqlpb.Query();
     if (condition !== null) req.addCondition(condition)
+    console.log("req:",req.toObject())
     // let product = await app.grpcFetch(method, metadata, req, (err, resp) => {
     let product = await app.grpcAxios(app.$axios,method, metadata, req, (err, resp) => {
       // todo:錯誤時候會跑兩次!?

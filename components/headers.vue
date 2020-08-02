@@ -25,6 +25,7 @@
                   >
                     <!-- <nuxt-link tag="a"  class="nav-link" to="/cart/123">購物車</nuxt-link> -->
                     購物車
+                     <span class="badge badge-primary badge-pill">12</span>
                   </a>
                   <DropCart :active.sync="active" />
                   <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -122,6 +123,12 @@ export default {
     "$store.state.web.style"(status) {
       console.log("watch header");
       this.nav = this.get_headerNav();
+    },
+    "$store.state.cart.content": {
+      handler(val) {
+        console.log("val",val)
+      },
+      deep: true,
     },
   },
   methods: {
