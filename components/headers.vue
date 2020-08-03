@@ -88,11 +88,11 @@
           <ul class="navbar-nav">
             <li class="nav-item" v-for="(item,i) in nav">
               <nuxt-link
-                v-if="item.title.tw === '所有商品' "
+                v-if="item.title.tw === 'all_product' "
                 tag="a"
                 class="nav-link"
-                :to="`/class/?prod=${item.title.tw}`"
-              >{{item.title.tw}}</nuxt-link>
+                :to="`/class/?prod=所有商品`"
+              >所有商品</nuxt-link>
               <nuxt-link
                 v-else-if="item.target.class"
                 tag="a"
@@ -122,16 +122,6 @@ export default {
       active: false,
       nav: [],
       cart_total: 0, //購物車數量
-      left: [
-        { title: "優勢特色", link: "/home" },
-        { title: "系統簡介", link: "/introduction" },
-        { title: "計畫費用", link: "/cost" },
-        { title: "常見問題", link: "/question" },
-      ],
-      right: [
-        { title: "開通帳號", link: "/registered" },
-        // { title: "登入", link: "/login" }
-      ],
     };
   },
   // 監聽,當路由發生變化的時候執行

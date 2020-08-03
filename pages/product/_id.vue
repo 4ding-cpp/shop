@@ -3,7 +3,7 @@
     <section class="content">
       <div class="container">
         <!-- 麵包屑 -->
-        <Breadcrumb :data="page_info" />
+        <Breadcrumb :data="breadcrumb_info" />
       </div>
       <div class="container">
         <div class="row">
@@ -141,46 +141,38 @@
 
 <script>
 import { mapActions } from "vuex";
+import { Struct } from "google-protobuf/google/protobuf/struct_pb";
 
 export default {
   data() {
     return {
-      page_info: {},
-      carousel: 0,
+      // Breadcrumb 
+      breadcrumb_info: {},
       product_info: {},
       // 所選擇的產品資訊
       specx: "",
       count: 1,
-      list: [
-        { image: "/images/prod01.jpg" },
-        { image: "/images/prod02.jpg" },
-        { image: "/images/prod03.jpg" },
-        { image: "/images/prod04.jpg" },
-        { image: "/images/prod05.jpg" },
-        { image: "/images/prod04.jpg" },
-        { image: "/images/prod05.jpg" },
-        { image: "/images/prod06.jpg" }
-      ]
     };
   },
   async asyncData({ context, app, store, route, redirect }) {
     if (typeof route.params.id !== "string") redirect.go(-1);
     let data = {
-      page_info: { name: "熱門商品", key: "product", url: "/class/" ,prod:"" }
+      breadcrumb_info: { name: "熱門商品", key: "product", url: "/class/" ,prod:"" }
     };
 
-    let cond = new app.sqlpb.Condition();
-    cond.setF("product_id").setV(route.params.id);
-    let result = await store.dispatch("product/get_product", {
+     let cond = Struct.fromJavaScript({
+      product_id: route.params.id,
+    });
+    let result = await store.dispatch("product/get_productDetail", {
       app: app,
       token: store.state.other.token,
       condition: cond
     });
-    if (result.code === 200 && result.data.length > 0) {
-      data.product_info = result.data.shift();
+    if (result.code === 200 ) {
+      data.product_info = result.data ;
       data.specx = Object.keys(data.product_info.specx)[0];
-      data.page_info.url += data.product_info.link.class_id;
-      data.page_info.prod = data.product_info.name.tw;
+      data.breadcrumb_info.url += data.product_info.link.class_id;
+      data.breadcrumb_info.prod = data.product_info.name.tw;
     }
 
     return data;
