@@ -1,8 +1,8 @@
 <template>
   <div id="page">
     <section class="content">
-      <div v-for="(item,i) in layout">
-        <component :is="'IndexLayout'+item.type" :item.sync="item"></component>
+      <div class="container">
+        聯絡資訊
       </div>
     </section>
     <Footers />
@@ -16,11 +16,23 @@ export default {
   data: function () {
     // 資料
     return {
-      layout: this.$store.state.web.home.layout, //
+      content: [], //
     };
   },
-
-  async asyncData({ context, app, store }) {
+  async asyncData({ context, app, store, route }) {
+    // 搜尋該分類的產品列表
+    if (route.params.id === undefined) return;
+    let data = { content: "" };
+    let cond = new app.sqlpb.Condition();
+    cond.setF("page_id").setV(route.params.id);
+    let result = await store.dispatch("web/get_WebPage", {
+      app: app,
+      token: store.state.other.token,
+      condition: cond,
+    });
+    console.log("page>>>", result);
+    if (result.code == 200) data.content = result.data;
+    return data;
   },
   async fetch({ store, $axios, app }) {},
   watch: {
@@ -33,6 +45,7 @@ export default {
     // 初始
     ...mapActions({
       loading: "loading",
+      get_product: "product/get_product",
     }),
     ...mapMutations({
       set_product_list: "product/set_product_list",
@@ -43,7 +56,7 @@ export default {
   beforeCreate: function () {
     //實體初始化
   },
-  created: async function () {
+  created: function () {
     //實體建立完成。資料 data 已可取得，但 el 屬性還未被建立。
     this.loading(true);
   },
