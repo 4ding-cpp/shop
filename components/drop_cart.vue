@@ -11,7 +11,7 @@
               <a href>{{item.name.tw}}</a>
             </p>
             <span class="price">
-              NT${{ item.count * item.price }}元
+              NT${{ item.price }}元
               <span class="color-gray-text">*{{item.count}}</span>
             </span>
           </div>
@@ -34,6 +34,12 @@ import _values from "lodash/values";
 
 export default {
   props: {
+    count: {
+      active: [Number, String],
+      default: function () {
+        return 0;
+      },
+    },
     data: {
       active: Boolean,
       default: function () {
@@ -57,6 +63,7 @@ export default {
     },
   },
   mounted: async function () {
+    this.cart = this.$store.state.cart.content;
     let list = ["/cart/step1", "/cart/step2", "/cart/step3", "/cart/orderList"];
     if (!list.includes(this.$route.path)) {
       await this.get_completeCar();
@@ -72,15 +79,18 @@ export default {
     // 初始
     total() {
       let money = 0;
+      let count = 0;
       Object.keys(this.cart).forEach((k) => {
+        count += Number(this.cart[k].count);
         money += Number(this.cart[k].price) * Number(this.cart[k].count);
       });
+      this.$emit("update:count", count);
       return money;
     },
     // 將目前購物車 送出取得可套用活動相關資訊
     get_completeCar: async function () {
       let data = {};
-      let cart = JSON.parse(localStorage.getItem("cart"));
+      let cart = this.$store.state.cart.content;
       let cart_info = this.$store.state.cart.info;
       if (cart == "" || cart_info.id == "") return;
 
@@ -93,7 +103,7 @@ export default {
         token: this.$store.state.other.token,
         condition: cond,
       });
-     
+
       if (result.code === 200) {
         cart_info = {
           state: 1,

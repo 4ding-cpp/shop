@@ -27,7 +27,7 @@
                     購物車
                     <span class="badge badge-primary badge-pill">{{cart_total}}</span>
                   </a>
-                  <DropCart :active.sync="active" />
+                  <DropCart :active.sync="active"  :count.sync="cart_total" />
                   <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <div class="cart-content">
                       <div class="cart_list">
@@ -130,15 +130,15 @@ export default {
       console.log("watch header");
       this.nav = this.get_headerNav();
     },
-    "$store.state.cart.content": {
-      handler(val) {
-        this.cart_total = 0 ;
-        for (let i in val) {
-          this.cart_total += Number(val[i].count)
-        }
-      },
-      deep: true,
-    },
+    // "$store.state.cart.content": {
+    //   handler(val) {
+    //     this.cart_total = 0 ;
+    //     for (let i in val) {
+    //       this.cart_total += Number(val[i].count)
+    //     }
+    //   },
+    //   deep: true,
+    // },
   },
   methods: {
     ...mapGetters({

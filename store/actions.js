@@ -31,6 +31,14 @@ export default {
             });
         }
     },
+    /**
+     * storage 內容設定置vuex內
+     */
+    storage_init(context){
+        let cart = JSON.parse(localStorage.getItem("cart"));
+        console.log("cart storage",cart)
+        context.commit("cart/set_cart", cart)
+    },
     async check_init(context) {
         let store = this.app.store.state
         switch (true) {

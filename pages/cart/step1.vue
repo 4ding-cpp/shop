@@ -144,7 +144,7 @@ export default {
     // 將目前購物車 送出取得可套用活動相關資訊
     async get_completeCar() {
       let data = {};
-      let cart = JSON.parse(localStorage.getItem("cart"));
+      let cart = this.$store.state.cart.content;
       let cart_info = this.$store.state.cart.info;
       let commodity = _values(cart).map((res) => {
         return {
