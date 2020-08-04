@@ -55,11 +55,10 @@
                       >加入購物車</button>
                     </div>
                     <div class="col-md-6 mt-3">
-                      <nuxt-link
-                        tag="button"
+                      <button
                         class="w-100 checkout-btn  l-btn"
-                        :to="`/cart/step1`"
-                      >立即結帳</nuxt-link>
+                        @click="toStep1();"
+                      >立即結帳</button>
                     </div>
                   </div>
                 </div>
@@ -217,6 +216,10 @@ export default {
       };
       this._store({ act: "cart/add_cart", data: data });
       this.$toast.success("加入到購物車");
+    },
+    toStep1: async function() {
+      await this.cartJoin();
+      this.$router.push('/cart/step1')
     }
   },
   mounted: async function() {

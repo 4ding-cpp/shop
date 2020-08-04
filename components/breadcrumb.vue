@@ -30,16 +30,6 @@ export default {
   data() {
     return {
       _:this.data,
-      left: [
-        { title: "優勢特色", link: "/home" },
-        { title: "系統簡介", link: "/introduction" },
-        { title: "計畫費用", link: "/cost" },
-        { title: "常見問題", link: "/question" }
-      ],
-      right: [
-        { title: "開通帳號", link: "/registered" }
-        // { title: "登入", link: "/login" }
-      ]
     };
   }
 };

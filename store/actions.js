@@ -1,11 +1,20 @@
 // https://vuex.vuejs.org/en/actions.html
 
 export default {
+    /**
+     * SSR 模式 首次模式
+     * @param {*} param0 
+     * @param {*} param1 
+     */
     async nuxtServerInit({ commit, dispatch, app }, { req }) {
         await dispatch("init");
     },
+    /**
+     * 初始化流程
+     * @param {*} context 
+     */
     async init(context) {
-        let app =  this.app
+        let app = this.app
         let store = this.app.store
         let token = app.$cookies.get('4dingtoken');
         if (token == "" || token === undefined) {
@@ -34,21 +43,25 @@ export default {
     /**
      * storage 內容設定置vuex內
      */
-    storage_init(context){
+    storage_init(context) {
         let cart = JSON.parse(localStorage.getItem("cart"));
-        console.log("cart storage",cart)
+        if(cart === null ) return ;
         context.commit("cart/set_cart", cart)
     },
+    /**
+     * 檢查首次登入的資訊是否存在
+     * @param {*} context 
+     */
     async check_init(context) {
         let store = this.app.store.state
         switch (true) {
-          case (store.other.token !== ""):
-            console.log("檢查判定非首次!")
-            return true;
+            case (store.other.token !== ""):
+                console.log("檢查判定非首次!")
+                return true;
         }
         console.log("檢查判定首次!")
         return false;
-      },
+    },
     loading(context, o) {
         context.commit("set_loading", o);
     },

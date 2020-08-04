@@ -1,7 +1,9 @@
 // https://vuex.vuejs.org/en/getters.html
 
 export default {
-  // 取上方nav 分類
+  /**
+   * 取上方nav 分類
+   */
   get_headerNav:state => {
     let res = [] 
     Object.keys(state.style).forEach(index=>{
@@ -10,7 +12,9 @@ export default {
     })
     return res
   },
-  // 取上方menu 分類
+  /**
+   * 取上方menu 分類
+   */
   get_headerMenu:state => {
     let res = [] 
     Object.keys(state.style).forEach(index=>{
@@ -18,4 +22,15 @@ export default {
     })
     return res
   },
+  /**
+   * 取下方footer 分類
+   */
+  get_footer:state => {
+    let res = [] 
+    Object.keys(state.style).forEach(index=>{
+      res = state.style[index].footer 
+    })
+    return res
+  },
+
 }

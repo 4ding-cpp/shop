@@ -58,11 +58,11 @@
             </div>
             <div class="col-md-12 d-flex justify-content-between p-2">
               <div class>商品小計</div>
-              <div class>NT$2666</div>
+              <div class>NT${{total()}}</div>
             </div>
             <div class="col-md-12 d-flex justify-content-between bord-top-dash p-2">
-              <div class>共N項</div>
-              <div class="total-money">NT$2666</div>
+              <div class>共{{cart.count}}項</div>
+              <div class="total-money">NT${{cart.money}}</div>
             </div>
             <div class="col-md-12">
               <nuxt-link
@@ -74,12 +74,12 @@
           </div>
         </div>
         <!-- 加購專區 先隱藏 -->
-        <!-- <div class="purchase row">
+        <div class="purchase row">
           <div class="col-lg-12 col-md-12 col-xs-12 p-2 title">加購專區</div>
           <div v-for="item in purchase" class="card col-lg-3 col-md-3 col-xs-6 p-2">
             <Purchase />
           </div>
-        </div>-->
+        </div>
       </div>
     </section>
   </div>
@@ -94,7 +94,12 @@ import _values from "lodash/values";
 export default {
   data() {
     return {
-      imgesUrl: "",
+      cart:{
+        count:0,
+        money:0,
+        list:{}
+      },
+      imgesUrl:  process.env.IMG_URL,
       commodity: [],
       activity: [],
       purchase: [
@@ -105,32 +110,17 @@ export default {
           offer: "249",
         },
       ],
-      list: [
-        {
-          image: "/images/noprod.png",
-          name: "歐美高衩深V透膚雕花連體衣",
-          size: "S",
-          price: "227",
-          num: "1",
-        },
-        {
-          image: "/images/noprod.png",
-          name: "歐美高衩深V透膚雕花連體衣",
-          size: "S",
-          price: "227",
-          num: "1",
-        },
-      ],
     };
   },
   async asyncData({ context, app, store, route }) {
-    // todo:拉到store去
-    let data = { imgesUrl: process.env.IMG_URL };
-
-    return data;
   },
   watch: {
-    //監聽值
+    "$store.state.cart.content": {
+      handler(val) {
+        this.cart.list = Object.assign({}, val);
+      },
+      deep: true,
+    },
   },
   computed: {
     //相依的資料改變時才做計算方法
@@ -141,10 +131,24 @@ export default {
       loading: "loading",
       _store: "_store",
     }),
+    /**
+     * 計算購物車
+     */
+    total() {
+      let money = 0;
+      let count = 0;
+      Object.keys(this.cart.list).forEach((k) => {
+        count += Number(this.cart.list[k].count);
+        money += Number(this.cart.list[k].price) * Number(this.cart.list[k].count);
+      });
+      this.cart.money = money;
+      this.cart.count = count;
+      return money;
+    },
     // 將目前購物車 送出取得可套用活動相關資訊
     async get_completeCar() {
       let data = {};
-      let cart = this.$store.state.cart.content;
+      let cart = this.cart.list;
       let cart_info = this.$store.state.cart.info;
       let commodity = _values(cart).map((res) => {
         return {
@@ -205,6 +209,7 @@ export default {
   mounted: async function () {
     //元素已掛載， el 被建立。
     this.loading(false);
+    this.cart.list = this.$store.state.cart.content;
     await this.get_completeCar();
     // let a =await this.get_findCar({token:this.$store.state.other.token})
     // console.log(a)
