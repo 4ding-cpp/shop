@@ -18,4 +18,5 @@ export default {
   set_menu(state, o) {
     state.menu = o
   },
+
 }

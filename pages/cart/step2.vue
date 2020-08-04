@@ -370,7 +370,6 @@ export default {
     // ssr 過來此頁面 不動作 監聽觸發
     if (this.$store.state.cart.info.state == 1) {
       await this.get_lockCar();
-      // this._store({ act: "cart/set_cart_info", data: cart_info });
     }
 
     await this.get_logistics();

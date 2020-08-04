@@ -41,7 +41,7 @@ export default {
   },
   async asyncData({ context, app, store, route }) {
     let data = {
-      page_info: { name: "熱門分類", url: "" , prod:route.query.prod  }
+      page_info: { name: "分類", url: "/class/?prod=所有商品" , prod:route.query.prod  }
     };
     // 搜尋該分類的產品列表
     let cond = null

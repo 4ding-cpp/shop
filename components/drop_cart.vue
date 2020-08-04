@@ -76,7 +76,9 @@ export default {
       loading: "loading",
       _store: "_store",
     }),
-    // 初始
+    /**
+     * 計算購物車
+     */
     total() {
       let money = 0;
       let count = 0;
