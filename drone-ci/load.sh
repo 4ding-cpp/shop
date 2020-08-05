@@ -2,20 +2,20 @@
 
 
 prepare() {
-    if [ "$NORMAL_SERVICE_PORT_WEB1" = "" ]; then
-        return "env NORMAL_SERVICE_PORT_WEB1 not set"
+    if [ "$WEB1_SERVICE_PORT" = "" ]; then
+        return "env WEB1_SERVICE_PORT not set"
     fi
-    sed -i "s/NGINX_PORT/"$NORMAL_SERVICE_PORT_WEB1"/g" /etc/nginx/conf.d/default.conf
+    sed -i "s/NGINX_PORT/"$WEB1_SERVICE_PORT"/g" /etc/nginx/conf.d/default.conf
 
-    if [ "$NORMAL_SERVICE_HOST" = "" ]; then
-        return "env NORMAL_SERVICE_HOST not set"
+    if [ "$SHOP_SERVICE_HOST" = "" ]; then
+        return "env SHOP_SERVICE_HOST not set"
     fi
-    sed -i "s/GRPC_HOST/"$NORMAL_SERVICE_HOST"/g" /etc/nginx/conf.d/default.conf
+    sed -i "s/GRPC_HOST/"$SHOP_SERVICE_HOST"/g" /etc/nginx/conf.d/default.conf
 
-    if [ "$NORMAL_SERVICE_PORT_SHOP" = "" ]; then
-        return "env NORMAL_SERVICE_PORT_SHOP not set"
+    if [ "$SHOP_SERVICE_PORT" = "" ]; then
+        return "env SHOP_SERVICE_PORT not set"
     fi
-    sed -i "s/GRPC_PORT/"$NORMAL_SERVICE_PORT_SHOP"/g" /etc/nginx/conf.d/default.conf
+    sed -i "s/GRPC_PORT/"$SHOP_SERVICE_PORT"/g" /etc/nginx/conf.d/default.conf
     
     nginx -g "daemon off;"
 }
