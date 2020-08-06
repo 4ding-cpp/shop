@@ -20,7 +20,7 @@ export default function grpcAxios(axios, method, metadata, req, callback) {
     }
   }
   return axios.$post(
-    `https://shop.4ding.site/ding4.ShopRPC/${method}`,
+    `https://4ding.store/ding4.ShopRPC/${method}`,
     new Uint8Array(ib),
     config
   ).then(buff => {
