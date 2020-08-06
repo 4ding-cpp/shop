@@ -1,7 +1,7 @@
 <template>
   <div id="page">
     <section class="content">
-      <button @click="login" >FB Login</button>
+      <button @click="login">FB Login</button>
       <!-- <div class="container">
         <iframe
           src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook&tabs=timeline&width=340&height=120&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false&appId"
@@ -13,7 +13,7 @@
           allowtransparency="true"
           allow="encrypted-media"
         ></iframe>
-      </div> -->
+      </div>-->
     </section>
   </div>
 </template>
@@ -54,7 +54,7 @@ export default {
     login() {
       const vm = this;
       // 檢查登入狀態
-      FB.getLoginStatus(function(response) {
+      FB.getLoginStatus(function (response) {
         // 登入狀態 - 已登入
         if (response.status === "connected") {
           // 獲取用戶個人資料
@@ -63,7 +63,7 @@ export default {
           // 登入狀態 - 未登入
           // 用戶登入(確認授權)
           FB.login(
-            function(res) {
+            function (res) {
               // 獲取用戶個人資料
               vm.getProfile();
             },
@@ -75,11 +75,11 @@ export default {
     },
     logout() {
       // 檢查登入狀態
-      FB.getLoginStatus(function(response) {
+      FB.getLoginStatus(function (response) {
         // 檢查登入狀態
         if (response.status === "connected") {
           // 移除授權
-          FB.api("/me/permissions", "DELETE", function(res) {
+          FB.api("/me/permissions", "DELETE", function (res) {
             // 用戶登出
             FB.logout();
           });
@@ -89,10 +89,10 @@ export default {
       });
     },
     getProfile() {
-      FB.api("/me?fields=name,id,email", function(res) {
+      FB.api("/me?fields=name,id,email", function (res) {
         // do something
       });
-    }
+    },
   },
   validators: {
     email: function (value) {
@@ -108,16 +108,16 @@ export default {
     //實體建立完成。資料 data 已可取得，但 el 屬性還未被建立。
     // 防止重複載入
     if (!window.FB) {
-      window.fbAsyncInit = function() {
+      window.fbAsyncInit = function () {
         FB.init({
-          appId: "364143314072504", // 填入自己 app 的 id
-          cookie: true,
+          appId: "364143314072504",
           xfbml: true,
-          version: "v4.0" // 目前版本
+          version: "v8.0",
         });
+        FB.AppEvents.logPageView();
       };
 
-      (function(d, s, id) {
+      (function (d, s, id) {
         var js,
           fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) {
