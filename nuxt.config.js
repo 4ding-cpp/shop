@@ -93,12 +93,9 @@ export default {
     credentials: true,
   },
   proxy: {
-    '/api': {
-      target: 'https://ingress.4ding.site',
+    '/static': {
+      target: 'https://4ding.store',
       changeOrigin: true,
-      pathRewrite: {
-        '^/api': '',
-      },
     }
   },
   /*

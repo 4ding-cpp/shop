@@ -57,7 +57,7 @@ spec:
   entryPoints:
     - http
   routes:
-    - match: Host(`shop.4ding.site`)
+    - match: Host(`4ding.store`)
       kind: Rule
       services:
         - name: shop-client-service

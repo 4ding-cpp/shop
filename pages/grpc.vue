@@ -50,7 +50,7 @@ export default {
     // ]);
     // new Uint8Array(ib, 5).set(bi);
     // console.log("ib>>>", ib);
-    // fetch(`https://shop.4ding.site/ding4.ShopRPC/${method}`, {
+    // fetch(`https://4ding.store/ding4.ShopRPC/${method}`, {
     //   method: "POST",
     //   headers: {
     //     "content-type": "application/grpc-web+proto",
