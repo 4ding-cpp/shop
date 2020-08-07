@@ -12,7 +12,7 @@ export default function grpcFetch(method, metadata, req, callback) {
   ])
   new Uint8Array(ib, 5).set(bi);
 
-  return fetch(`https://shop.4ding.site/ding4.ShopRPC/${method}`, {
+  return fetch(`https://4ding.store/ding4.ShopRPC/${method}`, {
     method: "POST",
     headers: {
       "content-type": "application/grpc-web+proto",

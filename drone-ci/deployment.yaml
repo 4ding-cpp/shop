@@ -21,6 +21,7 @@ spec:
           value: "test"
         - name: "BUILD_NUMBER"
           value: "{{build_number}}"
+<<<<<<< HEAD
         image: 4ding/shop-client:latest
         name: web1
         volumeMounts:
@@ -31,3 +32,46 @@ spec:
         nfs:
           path: /usr/nfs/test
           server: 192.168.69.230
+=======
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shop-client-service
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+  selector:
+    app: shop-client
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shop-client-service-nodeport
+spec:
+  type: NodePort
+  ports:
+  - name: shop-client-nodeport
+    port: 80
+    targetPort: 80
+    nodePort: 31000
+    protocol: TCP
+  selector:
+    app: shop-client
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: shop-client-http
+spec:
+  entryPoints:
+    - http
+  routes:
+    - match: Host(`4ding.store`)
+      kind: Rule
+      services:
+        - name: shop-client-service
+          port: 80
+>>>>>>> 6416e71e833f5fd734e6f37bb08085e689cb7f33
