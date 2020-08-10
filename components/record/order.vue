@@ -24,7 +24,7 @@
           <td>{{ item.amount }}</td>
           <td>{{ item.freight }}</td>
           <td align="center">
-            <span @click="test">
+            <span @click="freeback(item.order_id)">
               <i class="fas fa-comment-dots"></i> 詢問
             </span> ｜
             <nuxt-link tag="span" class :to="`/cart/orderList?id=${item.order_id}`">查看</nuxt-link>
@@ -50,7 +50,15 @@ import { mapActions } from "vuex";
 import { Struct } from "google-protobuf/google/protobuf/struct_pb";
 export default {
   name: "",
-  props: {},
+  props: {
+    // 父組件來源
+    data: {
+      type: Object,
+      default: function () {
+        return {};
+      },
+    },
+  },
   data: function () {
     // 資料
     return {
@@ -76,8 +84,11 @@ export default {
       loading: "loading",
       _store: "_store",
     }),
-    test(){
-      this.$modal.show('example')
+    freeback(id) {
+      this.$modal.show("drag_RecordCustomer");
+      // this.$modal.show("example-resizable");
+      
+      this.$emit("update:data",{id:id});
     },
     /**
      * clickCallback
@@ -104,8 +115,8 @@ export default {
         alert(result.data);
         return false;
       } else {
-        let total = parseInt(result.limit.length / result.limit.pageSize) 
-        this.page.total = (total == 0)? 1 : total;
+        let total = parseInt(result.limit.length / result.limit.pageSize);
+        this.page.total = total == 0 ? 1 : total;
         this.list = result.data;
       }
       return true;
@@ -141,6 +152,12 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+span {
+  cursor: pointer;
+  &:hover{
+    color: red;
+  }
+}
 .table-responsive {
   height: 100vh;
   overflow-y: hidden;

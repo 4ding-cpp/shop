@@ -2,7 +2,7 @@
   <div id="page">
     <section class="content">
       <button @click="login">FB Login</button>
-      <!-- <div class="container">
+      <div class="container">
         <iframe
           src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook&tabs=timeline&width=340&height=120&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false&appId"
           width="340"
@@ -13,7 +13,7 @@
           allowtransparency="true"
           allow="encrypted-media"
         ></iframe>
-      </div>-->
+      </div>
     </section>
   </div>
 </template>

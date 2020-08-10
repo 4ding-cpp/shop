@@ -1,8 +1,11 @@
 <template>
-<div class="onloading" :class="{'active':data.loading===true,'anim-opacity2':data.loading===false }">
-  <!-- <div class="onloading" :class="{'active':show===true,'anim-opacity2':show===false }"> -->
-  <!-- <div class="onloading" :class="{'active':show===true,'anim-opacity2':show===false }"> -->
-    <div class>
+  <div
+    class="onloading"
+    :class="{'active':data.loading===true,'anim-opacity2':data.loading===false}"
+  >
+    <!-- <div class="onloading" :class="{'active':show===true,'anim-opacity2':show===false }"> -->
+    <!-- <div class="onloading" :class="{'active':show===true,'anim-opacity2':show===false }"> -->
+    <div :class="{'top':top===true}">
       <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
     </div>
   </div>
@@ -12,10 +15,16 @@ export default {
   props: {
     data: {
       type: Object,
-      default: function() {
+      default: function () {
         return this.$store.state.act;
-      }
-    }
+      },
+    },
+    top: {
+      type: Boolean,
+      default: function () {
+        return true;
+      },
+    },
   },
   data() {
     return {};
@@ -24,8 +33,8 @@ export default {
     // 初始
     ToSelect() {
       this.$emit("selected");
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -39,7 +48,7 @@ export default {
   &.active {
     display: block;
   }
-  &.anim-opacity2{
+  &.anim-opacity2 {
     // z-index: 99;
   }
 }
@@ -48,12 +57,16 @@ export default {
   color: #ccc;
   display: flex;
   justify-content: center;
-  margin-top: 20vh;
+  padding-top:5px;
+
+  &.top {
+    margin-top: 20vh;
+  }
 }
 // 漸消
 .anim-opacity2 {
   animation: 2s opacity2 0s;
-  animation-fill-mode:forwards;
+  animation-fill-mode: forwards;
 }
 @keyframes opacity2 {
   0% {

@@ -23,7 +23,6 @@ export default {
     // 初始
     ...mapActions({
       _store: "_store",
-      get_findCar: "cart/get_findCar",
       loading: "loading"
     }),
     ...mapMutations({

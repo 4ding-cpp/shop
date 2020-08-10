@@ -193,6 +193,12 @@ export class Coupon extends jspb.Message {
   getIsUse(): number;
   setIsUse(value: number): void;
 
+  getOrderId(): string;
+  setOrderId(value: string): void;
+
+  getOrderAt(): string;
+  setOrderAt(value: string): void;
+
   getLabelxMap(): jspb.Map<string, number>;
   clearLabelxMap(): void;
 
@@ -246,6 +252,8 @@ export namespace Coupon {
     target?: a$submessage_pb.CustomerTarget.AsObject,
     usedMap: Array<[string, number]>,
     isUse: number,
+    orderId: string,
+    orderAt: string,
     labelxMap: Array<[string, number]>,
     operator: string,
     createAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,

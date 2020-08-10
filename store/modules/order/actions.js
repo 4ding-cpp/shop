@@ -50,7 +50,7 @@ export default {
    * @param {*} context 
    * @param {*} param1 
    */
-  async find_Order(context, { condition , pageLimit }) {
+  async find_Order(context, { condition = null, pageLimit = null}) {
     let app = this.app
     let metadata = { "x-4d-token": app.store.state.other.token };
     let method = "FindOrder";

@@ -753,7 +753,7 @@ proto.ding4.Dialogue.prototype.toObject = function(opt_includeInstance) {
 proto.ding4.Dialogue.toObject = function(includeInstance, msg) {
   var f, obj = {
     freebackId: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    timeAt: (f = msg.getTimeAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+    timeAt: jspb.Message.getFieldWithDefault(msg, 2, ""),
     message: jspb.Message.getFieldWithDefault(msg, 3, ""),
     responder: jspb.Message.getFieldWithDefault(msg, 4, ""),
     self: (f = msg.getSelf()) && google_protobuf_struct_pb.Struct.toObject(includeInstance, f)
@@ -798,8 +798,7 @@ proto.ding4.Dialogue.deserializeBinaryFromReader = function(msg, reader) {
       msg.setFreebackId(value);
       break;
     case 2:
-      var value = new google_protobuf_timestamp_pb.Timestamp;
-      reader.readMessage(value,google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader);
+      var value = /** @type {string} */ (reader.readString());
       msg.setTimeAt(value);
       break;
     case 3:
@@ -852,11 +851,10 @@ proto.ding4.Dialogue.serializeBinaryToWriter = function(message, writer) {
     );
   }
   f = message.getTimeAt();
-  if (f != null) {
-    writer.writeMessage(
+  if (f.length > 0) {
+    writer.writeString(
       2,
-      f,
-      google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
+      f
     );
   }
   f = message.getMessage();
@@ -903,39 +901,20 @@ proto.ding4.Dialogue.prototype.setFreebackId = function(value) {
 
 
 /**
- * optional google.protobuf.Timestamp time_at = 2;
- * @return {?proto.google.protobuf.Timestamp}
+ * optional string time_at = 2;
+ * @return {string}
  */
 proto.ding4.Dialogue.prototype.getTimeAt = function() {
-  return /** @type{?proto.google.protobuf.Timestamp} */ (
-    jspb.Message.getWrapperField(this, google_protobuf_timestamp_pb.Timestamp, 2));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
 /**
- * @param {?proto.google.protobuf.Timestamp|undefined} value
+ * @param {string} value
  * @return {!proto.ding4.Dialogue} returns this
-*/
+ */
 proto.ding4.Dialogue.prototype.setTimeAt = function(value) {
-  return jspb.Message.setWrapperField(this, 2, value);
-};
-
-
-/**
- * Clears the message field making it undefined.
- * @return {!proto.ding4.Dialogue} returns this
- */
-proto.ding4.Dialogue.prototype.clearTimeAt = function() {
-  return this.setTimeAt(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {boolean}
- */
-proto.ding4.Dialogue.prototype.hasTimeAt = function() {
-  return jspb.Message.getField(this, 2) != null;
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 

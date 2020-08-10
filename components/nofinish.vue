@@ -1,5 +1,9 @@
 <template>
-  <div>comming soon~</div>
+  <div>comming soon~
+
+    <Loading :data="true" />
+  </div>
+  
 </template>
 
 <script>

@@ -86,11 +86,8 @@ export class Order extends jspb.Message {
   getLogisticsSubType(): number;
   setLogisticsSubType(value: number): void;
 
-  getInTimeout(): boolean;
-  setInTimeout(value: boolean): void;
-
-  getReturnStaus(): number;
-  setReturnStaus(value: number): void;
+  getIsTimeout(): boolean;
+  setIsTimeout(value: boolean): void;
 
   getPickupAt(): string;
   setPickupAt(value: string): void;
@@ -191,8 +188,7 @@ export namespace Order {
     logisticsService: string,
     logisticsType: number,
     logisticsSubType: number,
-    inTimeout: boolean,
-    returnStaus: number,
+    isTimeout: boolean,
     pickupAt: string,
     closeAt: string,
     payAt: string,
@@ -218,6 +214,9 @@ export class OrderCommomdity extends jspb.Message {
 
   getStoreId(): string;
   setStoreId(value: string): void;
+
+  getActivityId(): string;
+  setActivityId(value: string): void;
 
   getProductId(): string;
   setProductId(value: string): void;
@@ -249,6 +248,7 @@ export namespace OrderCommomdity {
   export type AsObject = {
     orderId: string,
     storeId: string,
+    activityId: string,
     productId: string,
     sku: string,
     photoSrc: string,
@@ -333,6 +333,9 @@ export class OrderOther extends jspb.Message {
   getLogisticsNo(): string;
   setLogisticsNo(value: string): void;
 
+  getReturnNo(): string;
+  setReturnNo(value: string): void;
+
   getSender(): ContactInfo | undefined;
   setSender(value?: ContactInfo): void;
   hasSender(): boolean;
@@ -361,6 +364,7 @@ export namespace OrderOther {
     bankAccount: string,
     cvsNo: string,
     logisticsNo: string,
+    returnNo: string,
     sender?: ContactInfo.AsObject,
     receiver?: ContactInfo.AsObject,
   }

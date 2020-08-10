@@ -90,10 +90,8 @@ export class Dialogue extends jspb.Message {
   getFreebackId(): string;
   setFreebackId(value: string): void;
 
-  getTimeAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
-  setTimeAt(value?: google_protobuf_timestamp_pb.Timestamp): void;
-  hasTimeAt(): boolean;
-  clearTimeAt(): void;
+  getTimeAt(): string;
+  setTimeAt(value: string): void;
 
   getMessage(): string;
   setMessage(value: string): void;
@@ -117,7 +115,7 @@ export class Dialogue extends jspb.Message {
 export namespace Dialogue {
   export type AsObject = {
     freebackId: string,
-    timeAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+    timeAt: string,
     message: string,
     responder: string,
     self?: google_protobuf_struct_pb.Struct.AsObject,

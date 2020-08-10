@@ -31,7 +31,7 @@
           </section>
           <!-- 數據總覽 END -->
           <!-- TAB LIST -->
-          <div class="row text-center pb-4  col-md-12 table-responsive">
+          <div class="row text-center pb-4 col-md-12 table-responsive">
             <ul class="nav nav-tabs w-100">
               <li class="nav-item" v-for="(item,i) in tab.list" @click="tab.selected=i">
                 <a
@@ -45,11 +45,16 @@
           <!-- TAB LIST END -->
 
           <div class="row text-center col-md-12">
-            <components :is="tab.list[tab.selected].module" />
+            <components :is="tab.list[tab.selected].module" :data.sync="module_data" />
           </div>
 
-          <modal name="example" height="auto" :draggable="true">
-            <div>123</div>
+          <modal
+            name="drag_RecordCustomer"
+            width="60%"
+            height="auto"
+            :draggable="true"
+          >
+            <RecordCustomer :data.sync="module_data" />
           </modal>
         </div>
       </div>
@@ -65,6 +70,7 @@ export default {
   data: function () {
     // 資料
     return {
+      module_data: null,
       page: {
         loading: true,
       },
