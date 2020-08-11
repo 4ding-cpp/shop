@@ -6,7 +6,7 @@ export default {
      */
     async get_Freeback(context, { condition = null }) {
       let app = this.app
-      let metadata = { "x-4d-token": app.store.state.other.token };
+      let metadata = { "x-4d-token": "" };
       let method = "FindFreeback";
       let req = new app.sqlpb.Query();
       if (condition !== null) req.setSelf(condition)

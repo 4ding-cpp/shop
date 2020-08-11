@@ -19,12 +19,13 @@ export default function grpcAxios(axios, method, metadata, req, callback) {
       ...metadata,
     }
   }
-  return axios.$post(
+  return axios.post(
     `https://4ding.store/ding4.ShopRPC/${method}`,
     new Uint8Array(ib),
     config
-  ).then(buff => {
-    return callback(null, buff.slice(5));
+  ).then(response => {
+    console.log({...response,data:response.data.slice(5)});
+    return callback(null, response.data.slice(5));
   }).catch((err) => {
     return { err: err }
   });
