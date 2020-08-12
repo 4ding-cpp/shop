@@ -72,3 +72,8 @@ section.content {
   box-shadow: none;
   border-radius: 5px;
 }
+
+//  reCAPTCHA 隱藏
+.grecaptcha-badge {
+  display: none !important;
+}

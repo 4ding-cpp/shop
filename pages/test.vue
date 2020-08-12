@@ -104,7 +104,7 @@ export default {
   beforeCreate: function () {
     //實體初始化
   },
-  created: function () {
+  created: async function () {
     //實體建立完成。資料 data 已可取得，但 el 屬性還未被建立。
     // 防止重複載入
     if (!window.FB) {

@@ -52,6 +52,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    { src: "@/plugins/recaptcha", ssr: false },
     { src: "@/plugins/aos", ssr: false },
     { src: "@/components/index", ssr: true },
     { src: "@/filter/index", ssr: true },

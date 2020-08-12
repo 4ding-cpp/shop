@@ -25,9 +25,6 @@ export default {
       _store: "_store",
       loading: "loading"
     }),
-    ...mapMutations({
-      set_token: "other/set_token"
-    }),
   },
 
   beforeMount: async function() {

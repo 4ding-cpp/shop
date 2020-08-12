@@ -18,10 +18,14 @@ export default {
         let store = this.app.store
         let token = app.$cookies.get('4dingtoken');
         if (token == "" || token === undefined) {
-            token = "customer-test";
-            token = (token) ? token : await store.dispatch("other/get_token");
+            // token = "customer-test";
+            let resp = await store.dispatch("account/get_token");
+            console.log(">>>>檢查判定:",resp);
+            token = resp.data.token ;
+            // token = (token) ? token : 
         }
-        await store.commit('other/set_token', token)
+
+        await store.commit('account/set_token', token)
         // 首頁相關
         let result = await store.dispatch("web/get_website", {
             token: token,

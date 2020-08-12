@@ -27,7 +27,7 @@
                     購物車
                     <span class="badge badge-primary badge-pill">{{cart_total}}</span>
                   </a>
-                  <DropCart :active.sync="active"  :count.sync="cart_total" />
+                  <DropCart :active.sync="active" :count.sync="cart_total" />
                   <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <div class="cart-content">
                       <div class="cart_list">
@@ -61,7 +61,7 @@
                   </div>-->
                 </div>
               </li>
-              <li class="nav-item">
+              <li class="nav-item" @click="login">
                 <a class="nav-link" href="#">登入會員</a>
               </li>
             </ul>
@@ -108,6 +108,9 @@
             </li>
           </ul>
         </div>
+        <modal name="login" width="40%" height="auto">
+          <AccountLogin />
+        </modal>
       </nav>
     </div>
   </header>
@@ -146,6 +149,9 @@ export default {
     }),
     toggleShow() {
       this.active = !this.active;
+    },
+    login: function () {
+      this.$modal.show("login")
     },
   },
   created() {

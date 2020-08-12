@@ -155,7 +155,8 @@ export default {
       });
       console.log("res", result);
       this.list = [];
-      if (result.data !== null) this.list = result.data;
+      if ((result.code == 200) & (result.data !== null))
+        this.list = result.data;
       this.page.loading = false;
       return true;
     },

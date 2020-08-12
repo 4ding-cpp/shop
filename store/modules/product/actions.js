@@ -46,7 +46,7 @@ export default {
     let req = new app.prodpb.Product();
     if (condition !== null) req.setSelf(condition)
     let product = await app.grpcAxios(app.$axios, method, metadata, req, (err, resp) => {
-      const data = app.sqlpb.Response.deserializeBinary(resp);
+      const data = app.sqlpb.Response.deserializeBinary(resp.data);
       if (err !== null || data.getCode() != 0) {
         return { code: 0, data: `[${data.getCode()}] ${data.getMessage()} ` };
       }
@@ -68,7 +68,7 @@ export default {
     let req = new app.sqlpb.Query();
     if (condition !== null) req.addCondition(condition)
     let product = await app.grpcAxios(app.$axios, method, metadata, req, (err, resp) => {
-      const data = app.sqlpb.Response.deserializeBinary(resp);
+      const data = app.sqlpb.Response.deserializeBinary(resp.data);
       // todo:錯誤時候會跑兩次!?
       if (err !== null || data.getCode() != 0) {
         return { code: 0, data: `[${data.getCode()}] ${data.getMessage()} ` };
@@ -93,7 +93,7 @@ export default {
       if (err !== null) {
         return { code: 0, data: `[${data.getCode()}] ${data.getMessage()} ` };
       }
-      const data = app.sqlpb.Response.deserializeBinary(resp);
+      const data = app.sqlpb.Response.deserializeBinary(resp.data);
       return { code: 200, data: data.getResult().toJavaScript() };
     });
 
