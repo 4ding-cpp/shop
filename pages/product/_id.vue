@@ -164,7 +164,7 @@ export default {
     });
     let result = await store.dispatch("product/get_productDetail", {
       app: app,
-      token: store.state.other.token,
+      token: store.state.account.token,
       condition: cond
     });
     if (result.code === 200 ) {

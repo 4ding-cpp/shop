@@ -17,21 +17,23 @@ export default {
         let app = this.app
         let store = this.app.store
         let token = app.$cookies.get('4dingtoken');
+        console.log("cookie:", token)
         if (token == "" || token === undefined) {
-            // token = "customer-test";
             let resp = await store.dispatch("account/get_token");
-            console.log(">>>>檢查判定:",resp);
-            token = resp.data.token ;
-            // token = (token) ? token : 
+            token = resp.data.token;
+            // token = "customer-test";
+        } else {
+            await store.commit('account/set_token', { token: token, t: false })
+            let resp = await store.dispatch("account/whoAmI");
+            console.log(">>>>身分檢查判定:", resp);
         }
-
-        await store.commit('account/set_token', token)
         // 首頁相關
         let result = await store.dispatch("web/get_website", {
             token: token,
             condition: null
         });
-        if (result.data && result.data.length !== 0) {
+        console.log(">>",result.data)
+        if (result.data !== null && result.data.length !== 0) {
             // 搜尋該分類的產品列表
             await store.dispatch("web/init_layout", {
                 token: token,
@@ -49,7 +51,7 @@ export default {
      */
     storage_init(context) {
         let cart = JSON.parse(localStorage.getItem("cart"));
-        if(cart === null ) return ;
+        if (cart === null) return;
         context.commit("cart/set_cart", cart)
     },
     /**
@@ -59,7 +61,7 @@ export default {
     async check_init(context) {
         let store = this.app.store.state
         switch (true) {
-            case (store.other.token !== ""):
+            case (store.account.token !== ""):
                 console.log("檢查判定非首次!")
                 return true;
         }

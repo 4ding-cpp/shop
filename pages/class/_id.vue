@@ -52,7 +52,7 @@ export default {
 
     let result = await store.dispatch("product/get_product", {
       app: app,
-      token: store.state.other.token,
+      token: store.state.account.token,
       condition: cond
     });
 

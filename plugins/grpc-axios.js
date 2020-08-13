@@ -5,10 +5,17 @@ import sqlpb from '@/assets/shoppb/sql_pb'
  * @param {*} err 
  * @param {*} resp 
  */
-function gRPC_callback(err, resp) {
+async function gRPC_callback(err, resp) {
+  let store = $nuxt.$store ;
+  let nowTime = new Date().getTime()/1000;
+  let lastTime = store.state.account.token_time ;
 
   // 檢查錯誤 grpc-status
   if (err !== null) {
+    // token過期 自動重新更新
+    if(err['grpc-status'] == 16 && nowTime - lastTime > 600 ) {
+      await store.dispatch("account/get_token")
+    }
     return { code: 0, data: `[${err['grpc-status']}] ${err['grpc-message']} ` };
   }
   const data = sqlpb.Response.deserializeBinary(resp.data);
@@ -16,7 +23,7 @@ function gRPC_callback(err, resp) {
   if (data.getCode() != 0) {
     return { code: 0, data: `[${data.getCode()}] ${data.getMessage()} ` };
   }
-  return { code: 200, data: data.getResult().toJavaScript() };
+  return { code: 200, data: data.getInsertId() };
 }
 
 export default function grpcAxios(axios, method, metadata, req, callback = gRPC_callback) {

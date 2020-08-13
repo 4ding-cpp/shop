@@ -52,6 +52,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    { src: "@/plugins/facebook", ssr: false },
     { src: "@/plugins/recaptcha", ssr: false },
     { src: "@/plugins/aos", ssr: false },
     { src: "@/components/index", ssr: true },

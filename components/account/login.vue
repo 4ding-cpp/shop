@@ -46,19 +46,16 @@
             </div>
             <div class="col-md-12 p-3">
               <label class="w-100 text-center" for>註冊電郵</label>
-              <input class="w-100" type="text" name placeholder="用戶名" />
+              <input class="w-100" v-model="form.name" type="text" name placeholder="用戶名" />
             </div>
             <div class="col-md-12 p-3">
-              <input class="w-100" type="text" name placeholder="電郵" />
+              <input class="w-100" v-model="form.email" type="text" name placeholder="電郵" />
             </div>
             <div class="col-md-12 p-3">
-              <input class="w-100" type="password" name placeholder="密碼" />
+              <input class="w-100" v-model="form.phone" type="text" name placeholder="電話" />
             </div>
             <div class="col-md-12 p-3">
-              <select class="w-100" name id>
-                <option value="man">男</option>
-                <option value="woman">女</option>
-              </select>
+              <input class="w-100" v-model="form.password" type="password" name placeholder="密碼" />
             </div>
             <div class="col-md-12 p-3">
               <button tag="button" @click="signUp" class="w-100 btn btn-outline-primary btn-sm">立即加入</button>
@@ -84,12 +81,13 @@ export default {
         loading: true,
       },
       tab: {
-        selected: 1,
+        selected: 0,
         list: [{ name: "註冊會員" }, { name: "會員登入" }],
       },
       form: {
         name: "gggg",
-        email: "0988123321",
+        phone: "0988123321",
+        email: "" ,
         password: "password",
         address: "",
       },
@@ -111,16 +109,19 @@ export default {
       await this.signCheck()
       let o = { ...this.form };
       let cond = Struct.fromJavaScript(o);
-      let result = await this.$store.dispatch("account/singIn", {
+      let result = await this.$store.dispatch("account/signIn", {
         condition: cond,
       });
       console.log(result);
     },
     signUp:async function () {
       await this.signCheck()
-      // let result = await this.$store.dispatch("freeback/get_Freeback", {
-      //   condition: cond,
-      // });
+      let o = { ...this.form };
+      let cond = Struct.fromJavaScript(o);
+      let result = await this.$store.dispatch("account/signUp", {
+        condition: cond,
+      });
+      console.log(result);
     },
     /**
      * 檢查驗證

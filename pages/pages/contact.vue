@@ -27,7 +27,7 @@ export default {
     cond.setF("page_id").setV(route.params.id);
     let result = await store.dispatch("web/get_WebPage", {
       app: app,
-      token: store.state.other.token,
+      token: store.state.account.token,
       condition: cond,
     });
     console.log("page>>>", result);

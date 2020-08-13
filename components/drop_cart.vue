@@ -102,7 +102,7 @@ export default {
 
       let result = await this.$store.dispatch("cart/get_completeCar", {
         app: this,
-        token: this.$store.state.other.token,
+        token: this.$store.state.account.token,
         condition: cond,
       });
 

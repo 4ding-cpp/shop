@@ -164,7 +164,7 @@ export default {
 
       let result = await this.$store.dispatch("cart/get_completeCar", {
         app: this,
-        token: this.$store.state.other.token,
+        token: this.$store.state.account.token,
         condition: cond,
       });
 
@@ -211,7 +211,7 @@ export default {
     this.loading(false);
     this.cart.list = this.$store.state.cart.content;
     await this.get_completeCar();
-    // let a =await this.get_findCar({token:this.$store.state.other.token})
+    // let a =await this.get_findCar({token:this.$store.state.account.token})
     // console.log(a)
   },
   beforeUpdate: function () {

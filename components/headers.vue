@@ -108,7 +108,7 @@
             </li>
           </ul>
         </div>
-        <modal name="login" width="40%" height="auto">
+        <modal name="login" width="500px" height="auto">
           <AccountLogin />
         </modal>
       </nav>
@@ -131,7 +131,7 @@ export default {
   watch: {
     "$store.state.web.style"(status) {
       console.log("watch header");
-      this.nav = this.get_headerNav();
+      // this.nav = this.get_headerNav();
     },
     // "$store.state.cart.content": {
     //   handler(val) {
@@ -155,7 +155,8 @@ export default {
     },
   },
   created() {
-    this.nav = this.get_headerNav();
+    let list = this.get_headerNav();
+     this.nav = (list !== null)? list : this.nav
   },
 };
 </script>

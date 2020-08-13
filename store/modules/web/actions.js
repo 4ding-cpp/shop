@@ -9,7 +9,7 @@ export default {
     let req = new app.sqlpb.Query();
     if (condition !== null) req.addCondition(condition)
     // let product = await app.grpcFetch(method, metadata, req, (err, resp) => {
-    let product = await app.grpcAxios(app.$axios, method, metadata, req, (err, resp) => {
+    let result = await app.grpcAxios(app.$axios, method, metadata, req, (err, resp) => {
       // todo:錯誤時候會跑兩次!?
       if (err !== null) {
         return { code: 0, data: `[${data.getCode()}] ${data.getMessage()} ` };
@@ -19,7 +19,7 @@ export default {
       context.commit("set_style", data.getResult().toJavaScript());
       return { code: 200, data: data.getResult().toJavaScript() };
     });
-    return product;
+    return result;
   },
 
   /**
@@ -101,7 +101,7 @@ export default {
     cond.setF('product_id').setO(5).setSList(product)
     let response = await store.dispatch("product/get_product", {
       app: app,
-      token: store.state.other.token,
+      token: store.state.account.token,
       condition: cond
     });
     return response;
