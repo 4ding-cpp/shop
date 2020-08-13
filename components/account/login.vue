@@ -42,7 +42,11 @@
           <!-- 註冊 -->
           <div v-if="tab.selected == 0" class="tab_content">
             <div class="col-md-12 p-3">
-              <button tag="button" class="w-100 btn btn-outline-primary btn-sm">使用FACEBOOK登入</button>
+              <button
+                tag="button"
+                @click="FBLogin"
+                class="w-100 btn btn-outline-primary btn-sm"
+              >使用FACEBOOK登入</button>
             </div>
             <div class="col-md-12 p-3">
               <label class="w-100 text-center" for>註冊電郵</label>
@@ -87,7 +91,7 @@ export default {
       form: {
         name: "gggg",
         phone: "0988123321",
-        email: "" ,
+        email: "",
         password: "password",
         address: "",
       },
@@ -106,7 +110,7 @@ export default {
       _store: "_store",
     }),
     signIn: async function () {
-      await this.signCheck()
+      await this.signCheck();
       let o = { ...this.form };
       let cond = Struct.fromJavaScript(o);
       let result = await this.$store.dispatch("account/signIn", {
@@ -114,8 +118,8 @@ export default {
       });
       console.log(result);
     },
-    signUp:async function () {
-      await this.signCheck()
+    signUp: async function () {
+      await this.signCheck();
       let o = { ...this.form };
       let cond = Struct.fromJavaScript(o);
       let result = await this.$store.dispatch("account/signUp", {
@@ -135,6 +139,35 @@ export default {
           return token;
         });
     },
+    FBinit: function () {
+      FB.init({
+        appId: "364143314072504",
+        autoLogAppEvents: true,
+        xfbml: true,
+        version: "v8.0",
+      });
+    },
+    FBLogin: async function () {
+      FB.login(
+        (response) => {
+          console.log(response);
+          if (response.authResponse) {
+            console.log("Welcome!  Fetching your information.... ");
+            FB.api("/me", function (response) {
+              console.log(response);
+              console.log("Good to see you, " + response.name + ".");
+            });
+          } else {
+            console.log("User cancelled login or did not fully authorize.");
+          }
+        },
+        {
+          scope: "email,user_likes",
+          return_scopes: true,
+        }
+      );
+    },
+    FBLogout: async function () {},
   },
   //BEGIN--生命週期
   beforeCreate: function () {
@@ -148,6 +181,7 @@ export default {
   },
   mounted: async function () {
     //元素已掛載， el 被建立。
+    this.FBinit()
   },
   beforeUpdate: function () {
     //當資料變化時被呼叫，還不會描繪 View。
