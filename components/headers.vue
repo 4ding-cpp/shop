@@ -7,7 +7,7 @@
           <div class="navbar-collapse justify-content-end collapse">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <nuxt-link tag="a" class="nav-link" to="/test">test</nuxt-link>
+                <nuxt-link tag="a" class="nav-link" to="/test">testtt</nuxt-link>
               </li>
               <li class="nav-item">
                 <nuxt-link tag="a" class="nav-link" to="/account/">訂單查詢</nuxt-link>
