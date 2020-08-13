@@ -23,13 +23,28 @@ steps:
     - 'latest'
     - '0.0.0'
     dockerfile: drone-ci/Dockerfile
-# - name: deploy-shop-client
-#   image: danielgormly/drone-plugin-kube
-#   settings:
-#     ca:
-#       from_secret: k8s_ca
-#     server:
-#       from_secret: k8s_master
-#     template: drone-ci/deployment.yaml
-#     token:
-#       from_secret: k8s_token
+- name: git-clone-charts
+  image: alpine/git
+  environment:
+    GIT_USERNAME:
+      from_secret: git_username
+    GIT_PASSWORD:
+      from_secret: git_password
+  commands:
+  - git clone https://$GIT_USERNAME:$GIT_PASSWORD@github.com/4ding-cpp/charts.git
+- name: helm-upgrade
+  image: pelotech/drone-helm3
+  environment:
+    KUBE_API_SERVER:
+      from_secret: kube_api_server
+    KUBE_TOKEN:
+      from_secret: kube_token
+    KUBE_CERTIFICATE:
+      from_secret: kube_ca
+  settings:
+    mode: upgrade
+    chart: ./charts/business
+    namespace: test
+    release: test
+    values:
+    - "enable.web1=true"
