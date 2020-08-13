@@ -47,4 +47,4 @@ steps:
     namespace: test
     release: test
     values:
-    - "enable.web1=true"
+    - enable.web1=true
