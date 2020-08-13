@@ -19,14 +19,25 @@
           <!-- 登入 -->
           <div v-if="tab.selected == 1" class="tab_content">
             <div class="col-md-12 p-3">
-              <button tag="button" class="w-100 btn btn-outline-primary btn-sm">使用FACEBOOK登入</button>
+              <button
+                tag="button"
+                @click="FBsignIn"
+                class="w-100 btn btn-outline-primary btn-sm"
+              >使用FACEBOOK登入</button>
             </div>
             <div class="col-md-12 p-3">
               <label class="w-100 text-center" for>登入電郵</label>
-              <input class="w-100" v-model="form.email" type="text" name placeholder="電郵" />
+              <input
+                class="w-100 form-control"
+                :class="{'is-invalid': validation.hasError('login.account')}"
+                v-model="login.account"
+                type="text"
+                name
+                placeholder="請輸入電郵或是電話"
+              />
             </div>
             <div class="col-md-12 p-3">
-              <input class="w-100" v-model="form.password" type="text" name placeholder="密碼" />
+              <input class="w-100" v-model="form.password" type="text" name placeholder="請輸入密碼" />
             </div>
             <div class="col-md-12 p-3">
               <button tag="button" @click="signIn" class="w-100 btn btn-outline-primary btn-sm">登入</button>
@@ -41,29 +52,11 @@
           </div>
           <!-- 註冊 -->
           <div v-if="tab.selected == 0" class="tab_content">
-            <div class="col-md-12 p-3">
-              <button
-                tag="button"
-                @click="FBLogin"
-                class="w-100 btn btn-outline-primary btn-sm"
-              >使用FACEBOOK登入</button>
-            </div>
-            <div class="col-md-12 p-3">
-              <label class="w-100 text-center" for>註冊電郵</label>
-              <input class="w-100" v-model="form.name" type="text" name placeholder="用戶名" />
-            </div>
-            <div class="col-md-12 p-3">
-              <input class="w-100" v-model="form.email" type="text" name placeholder="電郵" />
-            </div>
-            <div class="col-md-12 p-3">
-              <input class="w-100" v-model="form.phone" type="text" name placeholder="電話" />
-            </div>
-            <div class="col-md-12 p-3">
-              <input class="w-100" v-model="form.password" type="password" name placeholder="密碼" />
-            </div>
-            <div class="col-md-12 p-3">
-              <button tag="button" @click="signUp" class="w-100 btn btn-outline-primary btn-sm">立即加入</button>
-            </div>
+            <AccountRegister
+              :signCheck="signCheck"
+              :fb_accesstoken.sync="fb_accesstoken"
+              :FBLogin="FBLogin"
+            />
           </div>
         </div>
       </div>
@@ -88,12 +81,26 @@ export default {
         selected: 0,
         list: [{ name: "註冊會員" }, { name: "會員登入" }],
       },
-      form: {
-        name: "gggg",
-        phone: "0988123321",
+      // email or phone
+      login: {
+        account: "",
+      },
+      // 註冊
+      registered: {
+        name: "",
+        phone: "",
         email: "",
-        password: "password",
+        password: "",
+      },
+      fb_accesstoken: "",
+      //
+      form: {
+        name: "",
+        phone: "",
+        email: "",
+        password: "",
         address: "",
+        fb_accesstoken: "",
       },
     };
   },
@@ -103,41 +110,75 @@ export default {
   computed: {
     //相依的資料改變時才做計算方法
   },
+  validators: {
+    /**
+     * 檢查登入是輸入電郵或是電話
+     */
+    "login.account": function (value) {
+      if (value.indexOf("@") > -1) {
+        this.form.email = value;
+        this.form.phone = "";
+        return this.Validator.value(value)
+          .required("請輸入電郵或是電話")
+          .email("請確認電郵");
+      } else {
+        this.form.email = "";
+        this.form.phone = value;
+        return this.Validator.value(value)
+          .required("請輸入電郵或是電話")
+          .length(10);
+      }
+    },
+    /**
+     * 檢查密碼
+     */
+    "form.password": function (value) {
+      return this.Validator.value(value).required("請確認密碼").length(10);
+    },
+  },
   methods: {
     // 初始
     ...mapActions({
       loading: "loading",
       _store: "_store",
     }),
+    // 檢查表單
+    submit: async function () {
+      return this.$validate().then((success, e) => {
+        return { res: success, message: this.validation.allErrors() };
+      });
+    },
     signIn: async function () {
-      await this.signCheck();
-      let o = { ...this.form };
+      let err = await this.submit();
+      if (!err.res) {
+        alert("form error:\n" + err.message.join("\n"));
+        return;
+      }
+      this.form.address = await this.signCheck();
+      let o = { ...this.form, ...this.fb_accesstoken };
       let cond = Struct.fromJavaScript(o);
       let result = await this.$store.dispatch("account/signIn", {
         condition: cond,
       });
       console.log(result);
+      if(result.code === 200) alert("登入成功")
     },
-    signUp: async function () {
-      await this.signCheck();
-      let o = { ...this.form };
-      let cond = Struct.fromJavaScript(o);
-      let result = await this.$store.dispatch("account/signUp", {
-        condition: cond,
-      });
-      console.log(result);
-    },
+
     /**
      * 檢查驗證
      */
     signCheck: async function () {
-      this.form.address = await grecaptcha
+      // return "4654568489494"
+      let resp = await grecaptcha
         .execute("6LebxbwZAAAAAJjTCvRT7eBHfrlaxnJVbaDz401q", {
           action: "signCheck",
         })
         .then(function (token) {
+          console.log("token:",token)
           return token;
         });
+        console.log("resp",resp)
+      return resp;
     },
     FBinit: function () {
       FB.init({
@@ -148,15 +189,12 @@ export default {
       });
     },
     FBLogin: async function () {
+      // this.fb_accesstoken = "AAA"+new Date().getTime();
+      // return ;
       FB.login(
         (response) => {
-          console.log(response);
           if (response.authResponse) {
-            console.log("Welcome!  Fetching your information.... ");
-            FB.api("/me", function (response) {
-              console.log(response);
-              console.log("Good to see you, " + response.name + ".");
-            });
+            this.fb_accesstoken = response.authResponse.accessToken;
           } else {
             console.log("User cancelled login or did not fully authorize.");
           }
@@ -167,7 +205,16 @@ export default {
         }
       );
     },
-    FBLogout: async function () {},
+    FBsignIn: async function () {
+      await this.FBLogin();
+      this.registered.address = await this.signCheck();
+      let o = { ...this.fb_accesstoken };
+      let cond = Struct.fromJavaScript(o);
+      let result = await this.$store.dispatch("account/signIn", {
+        condition: cond,
+      });
+      if(result.code === 200) alert("登入成功")
+    },
   },
   //BEGIN--生命週期
   beforeCreate: function () {
@@ -181,7 +228,7 @@ export default {
   },
   mounted: async function () {
     //元素已掛載， el 被建立。
-    this.FBinit()
+    this.FBinit();
   },
   beforeUpdate: function () {
     //當資料變化時被呼叫，還不會描繪 View。

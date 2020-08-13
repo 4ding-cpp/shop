@@ -17,11 +17,11 @@ export default {
         let app = this.app
         let store = this.app.store
         let token = app.$cookies.get('4dingtoken');
+        token = "customer-test";
         console.log("cookie:", token)
         if (token == "" || token === undefined) {
             let resp = await store.dispatch("account/get_token");
             token = resp.data.token;
-            // token = "customer-test";
         } else {
             await store.commit('account/set_token', { token: token, t: false })
             let resp = await store.dispatch("account/whoAmI");
@@ -32,8 +32,8 @@ export default {
             token: token,
             condition: null
         });
-        console.log(">>",result.data)
-        if (result.data !== null && result.data.length !== 0) {
+        console.log(">>",typeof null ,result.data)
+        if ( result.data !== undefined && result.data.length !== 0) {
             // 搜尋該分類的產品列表
             await store.dispatch("web/init_layout", {
                 token: token,

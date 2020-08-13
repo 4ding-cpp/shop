@@ -92,14 +92,18 @@ export default {
   axios: {
     // prefix: process.env.API_URL,
     proxy: true,
-    prefix: '/api',
-    credentials: true,
+    // prefix: '/api',
+    // credentials: true,
   },
   proxy: {
     '/static': {
       target: 'https://4ding.store',
       changeOrigin: true,
-    }
+    },
+    // '/ding4.ShopRPC': {
+    //   target: 'https://4ding.store/ding4.ShopRPC',
+    //   changeOrigin: true,
+    // },
   },
   /*
   ** Build configuration

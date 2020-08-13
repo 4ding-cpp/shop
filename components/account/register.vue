@@ -5,7 +5,7 @@
         tag="button"
         @click="FBsignUp()"
         class="w-100 btn btn-outline-primary btn-sm"
-      >使用FACEBOOK註冊{{fb_accesstoken}}</button>
+      >使用FACEBOOK註冊</button>
     </div>
     <div class="col-md-12 p-3">
       <label class="w-100 text-center" for>註冊電郵</label>
@@ -40,7 +40,6 @@ export default {
     signCheck: {
       type: Function,
       default: function () {
-        console.log(33333333333)
         return;
       },
     },
@@ -57,8 +56,8 @@ export default {
       // 註冊
       registered: {
         name: "",
-        phone: "",
-        email: "",
+        phone: "0922222222",
+        email: "xx@gmail.com",
         password: "",
         address: "",
       },
@@ -75,7 +74,16 @@ export default {
      * 檢查登入是輸入電郵或是電話
      */
     "registered.phone": function (value) {
-      return this.Validator.value(value).required("請輸入GG");
+      return this.Validator.value(value).required("請輸入電話").length(10);
+    },
+    "registered.email": function (value) {
+      return this.Validator.value(value)
+        .required("請輸入電郵")
+        .email("請確認電郵");
+    },
+    "registered.password": function (value) {
+      return this.Validator.value(value)
+        .required("請輸入密碼")
     },
   },
   methods: {
@@ -104,14 +112,11 @@ export default {
       let result = await this.$store.dispatch("account/signUp", {
         condition: cond,
       });
-      console.log(result);
     },
     FBsignUp: async function () {
       await this.FBLogin();
-      console.log(123213)
       this.registered.address = await this.signCheck();
       let o = { ...this.registered, ...this.fb_accesstoken };
-      console.log(123213)
       let cond = Struct.fromJavaScript(o);
       let result = await this.$store.dispatch("account/signUp", {
         condition: cond,

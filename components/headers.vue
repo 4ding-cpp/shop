@@ -3,11 +3,11 @@
     <div class="nav-wrapper">
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-          <nuxt-link tag="a" class="navbar-brand" to="/">首頁xx</nuxt-link>
+          <nuxt-link tag="a" class="navbar-brand" to="/">首頁</nuxt-link>
           <div class="navbar-collapse justify-content-end collapse">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <nuxt-link tag="a" class="nav-link" to="/test">testtt</nuxt-link>
+                <nuxt-link tag="a" class="nav-link" to="/test">testx</nuxt-link>
               </li>
               <li class="nav-item">
                 <nuxt-link tag="a" class="nav-link" to="/account/">訂單查詢</nuxt-link>
