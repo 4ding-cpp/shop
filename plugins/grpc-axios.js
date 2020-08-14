@@ -15,6 +15,7 @@ async function gRPC_callback(err, resp) {
     // token過期 自動重新更新
     if (err['grpc-status'] == 16 && nowTime - lastTime > 600) {
       await store.dispatch("account/get_token")
+      await store.dispatch("account/whoAmI")
     }
     return { code: 0, data: `[${err['grpc-status']}] ${err['grpc-message']} ` };
   }
