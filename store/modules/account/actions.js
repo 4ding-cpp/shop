@@ -62,7 +62,7 @@ export default {
     return res;
   },
   /**
-   * 初次新增對話內容(目前暫時沒有區分append)
+   * 會員資料
    * @param {*} context 
    * @param {*} param1 
    */

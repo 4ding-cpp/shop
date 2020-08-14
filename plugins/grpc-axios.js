@@ -24,7 +24,9 @@ async function gRPC_callback(err, resp) {
   if (data.getCode() != 0) {
     return { code: 0, data: `[${data.getCode()}] ${data.getMessage()} ` };
   }
-  return { code: 200, data: data.getResult().toJavaScript() };
+  let res = data.getResult() ;
+
+  return { code: 200, data: (res === undefined)? res.getAffectRow() : res.toJavaScript() };
 }
 
 export default function grpcAxios(axios, method, metadata, req, callback = gRPC_callback) {
