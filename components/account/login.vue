@@ -160,8 +160,13 @@ export default {
       let result = await this.$store.dispatch("account/signIn", {
         condition: cond,
       });
-      console.log(result);
-      if(result.code === 200) alert("登入成功")
+      if(result.code === 200) { 
+        await store.dispatch("account/whoAmI");
+        this.$toast.success("登入成功");
+        this.$modal.hide("login");
+      }else{
+        this.$toast.success(`${result.data} 登入失敗`);
+      }
     },
 
     /**
@@ -215,7 +220,15 @@ export default {
       let result = await this.$store.dispatch("account/signIn", {
         condition: cond,
       });
-      if(result.code === 200) alert("登入成功")
+      
+      if(result.code === 200) { 
+        await store.dispatch("account/whoAmI");
+        this.$toast.success("FB登入成功");
+        this.$modal.hide("login");
+      }else{
+        this.$toast.success(`${result.data} FB登入失敗`);
+      }
+     
     },
   },
   //BEGIN--生命週期

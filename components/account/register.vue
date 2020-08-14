@@ -112,9 +112,12 @@ export default {
       let result = await this.$store.dispatch("account/signUp", {
         condition: cond,
       });
-      if(result.code === 200) {
-        alert("註冊成功")
-        // await this.$store.dispatch("account/signUp", {})
+      if(result.code === 200) { 
+        await store.dispatch("account/whoAmI");
+        this.$toast.success("註冊成功");
+        this.$modal.hide("login");
+      }else{
+        this.$toast.success(`${result.data} 註冊失敗!!`);
       }
     },
     FBsignUp: async function () {
@@ -125,9 +128,12 @@ export default {
       let result = await this.$store.dispatch("account/signUp", {
         condition: cond,
       });
-      if(result.code === 200) {
-        alert("FB註冊成功")
-        // await this.$store.dispatch("account/signUp", {})
+      if(result.code === 200) { 
+        await store.dispatch("account/whoAmI");
+        this.$toast.success("FB註冊成功");
+        this.$modal.hide("login");
+      }else{
+        this.$toast.success(`${result.data} FB註冊失敗!!`);
       }
     },
   },
