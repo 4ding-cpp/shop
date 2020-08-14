@@ -142,7 +142,7 @@ export default {
     },
     "$store.state.account.user"(to, from) {
       console.log("watch", to, from);
-      this.user = { ...$store.state.account.user };
+      this.user = { ...to };
     },
   },
   methods: {
