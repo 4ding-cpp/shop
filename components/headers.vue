@@ -31,41 +31,34 @@
                     <span class="badge badge-primary badge-pill">{{cart_total}}</span>
                   </a>
                   <DropCart :active.sync="active" :count.sync="cart_total" />
-                  <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                </div>
+              </li>
+              <li class="nav-item">
+                <div class="dropdown">
+                  <a
+                    class="nav-link"
+                    role="button"
+                    id="memberMenu"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >會員專區</a>
+
+                  <div class="dropdown-menu" aria-labelledby="memberMenu">
                     <div class="cart-content">
-                      <div class="cart_list">
-                        <div class="product_item">
-                          <div class="float-left">
-                            <img src="/images/noprod.png" alt />
-                          </div>
-                          <div class="product-name">
-                            <p class="title">
-                              <a href="/products/mb-041">MB-041 奧本水洗式電動鼻毛刀</a>
-                            </p>
-                            <span class="price">
-                              NT$489元
-                              <span class="color-gray-text">*1</span>
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="color-gray-text text-right mb-2">
-                        總計:
-                        <span class="price">489</span>
+                      <div class="buttons mb-2" @click="login">
+                        <a class="btn btn-primary btn-block btn-cart">會員登入</a>
                       </div>
                       <div class="buttons">
                         <nuxt-link
                           tag="a"
                           class="btn btn-primary btn-block btn-cart"
-                          :to="`/cart/step1`"
-                        >立即結帳</nuxt-link>
+                          to="/account/"
+                        >訂單查詢</nuxt-link>
                       </div>
                     </div>
-                  </div>-->
+                  </div>
                 </div>
-              </li>
-              <li class="nav-item" @click="login">
-                <a class="nav-link" href="#">登入會員</a>
               </li>
               <li class="nav-item" @click="logout">
                 <a class="nav-link" href="#">登出</a>
@@ -141,7 +134,6 @@ export default {
       this.nav = this.get_headerNav();
     },
     "$store.state.account.user"(to, from) {
-      console.log("watch", to, from);
       this.user = { ...to };
     },
   },
@@ -168,6 +160,12 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+a.btn {
+  color: white;
+  &:hover {
+    color: white;
+  }
+}
 .logo {
   height: 50px;
 }

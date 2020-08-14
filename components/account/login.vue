@@ -78,7 +78,7 @@ export default {
         loading: true,
       },
       tab: {
-        selected: 0,
+        selected: 1,
         list: [{ name: "註冊會員" }, { name: "會員登入" }],
       },
       // email or phone
@@ -160,11 +160,11 @@ export default {
       let result = await this.$store.dispatch("account/signIn", {
         condition: cond,
       });
-      if(result.code === 200) { 
+      if (result.code === 200) {
         await this.$store.dispatch("account/whoAmI");
         this.$toast.success("登入成功");
         this.$modal.hide("login");
-      }else{
+      } else {
         this.$toast.success(`${result.data} 登入失敗`);
       }
     },
@@ -179,11 +179,12 @@ export default {
           action: "signCheck",
         })
         .then(function (token) {
-          console.log("token:",token)
+          console.log("token:", token);
           return token;
-        }).catch((err)=>{
-          console.log("err,",err)
-          return ""
+        })
+        .catch((err) => {
+          console.log("err,", err);
+          return "";
         });
       return resp;
     },
@@ -220,15 +221,14 @@ export default {
       let result = await this.$store.dispatch("account/signIn", {
         condition: cond,
       });
-      
-      if(result.code === 200) { 
+
+      if (result.code === 200) {
         await this.$store.dispatch("account/whoAmI");
         this.$toast.success("FB登入成功");
         this.$modal.hide("login");
-      }else{
+      } else {
         this.$toast.success(`${result.data} FB登入失敗`);
       }
-     
     },
   },
   //BEGIN--生命週期
