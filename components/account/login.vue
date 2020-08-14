@@ -161,7 +161,7 @@ export default {
         condition: cond,
       });
       if(result.code === 200) { 
-        await store.dispatch("account/whoAmI");
+        await this.$store.dispatch("account/whoAmI");
         this.$toast.success("登入成功");
         this.$modal.hide("login");
       }else{
@@ -222,7 +222,7 @@ export default {
       });
       
       if(result.code === 200) { 
-        await store.dispatch("account/whoAmI");
+        await this.$store.dispatch("account/whoAmI");
         this.$toast.success("FB登入成功");
         this.$modal.hide("login");
       }else{

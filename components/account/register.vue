@@ -113,7 +113,7 @@ export default {
         condition: cond,
       });
       if(result.code === 200) { 
-        await store.dispatch("account/whoAmI");
+        await this.$store.dispatch("account/whoAmI");
         this.$toast.success("註冊成功");
         this.$modal.hide("login");
       }else{
@@ -129,7 +129,7 @@ export default {
         condition: cond,
       });
       if(result.code === 200) { 
-        await store.dispatch("account/whoAmI");
+        await this.$store.dispatch("account/whoAmI");
         this.$toast.success("FB註冊成功");
         this.$modal.hide("login");
       }else{
