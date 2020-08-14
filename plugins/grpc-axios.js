@@ -25,7 +25,7 @@ async function gRPC_callback(err, resp) {
     return { code: 0, data: `[${data.getCode()}] ${data.getMessage()} ` };
   }
   let res = data.getResult() ;
-
+console.log("Res:",res,res.getAffectRow())
   return { code: 200, data: (res === undefined)? res.getAffectRow() : res.toJavaScript() };
 }
 
