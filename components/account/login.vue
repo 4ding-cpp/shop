@@ -176,8 +176,10 @@ export default {
         .then(function (token) {
           console.log("token:",token)
           return token;
+        }).catch((err)=>{
+          console.log("err,",err)
+          return ""
         });
-        console.log("resp",resp)
       return resp;
     },
     FBinit: function () {

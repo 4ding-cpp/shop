@@ -112,6 +112,10 @@ export default {
       let result = await this.$store.dispatch("account/signUp", {
         condition: cond,
       });
+      if(result.code === 200) {
+        alert("註冊成功")
+        // await this.$store.dispatch("account/signUp", {})
+      }
     },
     FBsignUp: async function () {
       await this.FBLogin();
@@ -121,6 +125,10 @@ export default {
       let result = await this.$store.dispatch("account/signUp", {
         condition: cond,
       });
+      if(result.code === 200) {
+        alert("FB註冊成功")
+        // await this.$store.dispatch("account/signUp", {})
+      }
     },
   },
   //BEGIN--生命週期

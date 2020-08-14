@@ -33,7 +33,7 @@ export default {
     if (condition !== null) req.setSelf(condition)
 
     let res = await app.grpcAxios(app.$axios, method, metadata, req);
-    console.log("signUp",res)
+    console.log("signUp", res)
     return res;
   },
   /**
@@ -73,6 +73,17 @@ export default {
     let req = new app.sqlpb.Query();
     // if (condition !== null) req.setSelf(condition)
     let res = await app.grpcAxios(app.$axios, method, metadata, req);
+    if (res.code === 200) context.commit("set_user", res.data[0]);
     return res;
+  },
+
+  /**
+   * 初次新增對話內容(目前暫時沒有區分append)
+   * @param {*} context 
+   * @param {*} param1 
+   */
+  async logout(context) {
+    context.commit("set_token", {token:"",t:false});
+    context.commit("set_user", {});
   },
 }

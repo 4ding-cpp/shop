@@ -6,14 +6,14 @@ import sqlpb from '@/assets/shoppb/sql_pb'
  * @param {*} resp 
  */
 async function gRPC_callback(err, resp) {
-  let store = $nuxt.$store ;
-  let nowTime = new Date().getTime()/1000;
-  let lastTime = store.state.account.token_time ;
+  let store = $nuxt.$store;
+  let nowTime = new Date().getTime() / 1000;
+  let lastTime = store.state.account.token_time;
 
   // 檢查錯誤 grpc-status
   if (err !== null) {
     // token過期 自動重新更新
-    if(err['grpc-status'] == 16 && nowTime - lastTime > 600 ) {
+    if (err['grpc-status'] == 16 && nowTime - lastTime > 600) {
       await store.dispatch("account/get_token")
     }
     return { code: 0, data: `[${err['grpc-status']}] ${err['grpc-message']} ` };
@@ -23,7 +23,7 @@ async function gRPC_callback(err, resp) {
   if (data.getCode() != 0) {
     return { code: 0, data: `[${data.getCode()}] ${data.getMessage()} ` };
   }
-  return { code: 200, data: data.getInsertId() };
+  return { code: 200, data: data.getResult().toJavaScript() };
 }
 
 export default function grpcAxios(axios, method, metadata, req, callback = gRPC_callback) {

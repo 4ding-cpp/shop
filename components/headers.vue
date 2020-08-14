@@ -7,9 +7,12 @@
           <div class="navbar-collapse justify-content-end collapse">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <nuxt-link tag="a" class="nav-link" to="/test">testx</nuxt-link>
+                <nuxt-link tag="a" class="nav-link" to="/test">
+                  <span v-if="!user.name">尚未登入!!</span>
+                  <span v-if="user.name">歡迎回來,{{user.name}}!!</span>
+                </nuxt-link>
               </li>
-              <li class="nav-item">
+              <li class="nav-item" v-if="user.name">
                 <nuxt-link tag="a" class="nav-link" to="/account/">訂單查詢</nuxt-link>
               </li>
               <li class="nav-item">
@@ -63,6 +66,9 @@
               </li>
               <li class="nav-item" @click="login">
                 <a class="nav-link" href="#">登入會員</a>
+              </li>
+              <li class="nav-item" @click="logout">
+                <a class="nav-link" href="#">登出</a>
               </li>
             </ul>
           </div>
@@ -125,23 +131,18 @@ export default {
       active: false,
       nav: [],
       cart_total: 0, //購物車數量
+      user: {},
     };
   },
   // 監聽,當路由發生變化的時候執行
   watch: {
     "$store.state.web.style"(status) {
       console.log("watch header");
-      // this.nav = this.get_headerNav();
+      this.nav = this.get_headerNav();
     },
-    // "$store.state.cart.content": {
-    //   handler(val) {
-    //     this.cart_total = 0 ;
-    //     for (let i in val) {
-    //       this.cart_total += Number(val[i].count)
-    //     }
-    //   },
-    //   deep: true,
-    // },
+    "$store.state.account.user"(to, from) {
+      console.log("watch", to, from);
+    },
   },
   methods: {
     ...mapGetters({
@@ -151,12 +152,16 @@ export default {
       this.active = !this.active;
     },
     login: function () {
-      this.$modal.show("login")
+      this.$modal.show("login");
+    },
+    logout: function () {
+      this.$store.dispatch("account/logout");
     },
   },
   created() {
     let list = this.get_headerNav();
-     this.nav = (list !== null)? list : this.nav
+    this.nav = list !== null ? list : this.nav;
+    this.user = this.$store.state.account.user;
   },
 };
 </script>

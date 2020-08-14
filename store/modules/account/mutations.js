@@ -18,6 +18,9 @@ export default {
       maxAge: 60 * 60 * 24 * 7
     })
   },
+  set_user(state, o) {
+    state.user = o
+  },
   set_test(state, o) {
     state.test = o
   },

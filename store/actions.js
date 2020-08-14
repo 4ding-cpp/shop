@@ -17,7 +17,7 @@ export default {
         let app = this.app
         let store = this.app.store
         let token = app.$cookies.get('4dingtoken');
-        // token = "customer-test";
+        // token = "21bb828bb98ff950c843bd8a361b8d13544d1265d17b88025f65a57f79fbf688";
         console.log("cookie:", token)
         if (token == "" || token === undefined) {
             let resp = await store.dispatch("account/get_token");

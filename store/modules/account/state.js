@@ -5,5 +5,6 @@ export default {
   token: '',
   // token 最後更新時間
   token_time: 0 ,
+  user:{},
   test: '',
 }
