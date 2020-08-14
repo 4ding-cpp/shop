@@ -32,7 +32,6 @@ steps:
       from_secret: git_password
   commands:
   - git clone https://$GIT_USERNAME:$GIT_PASSWORD@github.com/4ding-cpp/charts.git
-  - ls -la
 - name: helm-upgrade
   image: pelotech/drone-helm3
   environment:
@@ -47,5 +46,3 @@ steps:
     chart: ./charts/business
     namespace: test
     release: test
-    values:
-    - enable.web1=true
