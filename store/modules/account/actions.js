@@ -84,6 +84,7 @@ export default {
    */
   async logout(context) {
     let app = this.app
+    context.commit("set_token", { token: "", t: false })
     await app.store.dispatch("account/get_token")
     context.commit("set_user", {});
   },
