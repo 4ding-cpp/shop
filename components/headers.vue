@@ -157,6 +157,7 @@ export default {
     },
     logout: function () {
       this.$store.dispatch("account/logout");
+      this.$toast.success(`登出成功`);
     },
   },
   created() {
