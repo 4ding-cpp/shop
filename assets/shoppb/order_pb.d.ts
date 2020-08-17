@@ -35,14 +35,14 @@ export class Order extends jspb.Message {
   getCouponId(): string;
   setCouponId(value: string): void;
 
-  getCount(): number;
-  setCount(value: number): void;
+  getAmount(): number;
+  setAmount(value: number): void;
 
   getFreight(): number;
   setFreight(value: number): void;
 
-  getAmount(): number;
-  setAmount(value: number): void;
+  getPrice(): number;
+  setPrice(value: number): void;
 
   getOrderCharge(): number;
   setOrderCharge(value: number): void;
@@ -171,9 +171,9 @@ export namespace Order {
     isCustomer: boolean,
     carId: string,
     couponId: string,
-    count: number,
-    freight: number,
     amount: number,
+    freight: number,
+    price: number,
     orderCharge: number,
     salesCharge: number,
     paymentCharge: number,

@@ -47,8 +47,8 @@ export class Car extends jspb.Message {
   getAmount(): number;
   setAmount(value: number): void;
 
-  getCount(): number;
-  setCount(value: number): void;
+  getPrice(): number;
+  setPrice(value: number): void;
 
   getOperator(): string;
   setOperator(value: string): void;
@@ -99,7 +99,7 @@ export namespace Car {
     goodsList: Array<product$goods_pb.ProductGoods.AsObject>,
     isFreeShipping: boolean,
     amount: number,
-    count: number,
+    price: number,
     operator: string,
     createAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
     updateAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
@@ -113,8 +113,8 @@ export class Buy extends jspb.Message {
   getSku(): string;
   setSku(value: string): void;
 
-  getCount(): number;
-  setCount(value: number): void;
+  getAmount(): number;
+  setAmount(value: number): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Buy.AsObject;
@@ -127,7 +127,7 @@ export class Buy extends jspb.Message {
 export namespace Buy {
   export type AsObject = {
     sku: string,
-    count: number,
+    amount: number,
   }
 }
 

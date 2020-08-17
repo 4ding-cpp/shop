@@ -91,8 +91,8 @@ proto.ding4.ProductGoods.toObject = function(includeInstance, msg) {
     name: (f = msg.getName()) && google_protobuf_struct_pb.Value.toObject(includeInstance, f),
     urn: jspb.Message.getFieldWithDefault(msg, 8, ""),
     sku: jspb.Message.getFieldWithDefault(msg, 9, ""),
+    original: jspb.Message.getFieldWithDefault(msg, 11, 0),
     price: jspb.Message.getFieldWithDefault(msg, 10, 0),
-    reduce: jspb.Message.getFieldWithDefault(msg, 11, 0),
     weight: jspb.Message.getFloatingPointFieldWithDefault(msg, 12, 0.0),
     volume: jspb.Message.getFloatingPointFieldWithDefault(msg, 13, 0.0),
     isPickup: jspb.Message.getBooleanFieldWithDefault(msg, 14, false),
@@ -177,13 +177,13 @@ proto.ding4.ProductGoods.deserializeBinaryFromReader = function(msg, reader) {
       var value = /** @type {string} */ (reader.readString());
       msg.setSku(value);
       break;
+    case 11:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setOriginal(value);
+      break;
     case 10:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setPrice(value);
-      break;
-    case 11:
-      var value = /** @type {number} */ (reader.readInt32());
-      msg.setReduce(value);
       break;
     case 12:
       var value = /** @type {number} */ (reader.readDouble());
@@ -310,17 +310,17 @@ proto.ding4.ProductGoods.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
+  f = message.getOriginal();
+  if (f !== 0) {
+    writer.writeInt32(
+      11,
+      f
+    );
+  }
   f = message.getPrice();
   if (f !== 0) {
     writer.writeInt32(
       10,
-      f
-    );
-  }
-  f = message.getReduce();
-  if (f !== 0) {
-    writer.writeInt32(
-      11,
       f
     );
   }
@@ -599,6 +599,24 @@ proto.ding4.ProductGoods.prototype.setSku = function(value) {
 
 
 /**
+ * optional int32 original = 11;
+ * @return {number}
+ */
+proto.ding4.ProductGoods.prototype.getOriginal = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 11, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.ding4.ProductGoods} returns this
+ */
+proto.ding4.ProductGoods.prototype.setOriginal = function(value) {
+  return jspb.Message.setProto3IntField(this, 11, value);
+};
+
+
+/**
  * optional int32 price = 10;
  * @return {number}
  */
@@ -613,24 +631,6 @@ proto.ding4.ProductGoods.prototype.getPrice = function() {
  */
 proto.ding4.ProductGoods.prototype.setPrice = function(value) {
   return jspb.Message.setProto3IntField(this, 10, value);
-};
-
-
-/**
- * optional int32 reduce = 11;
- * @return {number}
- */
-proto.ding4.ProductGoods.prototype.getReduce = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 11, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.ding4.ProductGoods} returns this
- */
-proto.ding4.ProductGoods.prototype.setReduce = function(value) {
-  return jspb.Message.setProto3IntField(this, 11, value);
 };
 
 

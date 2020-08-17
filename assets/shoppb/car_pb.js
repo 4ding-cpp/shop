@@ -143,7 +143,7 @@ proto.ding4.Car.toObject = function(includeInstance, msg) {
     product$goods_pb.ProductGoods.toObject, includeInstance),
     isFreeShipping: jspb.Message.getBooleanFieldWithDefault(msg, 10, false),
     amount: jspb.Message.getFieldWithDefault(msg, 11, 0),
-    count: jspb.Message.getFieldWithDefault(msg, 12, 0),
+    price: jspb.Message.getFieldWithDefault(msg, 12, 0),
     operator: jspb.Message.getFieldWithDefault(msg, 13, ""),
     createAt: (f = msg.getCreateAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
     updateAt: (f = msg.getUpdateAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
@@ -238,7 +238,7 @@ proto.ding4.Car.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 12:
       var value = /** @type {number} */ (reader.readInt32());
-      msg.setCount(value);
+      msg.setPrice(value);
       break;
     case 13:
       var value = /** @type {string} */ (reader.readString());
@@ -374,7 +374,7 @@ proto.ding4.Car.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getCount();
+  f = message.getPrice();
   if (f !== 0) {
     writer.writeInt32(
       12,
@@ -693,10 +693,10 @@ proto.ding4.Car.prototype.setAmount = function(value) {
 
 
 /**
- * optional int32 count = 12;
+ * optional int32 price = 12;
  * @return {number}
  */
-proto.ding4.Car.prototype.getCount = function() {
+proto.ding4.Car.prototype.getPrice = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 12, 0));
 };
 
@@ -705,7 +705,7 @@ proto.ding4.Car.prototype.getCount = function() {
  * @param {number} value
  * @return {!proto.ding4.Car} returns this
  */
-proto.ding4.Car.prototype.setCount = function(value) {
+proto.ding4.Car.prototype.setPrice = function(value) {
   return jspb.Message.setProto3IntField(this, 12, value);
 };
 
@@ -947,7 +947,7 @@ proto.ding4.Buy.prototype.toObject = function(opt_includeInstance) {
 proto.ding4.Buy.toObject = function(includeInstance, msg) {
   var f, obj = {
     sku: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    count: jspb.Message.getFieldWithDefault(msg, 2, 0)
+    amount: jspb.Message.getFieldWithDefault(msg, 2, 0)
   };
 
   if (includeInstance) {
@@ -990,7 +990,7 @@ proto.ding4.Buy.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 2:
       var value = /** @type {number} */ (reader.readInt32());
-      msg.setCount(value);
+      msg.setAmount(value);
       break;
     default:
       reader.skipField();
@@ -1028,7 +1028,7 @@ proto.ding4.Buy.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getCount();
+  f = message.getAmount();
   if (f !== 0) {
     writer.writeInt32(
       2,
@@ -1057,10 +1057,10 @@ proto.ding4.Buy.prototype.setSku = function(value) {
 
 
 /**
- * optional int32 count = 2;
+ * optional int32 amount = 2;
  * @return {number}
  */
-proto.ding4.Buy.prototype.getCount = function() {
+proto.ding4.Buy.prototype.getAmount = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
@@ -1069,7 +1069,7 @@ proto.ding4.Buy.prototype.getCount = function() {
  * @param {number} value
  * @return {!proto.ding4.Buy} returns this
  */
-proto.ding4.Buy.prototype.setCount = function(value) {
+proto.ding4.Buy.prototype.setAmount = function(value) {
   return jspb.Message.setProto3IntField(this, 2, value);
 };
 

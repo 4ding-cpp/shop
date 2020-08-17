@@ -269,7 +269,7 @@ proto.ding4.Rule.prototype.toObject = function(opt_includeInstance) {
 proto.ding4.Rule.toObject = function(includeInstance, msg) {
   var f, obj = {
     amount: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    count: jspb.Message.getFieldWithDefault(msg, 2, 0)
+    price: jspb.Message.getFieldWithDefault(msg, 2, 0)
   };
 
   if (includeInstance) {
@@ -312,7 +312,7 @@ proto.ding4.Rule.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 2:
       var value = /** @type {number} */ (reader.readInt32());
-      msg.setCount(value);
+      msg.setPrice(value);
       break;
     default:
       reader.skipField();
@@ -350,7 +350,7 @@ proto.ding4.Rule.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getCount();
+  f = message.getPrice();
   if (f !== 0) {
     writer.writeInt32(
       2,
@@ -379,10 +379,10 @@ proto.ding4.Rule.prototype.setAmount = function(value) {
 
 
 /**
- * optional int32 count = 2;
+ * optional int32 price = 2;
  * @return {number}
  */
-proto.ding4.Rule.prototype.getCount = function() {
+proto.ding4.Rule.prototype.getPrice = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
@@ -391,7 +391,7 @@ proto.ding4.Rule.prototype.getCount = function() {
  * @param {number} value
  * @return {!proto.ding4.Rule} returns this
  */
-proto.ding4.Rule.prototype.setCount = function(value) {
+proto.ding4.Rule.prototype.setPrice = function(value) {
   return jspb.Message.setProto3IntField(this, 2, value);
 };
 
@@ -432,8 +432,7 @@ proto.ding4.Active.toObject = function(includeInstance, msg) {
     isRepeat: jspb.Message.getBooleanFieldWithDefault(msg, 2, false),
     discount: jspb.Message.getFloatingPointFieldWithDefault(msg, 3, 0.0),
     reduce: jspb.Message.getFloatingPointFieldWithDefault(msg, 4, 0.0),
-    giveaway: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    giveawaySku: jspb.Message.getFieldWithDefault(msg, 6, "")
+    giveaway: jspb.Message.getFieldWithDefault(msg, 5, "")
   };
 
   if (includeInstance) {
@@ -489,10 +488,6 @@ proto.ding4.Active.deserializeBinaryFromReader = function(msg, reader) {
     case 5:
       var value = /** @type {string} */ (reader.readString());
       msg.setGiveaway(value);
-      break;
-    case 6:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setGiveawaySku(value);
       break;
     default:
       reader.skipField();
@@ -555,13 +550,6 @@ proto.ding4.Active.serializeBinaryToWriter = function(message, writer) {
   if (f.length > 0) {
     writer.writeString(
       5,
-      f
-    );
-  }
-  f = message.getGiveawaySku();
-  if (f.length > 0) {
-    writer.writeString(
-      6,
       f
     );
   }
@@ -655,24 +643,6 @@ proto.ding4.Active.prototype.getGiveaway = function() {
  */
 proto.ding4.Active.prototype.setGiveaway = function(value) {
   return jspb.Message.setProto3StringField(this, 5, value);
-};
-
-
-/**
- * optional string giveaway_sku = 6;
- * @return {string}
- */
-proto.ding4.Active.prototype.getGiveawaySku = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.ding4.Active} returns this
- */
-proto.ding4.Active.prototype.setGiveawaySku = function(value) {
-  return jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
@@ -1004,8 +974,8 @@ proto.ding4.ProductTarget.deserializeBinaryFromReader = function(msg, reader) {
       msg.addClass(value);
       break;
     case 2:
-      var value = /** @type {string} */ (reader.readString());
-      msg.addItems(value);
+      var value = /** @type {!Array<number>} */ (reader.readPackedInt32());
+      msg.setItemsList(value);
       break;
     default:
       reader.skipField();
@@ -1045,7 +1015,7 @@ proto.ding4.ProductTarget.serializeBinaryToWriter = function(message, writer) {
   }
   f = message.getItemsList();
   if (f.length > 0) {
-    writer.writeRepeatedString(
+    writer.writePackedInt32(
       2,
       f
     );
@@ -1091,16 +1061,16 @@ proto.ding4.ProductTarget.prototype.clearClassList = function() {
 
 
 /**
- * repeated string items = 2;
- * @return {!Array<string>}
+ * repeated int32 items = 2;
+ * @return {!Array<number>}
  */
 proto.ding4.ProductTarget.prototype.getItemsList = function() {
-  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 2));
+  return /** @type {!Array<number>} */ (jspb.Message.getRepeatedField(this, 2));
 };
 
 
 /**
- * @param {!Array<string>} value
+ * @param {!Array<number>} value
  * @return {!proto.ding4.ProductTarget} returns this
  */
 proto.ding4.ProductTarget.prototype.setItemsList = function(value) {
@@ -1109,7 +1079,7 @@ proto.ding4.ProductTarget.prototype.setItemsList = function(value) {
 
 
 /**
- * @param {string} value
+ * @param {number} value
  * @param {number=} opt_index
  * @return {!proto.ding4.ProductTarget} returns this
  */

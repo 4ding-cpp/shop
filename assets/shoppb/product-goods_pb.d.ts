@@ -39,11 +39,11 @@ export class ProductGoods extends jspb.Message {
   getSku(): string;
   setSku(value: string): void;
 
+  getOriginal(): number;
+  setOriginal(value: number): void;
+
   getPrice(): number;
   setPrice(value: number): void;
-
-  getReduce(): number;
-  setReduce(value: number): void;
 
   getWeight(): number;
   setWeight(value: number): void;
@@ -89,8 +89,8 @@ export namespace ProductGoods {
     name?: google_protobuf_struct_pb.Value.AsObject,
     urn: string,
     sku: string,
+    original: number,
     price: number,
-    reduce: number,
     weight: number,
     volume: number,
     isPickup: boolean,
