@@ -3,6 +3,7 @@ import * as jspb from "google-protobuf"
 import * as sql_pb from './sql_pb';
 import * as activity$coupon_pb from './activity-coupon_pb';
 import * as a$submessage_pb from './a-submessage_pb';
+import * as product$goods_pb from './product-goods_pb';
 import * as google_protobuf_struct_pb from 'google-protobuf/google/protobuf/struct_pb';
 import * as google_protobuf_timestamp_pb from 'google-protobuf/google/protobuf/timestamp_pb';
 
@@ -22,6 +23,9 @@ export class Car extends jspb.Message {
   getState(): number;
   setState(value: number): void;
 
+  getBuyMap(): jspb.Map<number, Buy>;
+  clearBuyMap(): void;
+
   getCommodityList(): Array<Commodity>;
   setCommodityList(value: Array<Commodity>): void;
   clearCommodityList(): void;
@@ -31,6 +35,11 @@ export class Car extends jspb.Message {
   setActivityList(value: Array<activity$coupon_pb.Activity>): void;
   clearActivityList(): void;
   addActivity(value?: activity$coupon_pb.Activity, index?: number): activity$coupon_pb.Activity;
+
+  getGoodsList(): Array<product$goods_pb.ProductGoods>;
+  setGoodsList(value: Array<product$goods_pb.ProductGoods>): void;
+  clearGoodsList(): void;
+  addGoods(value?: product$goods_pb.ProductGoods, index?: number): product$goods_pb.ProductGoods;
 
   getIsFreeShipping(): boolean;
   setIsFreeShipping(value: boolean): void;
@@ -84,8 +93,10 @@ export namespace Car {
     customerId: string,
     couponId: string,
     state: number,
+    buyMap: Array<[number, Buy.AsObject]>,
     commodityList: Array<Commodity.AsObject>,
     activityList: Array<activity$coupon_pb.Activity.AsObject>,
+    goodsList: Array<product$goods_pb.ProductGoods.AsObject>,
     isFreeShipping: boolean,
     amount: number,
     count: number,
@@ -95,6 +106,28 @@ export namespace Car {
     colsList: Array<string>,
     conditionList: Array<sql_pb.Condition.AsObject>,
     self?: google_protobuf_struct_pb.Struct.AsObject,
+  }
+}
+
+export class Buy extends jspb.Message {
+  getSku(): string;
+  setSku(value: string): void;
+
+  getCount(): number;
+  setCount(value: number): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): Buy.AsObject;
+  static toObject(includeInstance: boolean, msg: Buy): Buy.AsObject;
+  static serializeBinaryToWriter(message: Buy, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): Buy;
+  static deserializeBinaryFromReader(message: Buy, reader: jspb.BinaryReader): Buy;
+}
+
+export namespace Buy {
+  export type AsObject = {
+    sku: string,
+    count: number,
   }
 }
 
@@ -144,6 +177,9 @@ export class Commodity extends jspb.Message {
   getStock(): number;
   setStock(value: number): void;
 
+  getShellId(): number;
+  setShellId(value: number): void;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Commodity.AsObject;
   static toObject(includeInstance: boolean, msg: Commodity): Commodity.AsObject;
@@ -167,6 +203,7 @@ export namespace Commodity {
     reduce: number,
     active: number,
     stock: number,
+    shellId: number,
   }
 }
 

@@ -1,8 +1,8 @@
 import * as jspb from "google-protobuf"
 
 import * as seo_pb from './seo_pb';
-import * as product_pb from './product_pb';
 import * as a$submessage_pb from './a-submessage_pb';
+import * as product_pb from './product_pb';
 import * as google_protobuf_struct_pb from 'google-protobuf/google/protobuf/struct_pb';
 
 export class ProductGoods extends jspb.Message {
@@ -14,6 +14,9 @@ export class ProductGoods extends jspb.Message {
 
   getClassId(): string;
   setClassId(value: string): void;
+
+  getType(): number;
+  setType(value: number): void;
 
   getSeo(): seo_pb.SEO | undefined;
   setSeo(value?: seo_pb.SEO): void;
@@ -33,6 +36,9 @@ export class ProductGoods extends jspb.Message {
   getUrn(): string;
   setUrn(value: string): void;
 
+  getSku(): string;
+  setSku(value: string): void;
+
   getPrice(): number;
   setPrice(value: number): void;
 
@@ -50,6 +56,9 @@ export class ProductGoods extends jspb.Message {
 
   getIsPreorder(): boolean;
   setIsPreorder(value: boolean): void;
+
+  getStock(): number;
+  setStock(value: number): void;
 
   getSpecxList(): Array<product_pb.ProductSpec>;
   setSpecxList(value: Array<product_pb.ProductSpec>): void;
@@ -74,16 +83,19 @@ export namespace ProductGoods {
     shellId: number,
     productId: string,
     classId: string,
+    type: number,
     seo?: seo_pb.SEO.AsObject,
     blockList: Array<seo_pb.Block.AsObject>,
     name?: google_protobuf_struct_pb.Value.AsObject,
     urn: string,
+    sku: string,
     price: number,
     reduce: number,
     weight: number,
     volume: number,
     isPickup: boolean,
     isPreorder: boolean,
+    stock: number,
     specxList: Array<product_pb.ProductSpec.AsObject>,
     photoxList: Array<a$submessage_pb.Image.AsObject>,
   }
