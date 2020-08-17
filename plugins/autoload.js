@@ -17,6 +17,8 @@ Vue.prototype.orderpb = order_pb
 import customer_pb from '@/assets/shoppb/customer_pb'
 Vue.prototype.customerpb = customer_pb
 
+
+
 import grpcAxios from '@/plugins/grpc-axios'
 Vue.prototype.grpcAxios = grpcAxios ;
 import grpcFetch from '@/plugins/grpc-fetch'

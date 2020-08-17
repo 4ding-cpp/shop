@@ -6,14 +6,14 @@
         v-if="data.photox!=null"
         :src="IMG_URL+data.photox[0].src"
         class="card-img-top"
-        :to="'/product/'+data.product_id"
+        :to="'/product/'+data.shell_id"
       ></nuxt-link>
       <nuxt-link
         tag="img"
         v-else
         src="/images/noprod.png"
         class="card-img-top"
-        :to="'/product/'+data.product_id"
+        :to="'/product/'+data.shell_id"
       ></nuxt-link>
       <!-- <img :src="data.photo" class="card-img-top" alt="..." /> -->
       <div class="card-body">

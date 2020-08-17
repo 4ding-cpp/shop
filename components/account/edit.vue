@@ -1,5 +1,6 @@
 <template>
   <div class="table-responsive">
+    {{user}}
     <!-- <Loading :data.sync="page" /> -->
     <table class="table">
       <thead>
@@ -112,10 +113,15 @@ export default {
       page: {
         loading: true,
       },
+      user:{}
     };
   },
   watch: {
     //監聽值
+    "$store.state.account.user"(to, from) {
+      this.user = { ...to };
+      console.log("user:",this.user)
+    },
   },
   computed: {
     //相依的資料改變時才做計算方法
@@ -139,6 +145,7 @@ export default {
   },
   mounted: function () {
     //元素已掛載， el 被建立。
+    this.user = {...this.$store.state.account.user}
   },
   beforeUpdate: function () {
     //當資料變化時被呼叫，還不會描繪 View。

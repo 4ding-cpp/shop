@@ -157,19 +157,20 @@ export default {
         prod: "",
       },
     };
+    console.log(route.params.id)
 
-    let cond = Struct.fromJavaScript({
-      product_id: route.params.id,
-    });
     let result = await store.dispatch("product/get_productDetail", {
       app: app,
       token: store.state.account.token,
-      condition: cond,
+      condition: {
+        id: route.params.id,
+      },
     });
+    console.log("get_productDetail >>>>", result);
     if (result.code === 200) {
       data.product_info = result.data;
-      data.specx = Object.keys(data.product_info.specx)[0];
-      data.breadcrumb_info.url += data.product_info.link.class_id;
+      data.specx = data.product_info.specxList[0];
+      data.breadcrumb_info.url += data.product_info.class_id;
       data.breadcrumb_info.prod = data.product_info.name.tw;
     }
 

@@ -2,7 +2,7 @@ import sql_pb from '@/assets/shoppb/sql_pb'
 import car_pb from '@/assets/shoppb/car_pb'
 import order_pb from '@/assets/shoppb/order_pb'
 import adapter_pb from '@/assets/shoppb/adapter_pb'
-import product_pb from '@/assets/shoppb/product_pb'
+import product_pb from '@/assets/shoppb/product-goods_pb'
 import freeback_pb from '@/assets/shoppb/freeback_pb'
 import customer_pb from '@/assets/shoppb/customer_pb'
 

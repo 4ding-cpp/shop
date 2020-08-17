@@ -43,15 +43,13 @@ export default {
 
     let metadata = { "x-4d-token": token };
     let method = "BrowseProductGoods";
-    let req = new app.prodpb.Product();
-    if (condition !== null) req.setSelf(condition)
+    let req = new app.prodpb.ProductGoods();
+
+    if (condition.id !== null) req.setShellId(condition.id)
     let product = await app.grpcAxios(app.$axios, method, metadata, req, (err, resp) => {
-      const data = app.sqlpb.Response.deserializeBinary(resp.data);
-      if (err !== null || data.getCode() != 0) {
-        return { code: 0, data: `[${data.getCode()}] ${data.getMessage()} ` };
-      }
-      // console.log( "get_productDetail>>>",data.getResult().toJavaScript())
-      return { code: 200, data: data.getResult().toJavaScript() };
+      err = (resp.headers["grpc-status"]) ? resp.headers : null;
+      const data = app.prodpb.ProductGoods.deserializeBinary(resp.data);
+      return { code: 200, data: data.toObject() };
     });
     return product;
 
@@ -67,14 +65,7 @@ export default {
     let method = "FindProductGoods";
     let req = new app.sqlpb.Query();
     if (condition !== null) req.addCondition(condition)
-    let product = await app.grpcAxios(app.$axios, method, metadata, req, (err, resp) => {
-      const data = app.sqlpb.Response.deserializeBinary(resp.data);
-      // todo:錯誤時候會跑兩次!?
-      if (err !== null || data.getCode() != 0) {
-        return { code: 0, data: `[${data.getCode()}] ${data.getMessage()} ` };
-      }
-      return { code: 200, data: data.getResult().toJavaScript() };
-    });
+    let product = await app.grpcAxios(app.$axios, method, metadata, req);
     return product;
 
   },
