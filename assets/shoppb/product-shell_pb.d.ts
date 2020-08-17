@@ -2,20 +2,44 @@ import * as jspb from "google-protobuf"
 
 import * as seo_pb from './seo_pb';
 import * as sql_pb from './sql_pb';
-import * as a$submessage_pb from './a-submessage_pb';
-import * as product$shell_pb from './product-shell_pb';
+import * as product_pb from './product_pb';
 import * as google_protobuf_struct_pb from 'google-protobuf/google/protobuf/struct_pb';
 import * as google_protobuf_timestamp_pb from 'google-protobuf/google/protobuf/timestamp_pb';
 
-export class ProductClass extends jspb.Message {
+export class ProductShell extends jspb.Message {
+  getShellId(): number;
+  setShellId(value: number): void;
+
+  getStoreId(): string;
+  setStoreId(value: string): void;
+
+  getProductId(): string;
+  setProductId(value: string): void;
+
   getClassId(): string;
   setClassId(value: string): void;
 
-  getActivityId(): string;
-  setActivityId(value: string): void;
+  getIsDisplay(): boolean;
+  setIsDisplay(value: boolean): void;
 
-  getPath(): string;
-  setPath(value: string): void;
+  getType(): number;
+  setType(value: number): void;
+
+  getSeo(): seo_pb.SEO | undefined;
+  setSeo(value?: seo_pb.SEO): void;
+  hasSeo(): boolean;
+  clearSeo(): void;
+
+  getBlockList(): Array<seo_pb.Block>;
+  setBlockList(value: Array<seo_pb.Block>): void;
+  clearBlockList(): void;
+  addBlock(value?: seo_pb.Block, index?: number): seo_pb.Block;
+
+  getReduce(): number;
+  setReduce(value: number): void;
+
+  getIsPreorder(): boolean;
+  setIsPreorder(value: boolean): void;
 
   getName(): google_protobuf_struct_pb.Value | undefined;
   setName(value?: google_protobuf_struct_pb.Value): void;
@@ -25,20 +49,13 @@ export class ProductClass extends jspb.Message {
   getUrn(): string;
   setUrn(value: string): void;
 
-  getSeo(): seo_pb.SEO | undefined;
-  setSeo(value?: seo_pb.SEO): void;
-  hasSeo(): boolean;
-  clearSeo(): void;
+  getPrice(): number;
+  setPrice(value: number): void;
 
-  getPhoto(): a$submessage_pb.Image | undefined;
-  setPhoto(value?: a$submessage_pb.Image): void;
-  hasPhoto(): boolean;
-  clearPhoto(): void;
-
-  getProductShellList(): Array<product$shell_pb.ProductShell>;
-  setProductShellList(value: Array<product$shell_pb.ProductShell>): void;
-  clearProductShellList(): void;
-  addProductShell(value?: product$shell_pb.ProductShell, index?: number): product$shell_pb.ProductShell;
+  getProduct(): product_pb.Product | undefined;
+  setProduct(value?: product_pb.Product): void;
+  hasProduct(): boolean;
+  clearProduct(): void;
 
   getLabelxMap(): jspb.Map<string, number>;
   clearLabelxMap(): void;
@@ -72,23 +89,29 @@ export class ProductClass extends jspb.Message {
   clearSelf(): void;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): ProductClass.AsObject;
-  static toObject(includeInstance: boolean, msg: ProductClass): ProductClass.AsObject;
-  static serializeBinaryToWriter(message: ProductClass, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): ProductClass;
-  static deserializeBinaryFromReader(message: ProductClass, reader: jspb.BinaryReader): ProductClass;
+  toObject(includeInstance?: boolean): ProductShell.AsObject;
+  static toObject(includeInstance: boolean, msg: ProductShell): ProductShell.AsObject;
+  static serializeBinaryToWriter(message: ProductShell, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): ProductShell;
+  static deserializeBinaryFromReader(message: ProductShell, reader: jspb.BinaryReader): ProductShell;
 }
 
-export namespace ProductClass {
+export namespace ProductShell {
   export type AsObject = {
+    shellId: number,
+    storeId: string,
+    productId: string,
     classId: string,
-    activityId: string,
-    path: string,
+    isDisplay: boolean,
+    type: number,
+    seo?: seo_pb.SEO.AsObject,
+    blockList: Array<seo_pb.Block.AsObject>,
+    reduce: number,
+    isPreorder: boolean,
     name?: google_protobuf_struct_pb.Value.AsObject,
     urn: string,
-    seo?: seo_pb.SEO.AsObject,
-    photo?: a$submessage_pb.Image.AsObject,
-    productShellList: Array<product$shell_pb.ProductShell.AsObject>,
+    price: number,
+    product?: product_pb.Product.AsObject,
     labelxMap: Array<[string, number]>,
     operator: string,
     createAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,

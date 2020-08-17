@@ -18,8 +18,8 @@ var sql_pb = require('./sql_pb.js');
 goog.object.extend(proto, sql_pb);
 var a$submessage_pb = require('./a-submessage_pb.js');
 goog.object.extend(proto, a$submessage_pb);
-var product_pb = require('./product_pb.js');
-goog.object.extend(proto, product_pb);
+var product$shell_pb = require('./product-shell_pb.js');
+goog.object.extend(proto, product$shell_pb);
 var google_protobuf_struct_pb = require('google-protobuf/google/protobuf/struct_pb.js');
 goog.object.extend(proto, google_protobuf_struct_pb);
 var google_protobuf_timestamp_pb = require('google-protobuf/google/protobuf/timestamp_pb.js');
@@ -92,8 +92,8 @@ proto.ding4.ProductClass.toObject = function(includeInstance, msg) {
     urn: jspb.Message.getFieldWithDefault(msg, 5, ""),
     seo: (f = msg.getSeo()) && seo_pb.SEO.toObject(includeInstance, f),
     photo: (f = msg.getPhoto()) && a$submessage_pb.Image.toObject(includeInstance, f),
-    productList: jspb.Message.toObjectList(msg.getProductList(),
-    product_pb.Product.toObject, includeInstance),
+    productShellList: jspb.Message.toObjectList(msg.getProductShellList(),
+    product$shell_pb.ProductShell.toObject, includeInstance),
     labelxMap: (f = msg.getLabelxMap()) ? f.toObject(includeInstance, undefined) : [],
     operator: jspb.Message.getFieldWithDefault(msg, 10, ""),
     createAt: (f = msg.getCreateAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
@@ -170,9 +170,9 @@ proto.ding4.ProductClass.deserializeBinaryFromReader = function(msg, reader) {
       msg.setPhoto(value);
       break;
     case 8:
-      var value = new product_pb.Product;
-      reader.readMessage(value,product_pb.Product.deserializeBinaryFromReader);
-      msg.addProduct(value);
+      var value = new product$shell_pb.ProductShell;
+      reader.readMessage(value,product$shell_pb.ProductShell.deserializeBinaryFromReader);
+      msg.addProductShell(value);
       break;
     case 9:
       var value = msg.getLabelxMap();
@@ -289,12 +289,12 @@ proto.ding4.ProductClass.serializeBinaryToWriter = function(message, writer) {
       a$submessage_pb.Image.serializeBinaryToWriter
     );
   }
-  f = message.getProductList();
+  f = message.getProductShellList();
   if (f.length > 0) {
     writer.writeRepeatedMessage(
       8,
       f,
-      product_pb.Product.serializeBinaryToWriter
+      product$shell_pb.ProductShell.serializeBinaryToWriter
     );
   }
   f = message.getLabelxMap(true);
@@ -534,31 +534,31 @@ proto.ding4.ProductClass.prototype.hasPhoto = function() {
 
 
 /**
- * repeated Product product = 8;
- * @return {!Array<!proto.ding4.Product>}
+ * repeated ProductShell product_shell = 8;
+ * @return {!Array<!proto.ding4.ProductShell>}
  */
-proto.ding4.ProductClass.prototype.getProductList = function() {
-  return /** @type{!Array<!proto.ding4.Product>} */ (
-    jspb.Message.getRepeatedWrapperField(this, product_pb.Product, 8));
+proto.ding4.ProductClass.prototype.getProductShellList = function() {
+  return /** @type{!Array<!proto.ding4.ProductShell>} */ (
+    jspb.Message.getRepeatedWrapperField(this, product$shell_pb.ProductShell, 8));
 };
 
 
 /**
- * @param {!Array<!proto.ding4.Product>} value
+ * @param {!Array<!proto.ding4.ProductShell>} value
  * @return {!proto.ding4.ProductClass} returns this
 */
-proto.ding4.ProductClass.prototype.setProductList = function(value) {
+proto.ding4.ProductClass.prototype.setProductShellList = function(value) {
   return jspb.Message.setRepeatedWrapperField(this, 8, value);
 };
 
 
 /**
- * @param {!proto.ding4.Product=} opt_value
+ * @param {!proto.ding4.ProductShell=} opt_value
  * @param {number=} opt_index
- * @return {!proto.ding4.Product}
+ * @return {!proto.ding4.ProductShell}
  */
-proto.ding4.ProductClass.prototype.addProduct = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 8, opt_value, proto.ding4.Product, opt_index);
+proto.ding4.ProductClass.prototype.addProductShell = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 8, opt_value, proto.ding4.ProductShell, opt_index);
 };
 
 
@@ -566,8 +566,8 @@ proto.ding4.ProductClass.prototype.addProduct = function(opt_value, opt_index) {
  * Clears the list making it empty but non-null.
  * @return {!proto.ding4.ProductClass} returns this
  */
-proto.ding4.ProductClass.prototype.clearProductList = function() {
-  return this.setProductList([]);
+proto.ding4.ProductClass.prototype.clearProductShellList = function() {
+  return this.setProductShellList([]);
 };
 
 

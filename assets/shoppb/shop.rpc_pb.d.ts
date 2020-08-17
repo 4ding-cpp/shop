@@ -4,7 +4,7 @@ import * as pingpong_pb from './pingpong_pb';
 import * as password_pb from './password_pb';
 import * as sql_pb from './sql_pb';
 import * as customer_pb from './customer_pb';
-import * as product_pb from './product_pb';
+import * as product$goods_pb from './product-goods_pb';
 import * as car_pb from './car_pb';
 import * as activity$coupon_pb from './activity-coupon_pb';
 import * as adapter_pb from './adapter_pb';
