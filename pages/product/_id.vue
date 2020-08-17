@@ -49,16 +49,10 @@
                   </div>
                   <div class="input-group">
                     <div class="col-md-6 mt-3">
-                      <button
-                        class="w-100 btn-block pick-btn  l-btn"
-                        @click="cartJoin()"
-                      >加入購物車</button>
+                      <button class="w-100 btn-block pick-btn l-btn" @click="cartJoin()">加入購物車</button>
                     </div>
                     <div class="col-md-6 mt-3">
-                      <button
-                        class="w-100 checkout-btn  l-btn"
-                        @click="toStep1();"
-                      >立即結帳</button>
+                      <button class="w-100 checkout-btn l-btn" @click="toStep1();">立即結帳</button>
                     </div>
                   </div>
                 </div>
@@ -145,7 +139,7 @@ import { Struct } from "google-protobuf/google/protobuf/struct_pb";
 export default {
   data() {
     return {
-      // Breadcrumb 
+      // Breadcrumb
       breadcrumb_info: {},
       product_info: {},
       // 所選擇的產品資訊
@@ -156,19 +150,24 @@ export default {
   async asyncData({ context, app, store, route, redirect }) {
     if (typeof route.params.id !== "string") redirect.go(-1);
     let data = {
-      breadcrumb_info: { name: "熱門商品", key: "product", url: "/class/" ,prod:"" }
+      breadcrumb_info: {
+        name: "熱門商品",
+        key: "product",
+        url: "/class/",
+        prod: "",
+      },
     };
 
-     let cond = Struct.fromJavaScript({
+    let cond = Struct.fromJavaScript({
       product_id: route.params.id,
     });
     let result = await store.dispatch("product/get_productDetail", {
       app: app,
       token: store.state.account.token,
-      condition: cond
+      condition: cond,
     });
-    if (result.code === 200 ) {
-      data.product_info = result.data ;
+    if (result.code === 200) {
+      data.product_info = result.data;
       data.specx = Object.keys(data.product_info.specx)[0];
       data.breadcrumb_info.url += data.product_info.link.class_id;
       data.breadcrumb_info.prod = data.product_info.name.tw;
@@ -189,12 +188,12 @@ export default {
     ...mapActions({
       loading: "loading",
       get_template: "other/get_template",
-      _store: "_store"
+      _store: "_store",
     }),
     // get 規格名稱
     specxName(data) {
       let name = "";
-      data.forEach(element => {
+      data.forEach((element) => {
         name += element.tw;
       });
       return name;
@@ -210,24 +209,24 @@ export default {
           src:
             p.photox.length === 0
               ? "/images/noprod.png"
-              : `${process.env.IMG_URL}/${p.photox[0].src}`
+              : `${process.env.IMG_URL}/${p.photox[0].src}`,
         },
-        count: this.count
+        count: this.count,
       };
       this._store({ act: "cart/add_cart", data: data });
       this.$toast.success("加入到購物車");
     },
-    toStep1: async function() {
+    toStep1: async function () {
       await this.cartJoin();
-      this.$router.push('/cart/step1')
-    }
+      this.$router.push("/cart/step1");
+    },
   },
-  mounted: async function() {
+  mounted: async function () {
     //元素已掛載， el 被建立。
     this.loading(false);
     console.log("product_info>>>>", this.product_info);
     // this.get_template('/Csp7Vk3EPg/template/yXxbn5AMuA')
-  }
+  },
 };
 </script>
 

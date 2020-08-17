@@ -4,16 +4,24 @@
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
           <nuxt-link tag="a" class="navbar-brand" to="/">首頁</nuxt-link>
-          <div class="navbar-collapse justify-content-end collapse">
+          <button
+            class="navbar-toggler collapsed"
+            type="button"
+            data-toggle="collapse"
+            data-target="#MenuDropdown"
+            aria-controls="MenuDropdown"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="navbar-collapse justify-content-end collapse" id="MenuDropdown">
             <ul class="navbar-nav">
               <li class="nav-item">
                 <nuxt-link tag="a" class="nav-link" to="/test">
                   <span v-if="!user.name">尚未登入!!</span>
                   <span v-if="user.name">歡迎回來,{{user.name}}!!</span>
                 </nuxt-link>
-              </li>
-              <li class="nav-item" v-if="user.name">
-                <nuxt-link tag="a" class="nav-link" to="/account/">訂單查詢</nuxt-link>
               </li>
               <li class="nav-item">
                 <div class="dropdown">
@@ -49,7 +57,7 @@
                       <div class="buttons mb-2" @click="login">
                         <a class="btn btn-primary btn-block btn-cart">會員登入</a>
                       </div>
-                      <div class="buttons">
+                      <div class="buttons" v-if="user.name">
                         <nuxt-link
                           tag="a"
                           class="btn btn-primary btn-block btn-cart"

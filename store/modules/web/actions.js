@@ -104,6 +104,7 @@ export default {
       token: store.state.account.token,
       condition: cond
     });
+    console.log("sortType2Items >>>",response)
     return response;
   },
   /**

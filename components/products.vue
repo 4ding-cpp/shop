@@ -3,7 +3,15 @@
     <div class="product">
       <nuxt-link
         tag="img"
+        v-if="data.photox!=null"
         :src="IMG_URL+data.photox[0].src"
+        class="card-img-top"
+        :to="'/product/'+data.product_id"
+      ></nuxt-link>
+      <nuxt-link
+        tag="img"
+        v-else
+        src="/images/noprod.png"
         class="card-img-top"
         :to="'/product/'+data.product_id"
       ></nuxt-link>
@@ -48,7 +56,7 @@ export default {
   },
   data() {
     return {
-     IMG_URL:process.env.IMG_URL
+     IMG_URL:process.env.IMG_URL,
     };
   },
   methods: {
@@ -56,6 +64,9 @@ export default {
     ToSelect() {
       this.$emit("selected");
     }
+  },
+  created() {
+    console.log("products",this.data)
   }
 };
 </script>

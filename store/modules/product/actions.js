@@ -42,7 +42,7 @@ export default {
   async get_productDetail(context, { app, token, condition = null }) {
 
     let metadata = { "x-4d-token": token };
-    let method = "BrowseProduct";
+    let method = "BrowseProductGoods";
     let req = new app.prodpb.Product();
     if (condition !== null) req.setSelf(condition)
     let product = await app.grpcAxios(app.$axios, method, metadata, req, (err, resp) => {
@@ -64,7 +64,7 @@ export default {
   async get_product(context, { app, token, condition = null }) {
 
     let metadata = { "x-4d-token": token };
-    let method = "FindProduct";
+    let method = "FindProductGoods";
     let req = new app.sqlpb.Query();
     if (condition !== null) req.addCondition(condition)
     let product = await app.grpcAxios(app.$axios, method, metadata, req, (err, resp) => {

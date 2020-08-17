@@ -2,7 +2,7 @@
   <div id="picText-type3" class="container">
      <!-- 標題 -->
     <div v-if="item.title" class="w-100 d-flex justify-content-center">
-      <b>{{item.title}}</b>
+      <b>{{item.title.tw}}</b>
     </div>
     <section class="pt-5 pb-5">
       <div class="w-100 align-items-center d-flex column ">
