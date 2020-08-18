@@ -2,7 +2,7 @@
   <div id="page">
     <section class="content">
       <div v-for="(item,i) in layout">
-        <component :is="'IndexLayout'+item.type" :item.sync="item"></component>
+        <component :is="'IndexLayout'+item.type" :item.sync="item" :randID="i" ></component>
       </div>
     </section>
     <Footers />

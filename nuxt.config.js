@@ -82,7 +82,7 @@ export default {
   ],
 
   toast: {
-    duration: 500 ,
+    duration: 3000 ,
     theme: "outline", 
   },
   /*
@@ -100,10 +100,10 @@ export default {
       target: 'https://4ding.store',
       changeOrigin: true,
     },
-    // '/ding4.ShopRPC': {
-    //   target: 'https://4ding.store/ding4.ShopRPC',
-    //   changeOrigin: true,
-    // },
+    '/ding4.ShopRPC': {
+      target: 'https://4ding.store',
+      changeOrigin: true,
+    },
   },
   /*
   ** Build configuration

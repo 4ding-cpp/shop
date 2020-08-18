@@ -1,6 +1,8 @@
 <template>
   <div id="page">
     <section class="content">
+      {{time1}}
+      <date-picker v-model="time1" valuetype="format"></date-picker>
       <button @click="login">FB Login</button>
       <div class="container">
         <iframe
@@ -19,15 +21,18 @@
 </template>
 <script>
 import { mapActions } from "vuex";
-
+import DatePicker from "vue2-datepicker";
+import "vue2-datepicker/index.css";
 // Vue.use(SimpleVueValidation);
 export default {
   name: "",
   props: {},
+  components: { DatePicker },
   data: function () {
     // 資料
     return {
       email: "", //
+      time1: new Date("2000-01-01"),
     };
   },
   watch: {

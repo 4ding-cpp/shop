@@ -101,6 +101,12 @@
                 :to="`/class/?prod=所有商品`"
               >所有商品</nuxt-link>
               <nuxt-link
+                v-if="item.title.tw === 'page_contact' "
+                tag="a"
+                class="nav-link"
+                :to="`/pages/contact`"
+              >聯絡我們</nuxt-link>
+              <nuxt-link
                 v-else-if="item.target.class"
                 tag="a"
                 class="nav-link"
@@ -112,6 +118,12 @@
                 class="nav-link"
                 :to="`/pages/${item.page}`"
               >{{item.title.tw}}</nuxt-link>
+              <a
+                v-else-if="item.link"
+                class="nav-link"
+                :target="(item.is_blank)?'_blank':''"
+                :href="`https://${item.link}`"
+              >{{item.title.tw}}</a>
             </li>
           </ul>
         </div>
@@ -140,6 +152,7 @@ export default {
     "$store.state.web.style"(status) {
       console.log("watch header");
       this.nav = this.get_headerNav();
+      console.log(this.nav);
     },
     "$store.state.account.user"(to, from) {
       this.user = { ...to };
@@ -163,6 +176,7 @@ export default {
   created() {
     let list = this.get_headerNav();
     this.nav = list !== null ? list : this.nav;
+    console.log(this.nav);
     this.user = this.$store.state.account.user;
   },
 };
@@ -184,9 +198,9 @@ a.btn {
 li {
   padding-left: 20px;
   padding-right: 20px;
-  border-left: 1px solid #ccc;
+  // border-left: 1px solid #ccc;
   &:first-child {
-    border-left: 0px solid;
+    // border-left: 0px solid;
   }
 }
 </style>

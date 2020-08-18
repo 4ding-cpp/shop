@@ -88,4 +88,18 @@ export default {
     await app.store.dispatch("account/get_token")
     context.commit("set_user", {});
   },
+  /**
+   * 
+   * @param {*} context 
+   */
+  async changeInfo(context,{ condition = null }) {
+    let app = this.app
+    let metadata = { "x-4d-token": app.store.state.account.token };
+    let method = "ChangeInfo";
+    let req = new app.customerpb.Customer();
+    if (condition !== null) req.setSelf(condition)
+    let res = await app.grpcAxios(app.$axios, method, metadata, req);
+    // if (res.code === 200) context.commit("set_user", res.data[0]);
+    return res;
+  },
 }

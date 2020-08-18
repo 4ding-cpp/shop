@@ -4,14 +4,17 @@
       <div class="container">
         <div class="row">
           <section class="col-sm-6 col-md-3" v-for="(item,i) in footer">
-            <h5 v-if="item.title.tw === 'footer_contact' " >聯絡資訊</h5>
-            <h5 v-else >{{item.title.tw}}</h5>
-            <ul>
+            <h5 v-if="item.title.tw === 'footer_contact' ">聯絡資訊</h5>
+            <h5 v-else-if="item.title.tw === 'fb_plug' ">
+              <PlugFb />
+            </h5>
+            <h5 v-else>{{item.title.tw}}</h5>
+            
+            <ul v-if="item.layout" >
+              
               <template v-for="(o,j) in item.layout">
                 <!-- 聯絡資訊 -->
-                <li v-if="o.title.tw === 'page_contact'">
-                  
-                </li>
+                <li v-if="o.title.tw === 'page_contact'"></li>
                 <!-- 另開連結 -->
                 <li v-else-if="o.link">
                   <i class="fas fa-link"></i>

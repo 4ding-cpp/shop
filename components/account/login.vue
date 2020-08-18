@@ -35,9 +35,11 @@
                 name
                 placeholder="請輸入電郵或是電話"
               />
+              <div class="text-danger">{{ validation.firstError('login.account') }}</div>
             </div>
             <div class="col-md-12 p-3">
-              <input class="w-100" v-model="form.password" type="text" name placeholder="請輸入密碼" />
+              <input class="w-100 form-control" v-model="form.password" type="password" name placeholder="請輸入密碼" />
+              <div class="text-danger">{{ validation.firstError('form.password') }}</div>
             </div>
             <div class="col-md-12 p-3">
               <button tag="button" @click="signIn" class="w-100 btn btn-outline-primary btn-sm">登入</button>

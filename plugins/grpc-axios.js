@@ -25,7 +25,7 @@ async function gRPC_callback(err, resp) {
     return { code: 0, data: `[${data.getCode()}] ${data.getMessage()} ` };
   }
   let res = data.getResult() ;
-console.log("Res:",res,data.getAffectRow())
+
   return { code: 200, data: (res === undefined)? data.getAffectRow() : res.toJavaScript() };
 }
 
@@ -51,7 +51,7 @@ export default function grpcAxios(axios, method, metadata, req, callback = gRPC_
     }
   }
   return axios.post(
-    `https://4ding.store/ding4.ShopRPC/${method}`,
+    `/ding4.ShopRPC/${method}`,
     new Uint8Array(ib),
     config
   ).then((response, err) => {

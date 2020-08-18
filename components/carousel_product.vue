@@ -53,7 +53,7 @@ export default {
       setTimeout(() => {
         // 只有一張圖片 or 沒有設定秒數
         // if (this.item.image.length == 1 || this.second == 0 ) return;
-        $(".carousel-control-next").click();
+        //$(".carousel-control-next").click();
         // this.run_carousel();
       }, this.second);
     }

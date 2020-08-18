@@ -9,16 +9,48 @@
     </div>
     <div class="col-md-12 p-3">
       <label class="w-100 text-center" for>註冊電郵</label>
-      <input class="w-100" v-model="registered.name" type="text" name placeholder="用戶名" />
+      <input
+        class="w-100 form-control"
+        :class="{'is-invalid': validation.hasError('registered.name')}"
+        v-model="registered.name"
+        type="text"
+        name
+        placeholder="用戶名"
+      />
+      <div class="text-danger">{{ validation.firstError('registered.name') }}</div>
     </div>
     <div class="col-md-12 p-3">
-      <input class="w-100" v-model="registered.email" type="text" name placeholder="電郵" />
+      <input
+        class="w-100 form-control"
+        :class="{'is-invalid': validation.hasError('registered.email')}"
+        v-model="registered.email"
+        type="text"
+        name
+        placeholder="電郵"
+      />
+      <div class="text-danger">{{ validation.firstError('registered.email') }}</div>
     </div>
     <div class="col-md-12 p-3">
-      <input class="w-100" v-model="registered.phone" type="text" name placeholder="電話" />
+      <input
+        class="w-100 form-control"
+        :class="{'is-invalid': validation.hasError('registered.phone')}"
+        v-model="registered.phone"
+        type="text"
+        name
+        placeholder="電話"
+      />
+      <div class="text-danger">{{ validation.firstError('registered.phone') }}</div>
     </div>
     <div class="col-md-12 p-3">
-      <input class="w-100" v-model="registered.password" type="password" name placeholder="密碼" />
+      <input
+        class="w-100 form-control"
+        :class="{'is-invalid': validation.hasError('registered.password')}"
+        v-model="registered.password"
+        type="password"
+        name
+        placeholder="密碼"
+      />
+      <div class="text-danger">{{ validation.firstError('registered.password') }}</div>
     </div>
     <div class="col-md-12 p-3">
       <button tag="button" @click="signUp" class="w-100 btn btn-outline-primary btn-sm">立即加入</button>
@@ -82,8 +114,7 @@ export default {
         .email("請確認電郵");
     },
     "registered.password": function (value) {
-      return this.Validator.value(value)
-        .required("請輸入密碼")
+      return this.Validator.value(value).required("請輸入密碼");
     },
   },
   methods: {
@@ -112,11 +143,11 @@ export default {
       let result = await this.$store.dispatch("account/signUp", {
         condition: cond,
       });
-      if(result.code === 200) { 
+      if (result.code === 200) {
         await this.$store.dispatch("account/whoAmI");
         this.$toast.success("註冊成功");
         this.$modal.hide("login");
-      }else{
+      } else {
         this.$toast.success(`${result.data} 註冊失敗!!`);
       }
     },
@@ -128,11 +159,11 @@ export default {
       let result = await this.$store.dispatch("account/signUp", {
         condition: cond,
       });
-      if(result.code === 200) { 
+      if (result.code === 200) {
         await this.$store.dispatch("account/whoAmI");
         this.$toast.success("FB註冊成功");
         this.$modal.hide("login");
-      }else{
+      } else {
         this.$toast.success(`${result.data} FB註冊失敗!!`);
       }
     },

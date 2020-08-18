@@ -3,7 +3,7 @@ import Vue from 'vue'
 import SimpleVueValidation from 'simple-vue-validator';
 Vue.prototype.Validator = window.Validator = SimpleVueValidation.Validator;
 SimpleVueValidation.extendTemplates({
-  length: '{1}長度必須等於{0} ',
+  length: '長度必須等於{0} ',
 });
 Vue.use(SimpleVueValidation);
 
