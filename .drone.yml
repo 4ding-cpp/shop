@@ -45,4 +45,4 @@ steps:
     mode: upgrade
     chart: ./charts/business
     namespace: test
-    release: test
+    release: business
