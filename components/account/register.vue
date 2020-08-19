@@ -106,7 +106,7 @@ export default {
      * 檢查登入是輸入電郵或是電話
      */
     "registered.phone": function (value) {
-      return this.Validator.value(value).required("請輸入電話").length(10);
+      return this.Validator.value(value).required("請輸入電話").length(8);
     },
     "registered.email": function (value) {
       return this.Validator.value(value)

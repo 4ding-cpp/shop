@@ -1,21 +1,8 @@
 <template>
   <div id="page">
     <section class="content">
-      {{time1}}
-      <date-picker v-model="time1" valuetype="format"></date-picker>
-      <button @click="login">FB Login</button>
-      <div class="container">
-        <iframe
-          src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook&tabs=timeline&width=340&height=120&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false&appId"
-          width="340"
-          height="140"
-          style="border:none;overflow:hidden"
-          scrolling="no"
-          frameborder="0"
-          allowtransparency="true"
-          allow="encrypted-media"
-        ></iframe>
-      </div>
+      <div id="fb-root"></div>
+      <div class="fb-page" data-href="https://www.facebook.com/facebook" data-tabs="timeline" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/facebook" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/facebook">Facebook</a></blockquote></div>
     </section>
   </div>
 </template>

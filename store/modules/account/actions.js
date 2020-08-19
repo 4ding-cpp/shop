@@ -1,4 +1,5 @@
 // var fetch = require('node-fetch');
+import passwordpb from '@/assets/shoppb/password_pb'
 
 export default {
 
@@ -89,14 +90,29 @@ export default {
     context.commit("set_user", {});
   },
   /**
-   * 
+   * 修改使用者資訊
    * @param {*} context 
    */
-  async changeInfo(context,{ condition = null }) {
+  async changeInfo(context, { condition = null }) {
     let app = this.app
     let metadata = { "x-4d-token": app.store.state.account.token };
     let method = "ChangeInfo";
     let req = new app.customerpb.Customer();
+    if (condition !== null) req.setSelf(condition)
+    let res = await app.grpcAxios(app.$axios, method, metadata, req);
+    // if (res.code === 200) context.commit("set_user", res.data[0]);
+    return res;
+  },
+  /**
+   * 
+   * @param {*} context 
+   * @param {*} param1 
+   */
+  async changePassword(context, { condition = null }) {
+    let app = this.app
+    let metadata = { "x-4d-token": app.store.state.account.token };
+    let method = "ChangePassword";
+    let req = new passwordpb.Password();
     if (condition !== null) req.setSelf(condition)
     let res = await app.grpcAxios(app.$axios, method, metadata, req);
     // if (res.code === 200) context.commit("set_user", res.data[0]);

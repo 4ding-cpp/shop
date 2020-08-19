@@ -38,7 +38,14 @@
               <div class="text-danger">{{ validation.firstError('login.account') }}</div>
             </div>
             <div class="col-md-12 p-3">
-              <input class="w-100 form-control" v-model="form.password" type="password" name placeholder="請輸入密碼" />
+              <input
+                class="w-100 form-control"
+                :class="{'is-invalid': validation.hasError('form.password')}"
+                v-model="form.password"
+                type="password"
+                name
+                placeholder="請輸入密碼"
+              />
               <div class="text-danger">{{ validation.firstError('form.password') }}</div>
             </div>
             <div class="col-md-12 p-3">
@@ -135,7 +142,7 @@ export default {
      * 檢查密碼
      */
     "form.password": function (value) {
-      return this.Validator.value(value).required("請確認密碼").length(10);
+      return this.Validator.value(value).required("請確認密碼").length(8);
     },
   },
   methods: {
@@ -144,7 +151,9 @@ export default {
       loading: "loading",
       _store: "_store",
     }),
-    // 檢查表單
+    /**
+     * 檢查表單
+     */
     submit: async function () {
       return this.$validate().then((success, e) => {
         return { res: success, message: this.validation.allErrors() };
