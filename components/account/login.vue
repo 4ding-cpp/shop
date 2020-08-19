@@ -42,6 +42,7 @@
                 class="w-100 form-control"
                 :class="{'is-invalid': validation.hasError('form.password')}"
                 v-model="form.password"
+                @keyup.enter="signIn"
                 type="password"
                 name
                 placeholder="請輸入密碼"

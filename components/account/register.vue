@@ -47,7 +47,7 @@
         :class="{'is-invalid': validation.hasError('registered.password')}"
         v-model="registered.password"
         type="password"
-        name
+        @keyup.enter="signUp"
         placeholder="密碼"
       />
       <div class="text-danger">{{ validation.firstError('registered.password') }}</div>
@@ -106,7 +106,7 @@ export default {
      * 檢查登入是輸入電郵或是電話
      */
     "registered.phone": function (value) {
-      return this.Validator.value(value).required("請輸入電話").length(8);
+      return this.Validator.value(value).required("請輸入電話").length(10);
     },
     "registered.email": function (value) {
       return this.Validator.value(value)
@@ -114,7 +114,7 @@ export default {
         .email("請確認電郵");
     },
     "registered.password": function (value) {
-      return this.Validator.value(value).required("請輸入密碼");
+      return this.Validator.value(value).required("請輸入密碼").length(8);
     },
   },
   methods: {

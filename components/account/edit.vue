@@ -43,7 +43,13 @@
         <tr>
           <th>舊密碼</th>
           <td>
-            <input type="password" class="w-25 form-control" v-model="password.old_p" />
+            <input
+              type="password"
+              class="w-25 form-control"
+              :class="{'is-invalid': validation.hasError('password.old_p')}"
+              v-model="password.old_p"
+            />
+            <div class="text-danger">{{ validation.firstError('password.old_p') }}</div>
           </td>
         </tr>
         <tr>
@@ -170,6 +176,9 @@ export default {
     "user.zip_code": function (value) {
       return this.Validator.value(value).length(3);
     },
+    "password.old_p": function (value) {
+      return Validator.value(value).length(8);
+    },
     "password.new_p": function (value) {
       return Validator.value(value).length(8);
     },
@@ -250,9 +259,9 @@ export default {
       let result = await this.$store.dispatch("account/changePassword", {
         condition: cond,
       });
-      if(result.code === 200 && result.data === 1){
+      if (result.code === 200 && result.data === 1) {
         this.$toast.success("修改密碼成功");
-      }else {
+      } else {
         this.$toast.success(`修改密碼失敗`);
       }
     },
