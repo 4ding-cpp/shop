@@ -18,6 +18,7 @@
                   <CarouselProduct :lists="product_info.photox" />
                 </section>
               </div>
+              <!-- 右側規格數量 -->
               <div class="col-md-6">
                 <div class="product-name">
                   <div class="cart-button">
@@ -26,9 +27,9 @@
                     </a>
                   </div>
 
-                  <h4>{{product_info.name.tw}}</h4>
-                  <div class="originalPrice">NT{{product_info.price}}</div>
-                  <div class="offer">NT{{product_info.reduce}}</div>
+                  <h4>{{product_info.name.tw}}-{{specx}}</h4>
+                  <div class="originalPrice">NT{{product_info.original}}</div>
+                  <div class="offer">NT{{product_info.price}}</div>
                   <br />
                   <div>規格:</div>
                   <div class="row">
@@ -36,8 +37,8 @@
                       <ButtonChoice
                         :title="specxName(o.itemx)"
                         :free="false"
-                        :active="specx===id"
-                        @selected="specx=id"
+                        :active="specx===o.sku"
+                        @selected="specx=o.sku"
                       />
                     </div>
                   </div>
@@ -59,7 +60,7 @@
               </div>
             </div>
             <!-- 規格說明 -->
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <!-- <ul class="nav nav-tabs" id="myTab" role="tablist">
               <li class="nav-item" v-for="(item,i) in product_info.link.block">
                 <a
                   class="nav-link"
@@ -78,7 +79,7 @@
                 :id="'tab_'+i"
                 role="tabpanel"
               >{{item.title.tw}}</div>
-            </div>
+            </div>-->
             <!-- 瀏覽器紀錄 -->
             <div class="history p-2">瀏覽紀錄</div>
             <div class="history-contect mb-5"></div>
@@ -157,23 +158,20 @@ export default {
         prod: "",
       },
     };
-    console.log(route.params.id)
-
-    let result = await store.dispatch("product/get_productDetail", {
+    let cond = new app.sqlpb.Condition();
+    cond.setF("shell_id").setV(route.params.id);
+    let result = await store.dispatch("product/get_product", {
       app: app,
       token: store.state.account.token,
-      condition: {
-        id: route.params.id,
-      },
+      condition: cond
     });
-    console.log("get_productDetail >>>>", result);
+
     if (result.code === 200) {
-      data.product_info = result.data;
-      data.specx = data.product_info.specxList[0];
+      data.product_info = result.data.shift();
+      data.specx = data.product_info.specx[0].sku;
       data.breadcrumb_info.url += data.product_info.class_id;
       data.breadcrumb_info.prod = data.product_info.name.tw;
     }
-
     return data;
   },
   watch: {
@@ -202,17 +200,17 @@ export default {
     cartJoin() {
       let p = this.product_info;
       let data = {
-        normal: p.product_id,
+        shell_id : p.shell_id,
         sku: this.specx,
         name: { tw: p.name.tw },
-        price: p.reduce,
-        photo: {
+        price: p.price,
+        photox: [{
           src:
             p.photox.length === 0
               ? "/images/noprod.png"
-              : `${process.env.IMG_URL}/${p.photox[0].src}`,
-        },
-        count: this.count,
+              : `${p.photox[0].src}`,
+        }],
+        amount: this.count,
       };
       this._store({ act: "cart/add_cart", data: data });
       this.$toast.success("加入到購物車");

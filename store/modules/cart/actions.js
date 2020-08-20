@@ -8,16 +8,9 @@ export default {
     let req = new app.carpb.Car();
     // if (condition !== null) req.addCommodity(condition)
     if (condition !== null) req.setSelf(condition)
-    let product = await app.grpcAxios(app.$axios, method, metadata, req, (err, resp) => {
-      const data = app.sqlpb.Response.deserializeBinary(resp.data);
-      // todo:錯誤時候會跑兩次!?
-      if (err !== null || data.getCode() != 0) {
-        return { code: 0, data: `[${data.getCode()}] ${data.getMessage()} ` };
-      }
-      return { code: 200, data: data.getResult().toJavaScript() };
-    });
+    let resp = await app.grpcAxios(app.$axios, method, metadata, req);
 
-    return product;
+    return resp;
   },
 
   async get_findCar(context, { condition = null }) {

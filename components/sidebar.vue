@@ -72,7 +72,6 @@ export default {
     // 初始
     ...mapActions({
       loading: "loading",
-      get_productClass: "product/get_productClass",
     }),
     ...mapGetters({
       get_headerMenu: "web/get_headerMenu",

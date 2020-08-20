@@ -19,7 +19,7 @@
       <div class="card-body">
         <div class="caption">
           <h5>{{data.name.tw}}</h5>
-          <div class="originalPrice">NT{{data.price}}</div>
+          <div class="originalPrice">NT{{data.original}}</div>
           <div class="cart-button">
             <a href>
               <i class="far fa-heart"></i>
@@ -28,7 +28,7 @@
               <i class="fas fa-cart-plus"></i>
             </a>
           </div>
-          <div class="text-danger">NT{{data.reduce}}</div>
+          <div class="text-danger">NT{{data.price}}</div>
         </div>
       </div>
     </div>

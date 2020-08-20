@@ -9,7 +9,7 @@ async function gRPC_callback(err, resp) {
   let store = $nuxt.$store;
   let nowTime = new Date().getTime() / 1000;
   let lastTime = store.state.account.token_time;
-
+  console.log(err)
   // 檢查錯誤 grpc-status
   if (err !== null) {
     // token過期 自動重新更新

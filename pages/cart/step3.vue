@@ -380,14 +380,13 @@ export default {
         alert(result.data);
         return false;
       } else {
-        console.log("xxx" + result.data + "xxx");
         alert("createOrder OK:" + result.data);
         let service = this.order.PaymentAdapter.service;
         if (service == "") {
           this.$router.push(`/cart/orderList?id=${result.data}`);
           return true;
         }
-         let redirect = `${process.env.REDIRECT_URL}/cart/orderList?id=${result.data}`;
+        let redirect = `${process.env.REDIRECT_URL}/cart/orderList?id=${result.data}`;
         let url = `${process.env.PAYMENT_URL}/payment/${service}/order/${result.data}?&redirect=${redirect}`;
         window.location = url;
       }
@@ -398,13 +397,12 @@ export default {
       let id = this.order.LogisticsAdapter.id;
       let service = this.order.LogisticsAdapter.service;
       let redirect = `${process.env.REDIRECT_URL}/cart/step3`;
-      window.location = `${process.env.PAYMENT_URL}/logistics/${service}/storemap?a=${id}&redirect=${redirect}`;
+      window.location = `/logistics/${service}/storemap?a=${id}&redirect=${redirect}`;
     },
   },
   created: function () {},
   mounted: async function () {
     this.loading(true);
-    console.log("query:", this.$route.query);
     this.order = JSON.parse(localStorage.getItem("order"));
     // 檢查是否有物流金流資料 沒有返回
     if (

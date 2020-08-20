@@ -10,10 +10,10 @@
           <div class="sidebar col-md-2 pt-3 mb-4">
             <Sidebar />
           </div>
-          <div class="content col-md-10">
-            <div class>
+          <div class="content col-md-10 pt-2">
+            <!-- <div class>
               <img src="/images/banner01.png" class="img-fluid" alt="Responsive image" />
-            </div>
+            </div> -->
             <div class>
               <template v-for="(item,i) in product_list">
                 <Products :data="item" />
@@ -71,10 +71,6 @@ export default {
     // 初始
     ...mapActions({
       loading: "loading",
-      get_product: "product/get_product"
-    }),
-    ...mapMutations({
-      set_product_list: "product/set_product_list"
     }),
     async test() {}
   },

@@ -47,10 +47,6 @@ export default {
     // 初始
     ...mapActions({
       loading: "loading",
-      get_product: "product/get_product",
-    }),
-    ...mapMutations({
-      set_product_list: "product/set_product_list",
     }),
     async test() {},
   },

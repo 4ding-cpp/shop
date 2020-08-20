@@ -53,6 +53,9 @@ export default {
         let cart = JSON.parse(localStorage.getItem("cart"));
         if (cart === null) return;
         context.commit("cart/set_cart", cart)
+        let cart_info = JSON.parse(localStorage.getItem("cart_info"));
+        if (cart_info === null) return;
+        context.commit("cart/set_cart_info", cart_info );
     },
     /**
      * 檢查首次登入的資訊是否存在

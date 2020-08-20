@@ -82,8 +82,8 @@ export default {
   ],
 
   toast: {
-    duration: 3000 ,
-    theme: "outline", 
+    duration: 3000,
+    theme: "outline",
   },
   /*
   ** Axios module configuration
@@ -97,6 +97,10 @@ export default {
   },
   proxy: {
     '/static': {
+      target: 'https://4ding.store',
+      changeOrigin: true,
+    },
+    '/logistics': {
       target: 'https://4ding.store',
       changeOrigin: true,
     },

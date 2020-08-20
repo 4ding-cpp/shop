@@ -14,24 +14,24 @@
             <th></th>
           </thead>
           <tbody>
-            <tr v-for="(item,i) in commodity">
+            <tr v-for="(item,i) in goods">
               <td>
-                <img :src="`${imgesUrl}${item.photo.src}`" alt width="80px" />
+                <img :src="`${imgesUrl}${item.photox[0].src}`" alt width="80px" />
                 <!-- <img src="/images/noprod.png" alt width="80px" /> -->
               </td>
               <td>{{item.name.tw}}</td>
-              <td>{{item.normal}}</td>
+              <td>{{item.shell_id }}</td>
               <td>NT${{item.price}}</td>
               <td>
-                <ButtonSubAdd :data.sync="item" :count.sync="item.count" @after_change="add_cart" />
+                <ButtonSubAdd :data.sync="item" :count.sync="item.amount" @after_change="add_cart" />
               </td>
-              <td>{{ item.count * item.price }}</td>
+              <td>{{ item.amount * item.price }}</td>
               <td>
                 <i @click="del_cart(i)" class="fas fa-trash-alt"></i>
               </td>
             </tr>
           </tbody>
-          <thead v-if="commodity.length==0">
+          <thead v-if="goods.length==0">
             <th class="text-center text-danger" colspan="7">無資料</th>
           </thead>
         </table>
@@ -94,13 +94,13 @@ import _values from "lodash/values";
 export default {
   data() {
     return {
-      cart:{
-        count:0,
-        money:0,
-        list:{}
+      cart: {
+        count: 0,
+        money: 0,
+        list: {},
       },
-      imgesUrl:  process.env.IMG_URL,
-      commodity: [],
+      imgesUrl: process.env.IMG_URL,
+      goods: [],
       activity: [],
       purchase: [
         {
@@ -112,16 +112,8 @@ export default {
       ],
     };
   },
-  async asyncData({ context, app, store, route }) {
-  },
-  watch: {
-    "$store.state.cart.content": {
-      handler(val) {
-        this.cart.list = Object.assign({}, val);
-      },
-      deep: true,
-    },
-  },
+  async asyncData({ context, app, store, route }) {},
+  watch: {},
   computed: {
     //相依的資料改變時才做計算方法
   },
@@ -135,32 +127,32 @@ export default {
      * 計算購物車
      */
     total() {
+      let cart = this.$store.state.cart;
       let money = 0;
-      let count = 0;
-      Object.keys(this.cart.list).forEach((k) => {
-        count += Number(this.cart.list[k].count);
-        money += Number(this.cart.list[k].price) * Number(this.cart.list[k].count);
+      let amount = 0;
+      Object.keys(cart.content).forEach((k) => {
+        amount += Number(cart.content[k].amount);
+        money += Number(cart.content[k].price) * Number(cart.content[k].amount);
       });
       this.cart.money = money;
-      this.cart.count = count;
+      this.cart.count = amount;
       return money;
     },
     // 將目前購物車 送出取得可套用活動相關資訊
     async get_completeCar() {
       let data = {};
-      let cart = this.cart.list;
+      let cart = this.$store.state.cart.content;
       let cart_info = this.$store.state.cart.info;
-      let commodity = _values(cart).map((res) => {
+      let buy = _values(cart).map((res) => {
         return {
-          count: res.count,
-          normal: res.normal,
+          amount: res.amount,
+          shell_id: res.shell_id,
           sku: res.sku,
         };
       });
+      console.log("buy:", buy);
       if (cart == null || cart_info.id == null) return;
-      let cond = Struct.fromJavaScript({
-        commodity: commodity,
-      });
+      let cond = Struct.fromJavaScript({ buy: buy });
 
       let result = await this.$store.dispatch("cart/get_completeCar", {
         app: this,
@@ -170,19 +162,18 @@ export default {
 
       if (result.code === 200) {
         cart_info = { state: 1, id: result.data.car_id };
-        
-        this.commodity = result.data.commodity;
-        this.activity = result.data.activity;
+        console.log(result);
+        this.goods = result.data.goods;
         let data = {};
-        for (let i in this.commodity) {
-          data[`${this.commodity[i].normal}-${this.commodity[i].sku}`] = this.commodity[i];
+        for (let i in this.goods) {
+          let o = this.goods[i];
+          data[`${o.shell_id}-${o.sku}`] = o;
         }
         this._store({
           act: "cart/set_cart_info",
           data: { state: 1, id: result.data.car_id },
         });
         this._store({ act: "cart/set_cart", data: data });
-        // this._store({ act: "cart/set_cart", data: this.commodity });
       }
     },
     // 更新購物車
@@ -191,8 +182,9 @@ export default {
       await this.get_completeCar();
     },
     async del_cart(i) {
-      this._store({ act: "cart/del_cart", data: this.commodity[i] });
-      this.commodity.splice(i, 1);
+      console.log(this.goods[i]);
+      this._store({ act: "cart/del_cart", data: this.goods[i] });
+      this.goods.splice(i, 1);
       await this.get_completeCar();
     },
   },
@@ -209,7 +201,6 @@ export default {
   mounted: async function () {
     //元素已掛載， el 被建立。
     this.loading(false);
-    this.cart.list = this.$store.state.cart.content;
     await this.get_completeCar();
     // let a =await this.get_findCar({token:this.$store.state.account.token})
     // console.log(a)

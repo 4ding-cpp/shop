@@ -23,25 +23,30 @@ export default {
   add_cart(state, o) {
     let content = state.content 
     state.content = {}
-    if(!content[`${o.normal}-${o.sku}`] ){
-      content[`${o.normal}-${o.sku}`] = o
+    if(!content[`${o.shell_id }-${o.sku}`] ){
+      content[`${o.shell_id }-${o.sku}`] = o
     }else{
-      content[`${o.normal}-${o.sku}`].count +=  Number(o.count) ;
+      content[`${o.shell_id }-${o.sku}`].amount +=  Number(o.amount) ;
     }
     state.content = content 
     localStorage.setItem('cart',JSON.stringify(state.content))
   },
   // 設定某一筆購物車
   set_one_cart(state, o) {
-    state.content[`${o.normal}-${o.sku}`] = o
+    state.content[`${o.shell_id }-${o.sku}`] = o
     localStorage.setItem('cart',JSON.stringify(state.content))
   },
   // 新增一筆購物車
   del_cart(state, o) {
     // state.content.push(o)
-    if(state.content[`${o.normal}-${o.sku}`]){
-      delete state.content[`${o.normal}-${o.sku}`] ;
+
+    let key = `${o.shell_id }-${o.sku}` ;
+    let clone = {...state.content};
+    if(clone[`${o.shell_id }-${o.sku}`]){
+      delete clone[key] ;
+      state.content = clone ;
     }
+    console.log("renew:",state.content)
     localStorage.setItem('cart',JSON.stringify(state.content))
   },
 }
