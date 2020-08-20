@@ -23,8 +23,10 @@ export class Car extends jspb.Message {
   getState(): number;
   setState(value: number): void;
 
-  getBuyMap(): jspb.Map<number, Buy>;
-  clearBuyMap(): void;
+  getBuyList(): Array<Buy>;
+  setBuyList(value: Array<Buy>): void;
+  clearBuyList(): void;
+  addBuy(value?: Buy, index?: number): Buy;
 
   getCommodityList(): Array<Commodity>;
   setCommodityList(value: Array<Commodity>): void;
@@ -93,7 +95,7 @@ export namespace Car {
     customerId: string,
     couponId: string,
     state: number,
-    buyMap: Array<[number, Buy.AsObject]>,
+    buyList: Array<Buy.AsObject>,
     commodityList: Array<Commodity.AsObject>,
     activityList: Array<activity$coupon_pb.Activity.AsObject>,
     goodsList: Array<product$goods_pb.ProductGoods.AsObject>,
@@ -110,6 +112,9 @@ export namespace Car {
 }
 
 export class Buy extends jspb.Message {
+  getShellId(): number;
+  setShellId(value: number): void;
+
   getSku(): string;
   setSku(value: string): void;
 
@@ -126,6 +131,7 @@ export class Buy extends jspb.Message {
 
 export namespace Buy {
   export type AsObject = {
+    shellId: number,
     sku: string,
     amount: number,
   }

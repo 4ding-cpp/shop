@@ -96,7 +96,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.ding4.Car.repeatedFields_ = [7,8,9,16,17];
+proto.ding4.Car.repeatedFields_ = [6,7,8,9,16,17];
 
 
 
@@ -134,7 +134,8 @@ proto.ding4.Car.toObject = function(includeInstance, msg) {
     customerId: jspb.Message.getFieldWithDefault(msg, 3, ""),
     couponId: jspb.Message.getFieldWithDefault(msg, 4, ""),
     state: jspb.Message.getFieldWithDefault(msg, 5, 0),
-    buyMap: (f = msg.getBuyMap()) ? f.toObject(includeInstance, proto.ding4.Buy.toObject) : [],
+    buyList: jspb.Message.toObjectList(msg.getBuyList(),
+    proto.ding4.Buy.toObject, includeInstance),
     commodityList: jspb.Message.toObjectList(msg.getCommodityList(),
     proto.ding4.Commodity.toObject, includeInstance),
     activityList: jspb.Message.toObjectList(msg.getActivityList(),
@@ -208,10 +209,9 @@ proto.ding4.Car.deserializeBinaryFromReader = function(msg, reader) {
       msg.setState(value);
       break;
     case 6:
-      var value = msg.getBuyMap();
-      reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readInt32, jspb.BinaryReader.prototype.readMessage, proto.ding4.Buy.deserializeBinaryFromReader, 0, new proto.ding4.Buy());
-         });
+      var value = new proto.ding4.Buy;
+      reader.readMessage(value,proto.ding4.Buy.deserializeBinaryFromReader);
+      msg.addBuy(value);
       break;
     case 7:
       var value = new proto.ding4.Commodity;
@@ -332,9 +332,13 @@ proto.ding4.Car.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getBuyMap(true);
-  if (f && f.getLength() > 0) {
-    f.serializeBinary(6, writer, jspb.BinaryWriter.prototype.writeInt32, jspb.BinaryWriter.prototype.writeMessage, proto.ding4.Buy.serializeBinaryToWriter);
+  f = message.getBuyList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      6,
+      f,
+      proto.ding4.Buy.serializeBinaryToWriter
+    );
   }
   f = message.getCommodityList();
   if (f.length > 0) {
@@ -521,25 +525,41 @@ proto.ding4.Car.prototype.setState = function(value) {
 
 
 /**
- * map<int32, Buy> buy = 6;
- * @param {boolean=} opt_noLazyCreate Do not create the map if
- * empty, instead returning `undefined`
- * @return {!jspb.Map<number,!proto.ding4.Buy>}
+ * repeated Buy buy = 6;
+ * @return {!Array<!proto.ding4.Buy>}
  */
-proto.ding4.Car.prototype.getBuyMap = function(opt_noLazyCreate) {
-  return /** @type {!jspb.Map<number,!proto.ding4.Buy>} */ (
-      jspb.Message.getMapField(this, 6, opt_noLazyCreate,
-      proto.ding4.Buy));
+proto.ding4.Car.prototype.getBuyList = function() {
+  return /** @type{!Array<!proto.ding4.Buy>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.ding4.Buy, 6));
 };
 
 
 /**
- * Clears values from the map. The map will be non-null.
+ * @param {!Array<!proto.ding4.Buy>} value
+ * @return {!proto.ding4.Car} returns this
+*/
+proto.ding4.Car.prototype.setBuyList = function(value) {
+  return jspb.Message.setRepeatedWrapperField(this, 6, value);
+};
+
+
+/**
+ * @param {!proto.ding4.Buy=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.ding4.Buy}
+ */
+proto.ding4.Car.prototype.addBuy = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 6, opt_value, proto.ding4.Buy, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
  * @return {!proto.ding4.Car} returns this
  */
-proto.ding4.Car.prototype.clearBuyMap = function() {
-  this.getBuyMap().clear();
-  return this;};
+proto.ding4.Car.prototype.clearBuyList = function() {
+  return this.setBuyList([]);
+};
 
 
 /**
@@ -946,8 +966,9 @@ proto.ding4.Buy.prototype.toObject = function(opt_includeInstance) {
  */
 proto.ding4.Buy.toObject = function(includeInstance, msg) {
   var f, obj = {
-    sku: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    amount: jspb.Message.getFieldWithDefault(msg, 2, 0)
+    shellId: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    sku: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    amount: jspb.Message.getFieldWithDefault(msg, 3, 0)
   };
 
   if (includeInstance) {
@@ -985,10 +1006,14 @@ proto.ding4.Buy.deserializeBinaryFromReader = function(msg, reader) {
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setShellId(value);
+      break;
+    case 2:
       var value = /** @type {string} */ (reader.readString());
       msg.setSku(value);
       break;
-    case 2:
+    case 3:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setAmount(value);
       break;
@@ -1021,17 +1046,24 @@ proto.ding4.Buy.prototype.serializeBinary = function() {
  */
 proto.ding4.Buy.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
+  f = message.getShellId();
+  if (f !== 0) {
+    writer.writeInt32(
+      1,
+      f
+    );
+  }
   f = message.getSku();
   if (f.length > 0) {
     writer.writeString(
-      1,
+      2,
       f
     );
   }
   f = message.getAmount();
   if (f !== 0) {
     writer.writeInt32(
-      2,
+      3,
       f
     );
   }
@@ -1039,11 +1071,29 @@ proto.ding4.Buy.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional string sku = 1;
+ * optional int32 shell_id = 1;
+ * @return {number}
+ */
+proto.ding4.Buy.prototype.getShellId = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.ding4.Buy} returns this
+ */
+proto.ding4.Buy.prototype.setShellId = function(value) {
+  return jspb.Message.setProto3IntField(this, 1, value);
+};
+
+
+/**
+ * optional string sku = 2;
  * @return {string}
  */
 proto.ding4.Buy.prototype.getSku = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
@@ -1052,16 +1102,16 @@ proto.ding4.Buy.prototype.getSku = function() {
  * @return {!proto.ding4.Buy} returns this
  */
 proto.ding4.Buy.prototype.setSku = function(value) {
-  return jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
 /**
- * optional int32 amount = 2;
+ * optional int32 amount = 3;
  * @return {number}
  */
 proto.ding4.Buy.prototype.getAmount = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
 };
 
 
@@ -1070,7 +1120,7 @@ proto.ding4.Buy.prototype.getAmount = function() {
  * @return {!proto.ding4.Buy} returns this
  */
 proto.ding4.Buy.prototype.setAmount = function(value) {
-  return jspb.Message.setProto3IntField(this, 2, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 

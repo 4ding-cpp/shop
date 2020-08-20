@@ -48,7 +48,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.ding4.ProductGoods.repeatedFields_ = [6,17,18];
+proto.ding4.ProductGoods.repeatedFields_ = [6,18,19];
 
 
 
@@ -91,13 +91,14 @@ proto.ding4.ProductGoods.toObject = function(includeInstance, msg) {
     name: (f = msg.getName()) && google_protobuf_struct_pb.Value.toObject(includeInstance, f),
     urn: jspb.Message.getFieldWithDefault(msg, 8, ""),
     sku: jspb.Message.getFieldWithDefault(msg, 9, ""),
+    photoSrc: jspb.Message.getFieldWithDefault(msg, 10, ""),
     original: jspb.Message.getFieldWithDefault(msg, 11, 0),
-    price: jspb.Message.getFieldWithDefault(msg, 10, 0),
-    weight: jspb.Message.getFloatingPointFieldWithDefault(msg, 12, 0.0),
-    volume: jspb.Message.getFloatingPointFieldWithDefault(msg, 13, 0.0),
-    isPickup: jspb.Message.getBooleanFieldWithDefault(msg, 14, false),
-    isPreorder: jspb.Message.getBooleanFieldWithDefault(msg, 15, false),
-    stock: jspb.Message.getFieldWithDefault(msg, 16, 0),
+    price: jspb.Message.getFieldWithDefault(msg, 12, 0),
+    weight: jspb.Message.getFloatingPointFieldWithDefault(msg, 13, 0.0),
+    volume: jspb.Message.getFloatingPointFieldWithDefault(msg, 14, 0.0),
+    isPickup: jspb.Message.getBooleanFieldWithDefault(msg, 15, false),
+    isPreorder: jspb.Message.getBooleanFieldWithDefault(msg, 16, false),
+    stock: jspb.Message.getFieldWithDefault(msg, 17, 0),
     specxList: jspb.Message.toObjectList(msg.getSpecxList(),
     product_pb.ProductSpec.toObject, includeInstance),
     photoxList: jspb.Message.toObjectList(msg.getPhotoxList(),
@@ -177,40 +178,44 @@ proto.ding4.ProductGoods.deserializeBinaryFromReader = function(msg, reader) {
       var value = /** @type {string} */ (reader.readString());
       msg.setSku(value);
       break;
+    case 10:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setPhotoSrc(value);
+      break;
     case 11:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setOriginal(value);
       break;
-    case 10:
+    case 12:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setPrice(value);
       break;
-    case 12:
+    case 13:
       var value = /** @type {number} */ (reader.readDouble());
       msg.setWeight(value);
       break;
-    case 13:
+    case 14:
       var value = /** @type {number} */ (reader.readDouble());
       msg.setVolume(value);
       break;
-    case 14:
+    case 15:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setIsPickup(value);
       break;
-    case 15:
+    case 16:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setIsPreorder(value);
       break;
-    case 16:
+    case 17:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setStock(value);
       break;
-    case 17:
+    case 18:
       var value = new product_pb.ProductSpec;
       reader.readMessage(value,product_pb.ProductSpec.deserializeBinaryFromReader);
       msg.addSpecx(value);
       break;
-    case 18:
+    case 19:
       var value = new a$submessage_pb.Image;
       reader.readMessage(value,a$submessage_pb.Image.deserializeBinaryFromReader);
       msg.addPhotox(value);
@@ -310,6 +315,13 @@ proto.ding4.ProductGoods.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
+  f = message.getPhotoSrc();
+  if (f.length > 0) {
+    writer.writeString(
+      10,
+      f
+    );
+  }
   f = message.getOriginal();
   if (f !== 0) {
     writer.writeInt32(
@@ -320,49 +332,49 @@ proto.ding4.ProductGoods.serializeBinaryToWriter = function(message, writer) {
   f = message.getPrice();
   if (f !== 0) {
     writer.writeInt32(
-      10,
+      12,
       f
     );
   }
   f = message.getWeight();
   if (f !== 0.0) {
     writer.writeDouble(
-      12,
+      13,
       f
     );
   }
   f = message.getVolume();
   if (f !== 0.0) {
     writer.writeDouble(
-      13,
+      14,
       f
     );
   }
   f = message.getIsPickup();
   if (f) {
     writer.writeBool(
-      14,
+      15,
       f
     );
   }
   f = message.getIsPreorder();
   if (f) {
     writer.writeBool(
-      15,
+      16,
       f
     );
   }
   f = message.getStock();
   if (f !== 0) {
     writer.writeInt32(
-      16,
+      17,
       f
     );
   }
   f = message.getSpecxList();
   if (f.length > 0) {
     writer.writeRepeatedMessage(
-      17,
+      18,
       f,
       product_pb.ProductSpec.serializeBinaryToWriter
     );
@@ -370,7 +382,7 @@ proto.ding4.ProductGoods.serializeBinaryToWriter = function(message, writer) {
   f = message.getPhotoxList();
   if (f.length > 0) {
     writer.writeRepeatedMessage(
-      18,
+      19,
       f,
       a$submessage_pb.Image.serializeBinaryToWriter
     );
@@ -599,6 +611,24 @@ proto.ding4.ProductGoods.prototype.setSku = function(value) {
 
 
 /**
+ * optional string photo_src = 10;
+ * @return {string}
+ */
+proto.ding4.ProductGoods.prototype.getPhotoSrc = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 10, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.ding4.ProductGoods} returns this
+ */
+proto.ding4.ProductGoods.prototype.setPhotoSrc = function(value) {
+  return jspb.Message.setProto3StringField(this, 10, value);
+};
+
+
+/**
  * optional int32 original = 11;
  * @return {number}
  */
@@ -617,11 +647,11 @@ proto.ding4.ProductGoods.prototype.setOriginal = function(value) {
 
 
 /**
- * optional int32 price = 10;
+ * optional int32 price = 12;
  * @return {number}
  */
 proto.ding4.ProductGoods.prototype.getPrice = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 10, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 12, 0));
 };
 
 
@@ -630,33 +660,15 @@ proto.ding4.ProductGoods.prototype.getPrice = function() {
  * @return {!proto.ding4.ProductGoods} returns this
  */
 proto.ding4.ProductGoods.prototype.setPrice = function(value) {
-  return jspb.Message.setProto3IntField(this, 10, value);
+  return jspb.Message.setProto3IntField(this, 12, value);
 };
 
 
 /**
- * optional double weight = 12;
+ * optional double weight = 13;
  * @return {number}
  */
 proto.ding4.ProductGoods.prototype.getWeight = function() {
-  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 12, 0.0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.ding4.ProductGoods} returns this
- */
-proto.ding4.ProductGoods.prototype.setWeight = function(value) {
-  return jspb.Message.setProto3FloatField(this, 12, value);
-};
-
-
-/**
- * optional double volume = 13;
- * @return {number}
- */
-proto.ding4.ProductGoods.prototype.getVolume = function() {
   return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 13, 0.0));
 };
 
@@ -665,34 +677,34 @@ proto.ding4.ProductGoods.prototype.getVolume = function() {
  * @param {number} value
  * @return {!proto.ding4.ProductGoods} returns this
  */
-proto.ding4.ProductGoods.prototype.setVolume = function(value) {
+proto.ding4.ProductGoods.prototype.setWeight = function(value) {
   return jspb.Message.setProto3FloatField(this, 13, value);
 };
 
 
 /**
- * optional bool is_pickup = 14;
+ * optional double volume = 14;
+ * @return {number}
+ */
+proto.ding4.ProductGoods.prototype.getVolume = function() {
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 14, 0.0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.ding4.ProductGoods} returns this
+ */
+proto.ding4.ProductGoods.prototype.setVolume = function(value) {
+  return jspb.Message.setProto3FloatField(this, 14, value);
+};
+
+
+/**
+ * optional bool is_pickup = 15;
  * @return {boolean}
  */
 proto.ding4.ProductGoods.prototype.getIsPickup = function() {
-  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 14, false));
-};
-
-
-/**
- * @param {boolean} value
- * @return {!proto.ding4.ProductGoods} returns this
- */
-proto.ding4.ProductGoods.prototype.setIsPickup = function(value) {
-  return jspb.Message.setProto3BooleanField(this, 14, value);
-};
-
-
-/**
- * optional bool is_preorder = 15;
- * @return {boolean}
- */
-proto.ding4.ProductGoods.prototype.getIsPreorder = function() {
   return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 15, false));
 };
 
@@ -701,17 +713,35 @@ proto.ding4.ProductGoods.prototype.getIsPreorder = function() {
  * @param {boolean} value
  * @return {!proto.ding4.ProductGoods} returns this
  */
-proto.ding4.ProductGoods.prototype.setIsPreorder = function(value) {
+proto.ding4.ProductGoods.prototype.setIsPickup = function(value) {
   return jspb.Message.setProto3BooleanField(this, 15, value);
 };
 
 
 /**
- * optional int32 stock = 16;
+ * optional bool is_preorder = 16;
+ * @return {boolean}
+ */
+proto.ding4.ProductGoods.prototype.getIsPreorder = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 16, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.ding4.ProductGoods} returns this
+ */
+proto.ding4.ProductGoods.prototype.setIsPreorder = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 16, value);
+};
+
+
+/**
+ * optional int32 stock = 17;
  * @return {number}
  */
 proto.ding4.ProductGoods.prototype.getStock = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 16, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 17, 0));
 };
 
 
@@ -720,17 +750,17 @@ proto.ding4.ProductGoods.prototype.getStock = function() {
  * @return {!proto.ding4.ProductGoods} returns this
  */
 proto.ding4.ProductGoods.prototype.setStock = function(value) {
-  return jspb.Message.setProto3IntField(this, 16, value);
+  return jspb.Message.setProto3IntField(this, 17, value);
 };
 
 
 /**
- * repeated ProductSpec specx = 17;
+ * repeated ProductSpec specx = 18;
  * @return {!Array<!proto.ding4.ProductSpec>}
  */
 proto.ding4.ProductGoods.prototype.getSpecxList = function() {
   return /** @type{!Array<!proto.ding4.ProductSpec>} */ (
-    jspb.Message.getRepeatedWrapperField(this, product_pb.ProductSpec, 17));
+    jspb.Message.getRepeatedWrapperField(this, product_pb.ProductSpec, 18));
 };
 
 
@@ -739,7 +769,7 @@ proto.ding4.ProductGoods.prototype.getSpecxList = function() {
  * @return {!proto.ding4.ProductGoods} returns this
 */
 proto.ding4.ProductGoods.prototype.setSpecxList = function(value) {
-  return jspb.Message.setRepeatedWrapperField(this, 17, value);
+  return jspb.Message.setRepeatedWrapperField(this, 18, value);
 };
 
 
@@ -749,7 +779,7 @@ proto.ding4.ProductGoods.prototype.setSpecxList = function(value) {
  * @return {!proto.ding4.ProductSpec}
  */
 proto.ding4.ProductGoods.prototype.addSpecx = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 17, opt_value, proto.ding4.ProductSpec, opt_index);
+  return jspb.Message.addToRepeatedWrapperField(this, 18, opt_value, proto.ding4.ProductSpec, opt_index);
 };
 
 
@@ -763,12 +793,12 @@ proto.ding4.ProductGoods.prototype.clearSpecxList = function() {
 
 
 /**
- * repeated Image photox = 18;
+ * repeated Image photox = 19;
  * @return {!Array<!proto.ding4.Image>}
  */
 proto.ding4.ProductGoods.prototype.getPhotoxList = function() {
   return /** @type{!Array<!proto.ding4.Image>} */ (
-    jspb.Message.getRepeatedWrapperField(this, a$submessage_pb.Image, 18));
+    jspb.Message.getRepeatedWrapperField(this, a$submessage_pb.Image, 19));
 };
 
 
@@ -777,7 +807,7 @@ proto.ding4.ProductGoods.prototype.getPhotoxList = function() {
  * @return {!proto.ding4.ProductGoods} returns this
 */
 proto.ding4.ProductGoods.prototype.setPhotoxList = function(value) {
-  return jspb.Message.setRepeatedWrapperField(this, 18, value);
+  return jspb.Message.setRepeatedWrapperField(this, 19, value);
 };
 
 
@@ -787,7 +817,7 @@ proto.ding4.ProductGoods.prototype.setPhotoxList = function(value) {
  * @return {!proto.ding4.Image}
  */
 proto.ding4.ProductGoods.prototype.addPhotox = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 18, opt_value, proto.ding4.Image, opt_index);
+  return jspb.Message.addToRepeatedWrapperField(this, 19, opt_value, proto.ding4.Image, opt_index);
 };
 
 

@@ -168,8 +168,6 @@ export namespace Condition {
     LIKE = 6,
     LABEL = 7,
     UNLABEL = 8,
-    LEVEL = 9,
-    CLASS = 10,
   }
 }
 
