@@ -4,7 +4,7 @@
       <button
         tag="button"
         @click="FBsignUp()"
-        class="w-100 btn btn-outline-primary btn-sm"
+        class="w-100 btn l-btn btn-facebook  btn-sm"
       >使用FACEBOOK註冊</button>
     </div>
     <div class="col-md-12 p-3">

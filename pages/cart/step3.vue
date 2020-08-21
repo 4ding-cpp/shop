@@ -2,70 +2,22 @@
   <div id="page">
     <section class="content">
       <Step />
-      <!-- 會員登入彈窗 -->
-      <div class="modal fade" id="MemberLogin">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id>會員登入</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <p class="text-center">歡迎回來</p>
-              <button type="button" class="l-btn btn-facebook mr-2 w-100">
-                FACEBOOK
-                快速登入
-              </button>
-              <hr class="divider" />
-              <button type="button" class="l-btn btn-line mr-2 w-100">LINE 快速登入</button>
-              <hr class="divider" />
-              <input class="form-control mb-3" type="text" placeholder="E-MAIL" />
-              <input class="form-control mb-3" type="text" placeholder="密碼" />
-              <button type="button" class="l-btn btn-user mr-2 w-100">會員登入</button>
-              <div class="form-check w-100 mt-2">
-                <input class="form-check-input" type="checkbox" value id="defaultCheck1" />
-                <label class="form-check-label check-label" for="defaultCheck1">保持登入</label>
-              </div>
-              <div class="login-footer row mt-3">
-                <div class="col-xs-6 text-center">
-                  <a href>
-                    <i class="fa fa-key" aria-hidden="true"></i> 忘記密碼嗎？
-                  </a>
-                </div>
-                <div class="col-xs-6 text-center">
-                  <a href="#" class="nav-link" @click="goto('/login/registered')">
-                    <i class="fa fa-user" aria-hidden="true"></i> 註冊新會員
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="container" style="min-height: 600px">
         <div class="row">
-          <div class="col-md-5">
+          <div class="col-md-12">
             <!-- 會員專區 -->
-            <div class="border p-3">
+            <div class="border p-3 mt-3">
               <h5>會員專區</h5>
               <p>
                 會員登入
                 <span class="hint-label">*登入會員管理訂單更方便！</span>
               </p>
               <div class="user-login-buttons">
-                <button type="button" class="l-btn fb-login-btn mr-2">快速登入</button>
-                <button type="button" class="l-btn line-login-btn mr-2">快速登入</button>
-                <!-- Button trigger modal -->
-                <button
-                  type="button"
-                  class="l-btn user-login-btn"
-                  data-toggle="modal"
-                  data-target="#MemberLogin"
-                >會員登入</button>
+                <button type="button" class="w-100 l-btn btn-primary" @click="signIn">會員登入</button>
               </div>
-              <div class="mt-2 mb-2">非會員購買</div>
+              <div class="mt-2 mb-2">
+                <span class="hint-label">* </span>非會員購買
+              </div>
               <input
                 class="form-control"
                 :class="{'is-invalid': validation.hasError('buyer.email')}"
@@ -75,15 +27,131 @@
               />
               <div class="hint-label mt-2">訂單通知會寄到此信箱，請您務必填入正確的 E-mail</div>
             </div>
-            <!-- 訂單備註 -->
+            <!-- 購買人 -->
             <div class="border p-3 mt-3">
-              <h5>訂單備註</h5>
-              <div class="form-group">
-                <textarea class="form-control rounded-0" rows="3" placeholder="有什麼想告訴賣家嗎?"></textarea>
+              <h5>購買人資訊</h5>
+              <div class="from-group mb-3">
+                <div class="row">
+                  <div class="col-md-2 float-left control-label">
+                    <span class="hint-label">* </span>姓名
+                  </div>
+                  <div class="col-md-10 float-left mb-3">
+                    <input
+                      class="form-control"
+                      v-model="buyer.name"
+                      :class="{'is-invalid': validation.hasError('buyer.name')}"
+                      type="text"
+                      placeholder="購買人姓名"
+                    />
+                  </div>
+                  <div class="col-md-2 float-left control-label">
+                    <span class="hint-label">* </span>聯絡電話
+                  </div>
+                  <div class="col-md-10 float-left mb-3">
+                    <input
+                      class="form-control"
+                      v-model="buyer.phone"
+                      :class="{'is-invalid': validation.hasError('buyer.phone')}"
+                      type="text"
+                      placeholder="購買人聯絡電話，例：0987654321"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 收件人 -->
+            <div class="border p-3 mt-3">
+              <h5 >收件人資訊</h5>
+              <div class="form-check w-100 ml-3"></div>
+              <div class="from-group mb-3">
+                <div class="row">
+                  <div class="col-md-12 float-left control-label mb-3">
+                    <input class type="checkbox"  v-model="checked" />
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
+                      <label class="form-check-label check-label" for="defaultCheck1">取件人與購買人相同</label>
+                    </a>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-2 float-left control-label">
+                    <span class="hint-label">* </span>姓名
+                  </div>
+                  <div class="col-md-10 float-left mb-3">
+                    <input
+                      class="form-control"
+                      v-model="receiver.name"
+                      :class="{'is-invalid': validation.hasError('receiver.name')}"
+                      type="text"
+                      placeholder="收件人姓名"
+                    />
+                    <div class="hint-label mt-2">*超商取貨請使用本名，並記得攜帶身分證前往取貨</div>
+                  </div>
+                  <div class="col-md-2 float-left control-label">
+                    <span class="hint-label">* </span>聯絡電話
+                  </div>
+                  <div class="col-md-10 float-left mb-3">
+                    <input
+                      class="form-control"
+                      v-model="receiver.phone"
+                      :class="{'is-invalid': validation.hasError('receiver.phone')}"
+                      type="text"
+                      placeholder="收件人聯絡電話，例：0987654321"
+                    />
+                    <div
+                      class="hint-label mt-2"
+                    >*取貨通知將以此電話聯繫，請勿加入任何空格或符號，使用超商取貨請務必填寫10碼手機，如：0987654321</div>
+                  </div>
+                  <div class="col-md-2 float-left control-label">
+                    <span class="hint-label">* </span>聯絡信箱
+                  </div>
+                  <div class="col-md-10 float-left mb-3">
+                    <input
+                      class="form-control"
+                      v-model="receiver.email"
+                      :class="{'is-invalid': validation.hasError('receiver.email')}"
+                      type="text"
+                      placeholder="聯絡信箱"
+                    />
+                  </div>
+                  <div class="col-md-2 float-left control-label">聯絡地址</div>
+                  <div class="col-md-10 float-left mb-3">
+                    <input
+                      class="form-control"
+                      v-model="receiver.address"
+                      :class="{'is-invalid': validation.hasError('receiver.address')}"
+                      type="text"
+                      placeholder="聯絡地址"
+                    />
+                  </div>
+                  <div class="col-md-12 float-left mb-3">
+                    <button
+                      type="button"
+                      @click="get_cvsStore()"
+                      class="w-100 l-btn pick-btn btn-block"
+                    >選擇取貨門市</button>
+                  </div>
+                  <!-- 下方選項 -->
+                  <div class="form-check w-100 ml-3">
+                    <div class="collapse list-unstyled" id="homeSubmenu">
+                      <div class="col-md-2 float-left control-label">姓名</div>
+                      <div class="col-md-10 float-left mb-3">
+                        <input class="form-control" type="text" placeholder="購買人姓名" />
+                        <div class="hint-label mt-2">*超商取貨請使用本名，並記得攜帶身分證前往取貨</div>
+                      </div>
+                      <div class="col-md-2 float-left control-label">聯絡電話</div>
+                      <div class="col-md-10 float-left mb-3">
+                        <input class="form-control" type="text" placeholder="購買人聯絡電話，例：0987654321" />
+                        <div
+                          class="hint-label mt-2"
+                        >*取貨通知將以此電話聯繫，請勿加入任何空格或符號，使用超商取貨請務必填寫10碼手機，如：0987654321</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <!-- 索取發票 -->
-            <div class="border p-3 mt-3">
+            <div v-if="false" class="border p-3 mt-3">
               <h5>索取發票</h5>
               <div class="from-group mb-3">
                 <div class="row">
@@ -134,132 +202,29 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col-md-7">
-            <!-- 購買人 -->
-            <div class="row border p-3">
-              <h5>購買人資訊</h5>
-              <div class="from-group mb-3">
-                <div class="row">
-                  <div class="col-md-2 float-left control-label">姓名</div>
-                  <div class="col-md-10 float-left mb-3">
-                    <input
-                      class="form-control"
-                      v-model="buyer.name"
-                      :class="{'is-invalid': validation.hasError('buyer.name')}"
-                      type="text"
-                      placeholder="購買人姓名"
-                    />
-                  </div>
-                  <div class="col-md-2 float-left control-label">聯絡電話</div>
-                  <div class="col-md-10 float-left mb-3">
-                    <input
-                      class="form-control"
-                      v-model="buyer.phone"
-                      :class="{'is-invalid': validation.hasError('buyer.phone')}"
-                      type="text"
-                      placeholder="購買人聯絡電話，例：0987654321"
-                    />
-                  </div>
-                </div>
+            <!-- 訂單備註 -->
+            <div class="border p-3 mt-3">
+              <h5>訂單備註</h5>
+              <div class="form-group pt-3">
+                <textarea class="form-control rounded-0" rows="3" placeholder="有什麼想告訴賣家嗎?" v-model="buyer.remark" ></textarea>
               </div>
-            </div>
-            <!-- 收件人 -->
-            <div class="row border p-3 mt-3">
-              <h5>收件人資訊</h5>
-              <div class="form-check w-100 ml-3"></div>
-              <div class="from-group mb-3">
-                <div class="row">
-                  <div class="col-md-12 float-left control-label mb-3">
-                    <input class type="checkbox" value />
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
-                      <label class="form-check-label check-label" for="defaultCheck1">取件人與購買人相同</label>
-                    </a>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-2 float-left control-label">姓名</div>
-                  <div class="col-md-10 float-left mb-3">
-                    <input
-                      class="form-control"
-                      v-model="receiver.name"
-                      :class="{'is-invalid': validation.hasError('receiver.name')}"
-                      type="text"
-                      placeholder="收件人姓名"
-                    />
-                    <div class="hint-label mt-2">*超商取貨請使用本名，並記得攜帶身分證前往取貨</div>
-                  </div>
-                  <div class="col-md-2 float-left control-label">聯絡電話</div>
-                  <div class="col-md-10 float-left mb-3">
-                    <input
-                      class="form-control"
-                      v-model="receiver.phone"
-                      :class="{'is-invalid': validation.hasError('receiver.phone')}"
-                      type="text"
-                      placeholder="收件人聯絡電話，例：0987654321"
-                    />
-                    <div
-                      class="hint-label mt-2"
-                    >*取貨通知將以此電話聯繫，請勿加入任何空格或符號，使用超商取貨請務必填寫10碼手機，如：0987654321</div>
-                  </div>
-                  <div class="col-md-2 float-left control-label">聯絡信箱</div>
-                  <div class="col-md-10 float-left mb-3">
-                    <input
-                      class="form-control"
-                      v-model="receiver.email"
-                      :class="{'is-invalid': validation.hasError('receiver.email')}"
-                      type="text"
-                      placeholder="聯絡信箱"
-                    />
-                  </div>
-                  <div class="col-md-12 float-left mb-3">
-                    <button
-                      type="button"
-                      @click="get_cvsStore()"
-                      class="l-btn pick-btn btn-block ml-3"
-                    >選擇取貨門市</button>
-                  </div>
-                  <!-- 下方選項 -->
-                  <div class="form-check w-100 ml-3">
-                    <div class="collapse list-unstyled" id="homeSubmenu">
-                      <div class="col-md-2 float-left control-label">姓名</div>
-                      <div class="col-md-10 float-left mb-3">
-                        <input class="form-control" type="text" placeholder="購買人姓名" />
-                        <div class="hint-label mt-2">*超商取貨請使用本名，並記得攜帶身分證前往取貨</div>
-                      </div>
-                      <div class="col-md-2 float-left control-label">聯絡電話</div>
-                      <div class="col-md-10 float-left mb-3">
-                        <input class="form-control" type="text" placeholder="購買人聯絡電話，例：0987654321" />
-                        <div
-                          class="hint-label mt-2"
-                        >*取貨通知將以此電話聯繫，請勿加入任何空格或符號，使用超商取貨請務必填寫10碼手機，如：0987654321</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-check w-100 ml-3">
-                    <input class="form-check-input" type="checkbox" value />
-                    <label class="form-check-label check-label" for="defaultCheck1">用上述資料直接註冊會員</label>
-                  </div>
-                  <div class="form-check w-100 ml-3">
-                    <input class="form-check-input" type="checkbox" value />
-                    <label class="form-check-label check-label" for="defaultCheck1">同意會員責任規範及個資聲明</label>
-                  </div>
-                  <div class="form-check w-100 ml-3">
-                    <input class="form-check-input" type="checkbox" value />
-                    <label
-                      class="form-check-label check-label"
-                      for="defaultCheck1"
-                    >為保障彼此之權益，賣家在收到您的訂單後仍保有決定是否接受訂單及出貨與否之權利</label>
-                  </div>
-                  <div class="form-check w-100 m-3">
-                    <button
-                      type="button"
-                      @click="create_Order()"
-                      class="col-md-5 l-btn checkout-btn"
-                    >立即結帳</button>
-                  </div>
-                  {{receiver}}
-                </div>
+              <div class="w-100">
+                <input class="form-check-input mt-2" type="checkbox" value />
+                <label class="form-check-label check-label ml-4" for="defaultCheck1">用上述資料直接註冊會員</label>
+              </div>
+              <div class="w-100">
+                <input class="form-check-input mt-2" type="checkbox" value />
+                <label class="form-check-label check-label ml-4" for="defaultCheck1">同意會員責任規範及個資聲明</label>
+              </div>
+              <div class="w-100">
+                <input class="form-check-input mt-2" type="checkbox" value />
+                <label
+                  class="form-check-label check-label ml-4"
+                  for="defaultCheck1"
+                >為保障彼此之權益，賣家在收到您的訂單後仍保有決定是否接受訂單及出貨與否之權利</label>
+              </div>
+              <div class="w-100 mt-3">
+                <button type="button" @click="create_Order()" class="w-100 l-btn checkout-btn">立即結帳</button>
               </div>
             </div>
           </div>
@@ -279,6 +244,7 @@ export default {
       order: {},
       storeID: "",
       invoice: 1,
+      checked:true,
       invoice_option: [
         { id: 1, title: "會員載具(個人)" },
         { id: 2, title: "公司用(統編)" },
@@ -289,9 +255,10 @@ export default {
 
       // 購買人
       buyer: {
-        phone: "0900000000",
-        email: "BUYER01@gmail.com",
-        name: "BUYER01",
+        phone: "",
+        email: "",
+        name: "",
+        remark: "",
       },
       // 收件人
       receiver: {
@@ -299,12 +266,21 @@ export default {
         phone: "0912345678",
         email: "RECEIVER01@gmail.com",
         name: "RECEIVER01",
+        address: "" ,
         cvs_code: "",
         cvs_type: "",
         cvs_name: "",
         cvs_address: "",
       },
     };
+  },
+  watch: {
+    "$store.state.account.user"(to, from) {
+      this.init_BuyerInfo();
+    },
+    checked:function (to,from) {
+      this.copyBuyer(to)
+    }
   },
   validators: {
     "receiver.name": function (value) {
@@ -320,13 +296,11 @@ export default {
         .required("請確認收件人聯絡信箱為必填")
         .email("請確認收件人聯絡信箱");
     },
-
     "receiver.cvs_type,receiver.cvs_name,receiver.cvs_address,receiver.cvs_code": function (
       value
     ) {
       return this.Validator.value(value).required("請選擇取貨門市");
     },
-
     "buyer.name": function (value) {
       return this.Validator.value(value).required("請確認購買者姓名");
     },
@@ -346,18 +320,32 @@ export default {
       loading: "loading",
       _store: "_store",
     }),
-    // 檢查表單
+    /**
+     * 檢查表單
+     */
     submit: async function () {
       return this.$validate().then((success, e) => {
         console.log(this.validation.allErrors());
         return { res: success, message: this.validation.allErrors() };
       });
     },
-    goto: function (url) {
-      window.open(url, "註冊", "width=300,height=300");
+    /**
+     * 登入
+     */
+    signIn: function () {
+      this.$modal.show("login");
     },
-    // 複製購買人
-    copyBuyer: function () {},
+    /**
+     * 複製購買人
+     */
+    copyBuyer: function (bol) {
+      this.receiver.name = (bol)? this.buyer.name : "" ;
+      this.receiver.phone = (bol)? this.buyer.phone : ""
+      this.receiver.email = (bol)? this.buyer.email : ""
+    },
+    /**
+     * 送出訂單
+     */
     create_Order: async function () {
       let err = await this.submit();
       if (!err.res) {
@@ -365,12 +353,11 @@ export default {
         return;
       }
 
-      let o = { ...this.$store.state.order.content };
+      let o = { ...this.$store.state.order.content, ...this.buyer };
       o.car_id = this.$store.state.cart.info.id;
       o.payment_adapter = this.order.PaymentAdapter.id;
       o.logistics_adapter = this.order.LogisticsAdapter.id;
       o.other.receiver = this.receiver;
-
       let cond = Struct.fromJavaScript(o);
       let result = await this.$store.dispatch("order/create_Order", {
         condition: cond,
@@ -387,20 +374,35 @@ export default {
           return true;
         }
         let redirect = `${process.env.REDIRECT_URL}/cart/orderList?id=${result.data}`;
-        let url = `${process.env.PAYMENT_URL}/payment/${service}/order/${result.data}?&redirect=${redirect}`;
+        let url = `/payment/${service}/order/${result.data}?&redirect=${redirect}`;
         window.location = url;
       }
       return true;
     },
-    // 選擇取貨門市
+    /**
+     * 選擇取貨門市
+     */
     get_cvsStore: async function () {
       let id = this.order.LogisticsAdapter.id;
       let service = this.order.LogisticsAdapter.service;
       let redirect = `${process.env.REDIRECT_URL}/cart/step3`;
       window.location = `/logistics/${service}/storemap?a=${id}&redirect=${redirect}`;
     },
+    /**
+     * 設定購買人資訊
+     */
+    init_BuyerInfo() {
+      let store = this.$store.state.account.user;
+      this.buyer.email = this.receiver.email = store.email ? store.email : "";
+      this.buyer.phone = this.receiver.phone = store.phone ? store.phone : "";
+      this.buyer.name = this.receiver.name = store.name ? store.name : "";
+    },
+
+
   },
-  created: function () {},
+  created: function () {
+    this.init_BuyerInfo();
+  },
   mounted: async function () {
     this.loading(true);
     this.order = JSON.parse(localStorage.getItem("order"));
@@ -426,6 +428,11 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box;
+  margin: 0 1;
+}
 .rule {
   background-color: #86919b;
   color: white;

@@ -104,6 +104,10 @@ export default {
       target: 'https://4ding.store',
       changeOrigin: true,
     },
+    '/payment': {
+      target: 'https://4ding.store',
+      changeOrigin: true,
+    },
     '/ding4.ShopRPC': {
       target: 'https://4ding.store',
       changeOrigin: true,

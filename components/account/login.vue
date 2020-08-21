@@ -22,9 +22,10 @@
               <button
                 tag="button"
                 @click="FBsignIn"
-                class="w-100 btn btn-outline-primary btn-sm"
+                class="w-100 btn l-btn btn-facebook  btn-sm"
               >使用FACEBOOK登入</button>
             </div>
+            <hr class="divider" />
             <div class="col-md-12 p-3">
               <label class="w-100 text-center" for>登入電郵</label>
               <input
