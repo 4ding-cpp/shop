@@ -18,6 +18,8 @@ var a$submessage_pb = require('./a-submessage_pb.js');
 goog.object.extend(proto, a$submessage_pb);
 var product_pb = require('./product_pb.js');
 goog.object.extend(proto, product_pb);
+var activity$coupon_pb = require('./activity-coupon_pb.js');
+goog.object.extend(proto, activity$coupon_pb);
 var google_protobuf_struct_pb = require('google-protobuf/google/protobuf/struct_pb.js');
 goog.object.extend(proto, google_protobuf_struct_pb);
 goog.exportSymbol('proto.ding4.ProductGoods', null, global);
@@ -48,7 +50,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.ding4.ProductGoods.repeatedFields_ = [6,18,19];
+proto.ding4.ProductGoods.repeatedFields_ = [6,18,19,20];
 
 
 
@@ -102,7 +104,9 @@ proto.ding4.ProductGoods.toObject = function(includeInstance, msg) {
     specxList: jspb.Message.toObjectList(msg.getSpecxList(),
     product_pb.ProductSpec.toObject, includeInstance),
     photoxList: jspb.Message.toObjectList(msg.getPhotoxList(),
-    a$submessage_pb.Image.toObject, includeInstance)
+    a$submessage_pb.Image.toObject, includeInstance),
+    activityList: jspb.Message.toObjectList(msg.getActivityList(),
+    activity$coupon_pb.Activity.toObject, includeInstance)
   };
 
   if (includeInstance) {
@@ -219,6 +223,11 @@ proto.ding4.ProductGoods.deserializeBinaryFromReader = function(msg, reader) {
       var value = new a$submessage_pb.Image;
       reader.readMessage(value,a$submessage_pb.Image.deserializeBinaryFromReader);
       msg.addPhotox(value);
+      break;
+    case 20:
+      var value = new activity$coupon_pb.Activity;
+      reader.readMessage(value,activity$coupon_pb.Activity.deserializeBinaryFromReader);
+      msg.addActivity(value);
       break;
     default:
       reader.skipField();
@@ -385,6 +394,14 @@ proto.ding4.ProductGoods.serializeBinaryToWriter = function(message, writer) {
       19,
       f,
       a$submessage_pb.Image.serializeBinaryToWriter
+    );
+  }
+  f = message.getActivityList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      20,
+      f,
+      activity$coupon_pb.Activity.serializeBinaryToWriter
     );
   }
 };
@@ -827,6 +844,44 @@ proto.ding4.ProductGoods.prototype.addPhotox = function(opt_value, opt_index) {
  */
 proto.ding4.ProductGoods.prototype.clearPhotoxList = function() {
   return this.setPhotoxList([]);
+};
+
+
+/**
+ * repeated Activity activity = 20;
+ * @return {!Array<!proto.ding4.Activity>}
+ */
+proto.ding4.ProductGoods.prototype.getActivityList = function() {
+  return /** @type{!Array<!proto.ding4.Activity>} */ (
+    jspb.Message.getRepeatedWrapperField(this, activity$coupon_pb.Activity, 20));
+};
+
+
+/**
+ * @param {!Array<!proto.ding4.Activity>} value
+ * @return {!proto.ding4.ProductGoods} returns this
+*/
+proto.ding4.ProductGoods.prototype.setActivityList = function(value) {
+  return jspb.Message.setRepeatedWrapperField(this, 20, value);
+};
+
+
+/**
+ * @param {!proto.ding4.Activity=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.ding4.Activity}
+ */
+proto.ding4.ProductGoods.prototype.addActivity = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 20, opt_value, proto.ding4.Activity, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.ding4.ProductGoods} returns this
+ */
+proto.ding4.ProductGoods.prototype.clearActivityList = function() {
+  return this.setActivityList([]);
 };
 
 

@@ -432,7 +432,7 @@ proto.ding4.Active.toObject = function(includeInstance, msg) {
     isRepeat: jspb.Message.getBooleanFieldWithDefault(msg, 2, false),
     discount: jspb.Message.getFloatingPointFieldWithDefault(msg, 3, 0.0),
     reduce: jspb.Message.getFloatingPointFieldWithDefault(msg, 4, 0.0),
-    giveaway: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    giveaway: jspb.Message.getFieldWithDefault(msg, 5, 0),
     giveawaySku: jspb.Message.getFieldWithDefault(msg, 6, "")
   };
 
@@ -487,7 +487,7 @@ proto.ding4.Active.deserializeBinaryFromReader = function(msg, reader) {
       msg.setReduce(value);
       break;
     case 5:
-      var value = /** @type {string} */ (reader.readString());
+      var value = /** @type {number} */ (reader.readInt32());
       msg.setGiveaway(value);
       break;
     case 6:
@@ -552,8 +552,8 @@ proto.ding4.Active.serializeBinaryToWriter = function(message, writer) {
     );
   }
   f = message.getGiveaway();
-  if (f.length > 0) {
-    writer.writeString(
+  if (f !== 0) {
+    writer.writeInt32(
       5,
       f
     );
@@ -641,20 +641,20 @@ proto.ding4.Active.prototype.setReduce = function(value) {
 
 
 /**
- * optional string giveaway = 5;
- * @return {string}
+ * optional int32 giveaway = 5;
+ * @return {number}
  */
 proto.ding4.Active.prototype.getGiveaway = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
 };
 
 
 /**
- * @param {string} value
+ * @param {number} value
  * @return {!proto.ding4.Active} returns this
  */
 proto.ding4.Active.prototype.setGiveaway = function(value) {
-  return jspb.Message.setProto3StringField(this, 5, value);
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 

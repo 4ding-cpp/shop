@@ -38,8 +38,8 @@ export class Active extends jspb.Message {
   getReduce(): number;
   setReduce(value: number): void;
 
-  getGiveaway(): string;
-  setGiveaway(value: string): void;
+  getGiveaway(): number;
+  setGiveaway(value: number): void;
 
   getGiveawaySku(): string;
   setGiveawaySku(value: string): void;
@@ -58,7 +58,7 @@ export namespace Active {
     isRepeat: boolean,
     discount: number,
     reduce: number,
-    giveaway: string,
+    giveaway: number,
     giveawaySku: string,
   }
 }

@@ -3,6 +3,7 @@ import * as jspb from "google-protobuf"
 import * as seo_pb from './seo_pb';
 import * as a$submessage_pb from './a-submessage_pb';
 import * as product_pb from './product_pb';
+import * as activity$coupon_pb from './activity-coupon_pb';
 import * as google_protobuf_struct_pb from 'google-protobuf/google/protobuf/struct_pb';
 
 export class ProductGoods extends jspb.Message {
@@ -73,6 +74,11 @@ export class ProductGoods extends jspb.Message {
   clearPhotoxList(): void;
   addPhotox(value?: a$submessage_pb.Image, index?: number): a$submessage_pb.Image;
 
+  getActivityList(): Array<activity$coupon_pb.Activity>;
+  setActivityList(value: Array<activity$coupon_pb.Activity>): void;
+  clearActivityList(): void;
+  addActivity(value?: activity$coupon_pb.Activity, index?: number): activity$coupon_pb.Activity;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ProductGoods.AsObject;
   static toObject(includeInstance: boolean, msg: ProductGoods): ProductGoods.AsObject;
@@ -102,6 +108,7 @@ export namespace ProductGoods {
     stock: number,
     specxList: Array<product_pb.ProductSpec.AsObject>,
     photoxList: Array<a$submessage_pb.Image.AsObject>,
+    activityList: Array<activity$coupon_pb.Activity.AsObject>,
   }
 }
 
