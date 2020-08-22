@@ -3,6 +3,7 @@
     <section class="content">
       <div class="container">
         <!-- 麵包屑 -->
+
         <Breadcrumb :data="breadcrumb_info" />
       </div>
       <div class="container">
@@ -16,6 +17,14 @@
               <div class="col-md-6">
                 <section class>
                   <CarouselProduct :lists="product_info.photox" />
+                </section>
+                <!-- 活動列表 -->
+                <section class="active-block">
+                  <h3>本商品適用活動</h3>
+                  <div v-for="(item,i) in activity" class="d-flex">
+                    <div class="active-item mb-3">活動</div>
+                    <div>{{item.name.tw}}</div>
+                  </div>
                 </section>
               </div>
               <!-- 右側規格數量 -->
@@ -60,8 +69,8 @@
               </div>
             </div>
             <!-- 規格說明 -->
-            <!-- <ul class="nav nav-tabs" id="myTab" role="tablist">
-              <li class="nav-item" v-for="(item,i) in product_info.link.block">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item" v-for="(item,i) in product_info.block">
                 <a
                   class="nav-link"
                   :class="{'active':i==0}"
@@ -73,13 +82,14 @@
             </ul>
             <div class="tab-content mb-5" id="myTabContent">
               <div
-                v-for="(item,i) in product_info.link.block"
+                v-for="(item,i) in product_info.block"
                 class="tab-pane fade"
                 :class="{'active show':i==0}"
                 :id="'tab_'+i"
                 role="tabpanel"
-              >{{item.title.tw}}</div>
-            </div>-->
+                v-html="item.content"
+              ></div>
+            </div>
             <!-- 瀏覽器紀錄 -->
             <div class="history p-2">瀏覽紀錄</div>
             <div class="history-contect mb-5"></div>
@@ -143,9 +153,11 @@ export default {
       // Breadcrumb
       breadcrumb_info: {},
       product_info: {},
+      activity: [],
       // 所選擇的產品資訊
       specx: "",
       count: 1,
+      blockContent: [],
     };
   },
   async asyncData({ context, app, store, route, redirect }) {
@@ -158,16 +170,27 @@ export default {
         prod: "",
       },
     };
-    let cond = new app.sqlpb.Condition();
-    cond.setF("shell_id").setV(route.params.id);
-    let result = await store.dispatch("product/get_product", {
+    let result = await store.dispatch("product/browse_product", {
       app: app,
       token: store.state.account.token,
-      condition: cond
+      condition: {
+        id: route.params.id,
+      },
     });
-
+    console.log("browe:", result);
     if (result.code === 200) {
-      data.product_info = result.data.shift();
+      for (let i in result.data.block) {
+        let item = result.data.block[i];
+        
+        let h = await app.$axios.get(item.url).then((resp) => {
+          return resp.data;
+        });
+        // console.log("item",h)
+        result.data.block[i].content = h
+      }
+      console.log(result.data)
+      data.product_info = result.data;
+      data.activity = data.product_info.activity;
       data.specx = data.product_info.specx[0].sku;
       data.breadcrumb_info.url += data.product_info.class_id;
       data.breadcrumb_info.prod = data.product_info.name.tw;
@@ -200,16 +223,18 @@ export default {
     cartJoin() {
       let p = this.product_info;
       let data = {
-        shell_id : p.shell_id,
+        shell_id: p.shell_id,
         sku: this.specx,
         name: { tw: p.name.tw },
         price: p.price,
-        photox: [{
-          src:
-            p.photox.length === 0
-              ? "/images/noprod.png"
-              : `${p.photox[0].src}`,
-        }],
+        photox: [
+          {
+            src:
+              p.photox.length === 0
+                ? "/images/noprod.png"
+                : `${p.photox[0].src}`,
+          },
+        ],
         amount: this.count,
       };
       this._store({ act: "cart/add_cart", data: data });
@@ -219,11 +244,20 @@ export default {
       await this.cartJoin();
       this.$router.push("/cart/step1");
     },
+    getHTML: async function (url) {
+      let html = await this.$axios.get(url).then((resp) => {
+        return resp.data;
+      });
+    },
   },
   mounted: async function () {
     //元素已掛載， el 被建立。
-    this.loading(false);
-    console.log("product_info>>>>", this.product_info);
+    this.loading(true);
+    this.getHTML("/static/template/RhHHoIldRg/");
+    setTimeout(() => {
+      this.loading(false);
+    }, 2000);
+
     // this.get_template('/Csp7Vk3EPg/template/yXxbn5AMuA')
   },
 };
@@ -237,5 +271,33 @@ export default {
   border: 1px solid #e6e6e6;
   border-top: 0px solid #dee2e6;
   padding: 12px;
+}
+.active-block {
+  box-sizing: border-box;
+  width: 100%;
+  float: left;
+  margin-left: 0;
+  margin-right: 0;
+  border: 1px solid #d4d9de;
+  border-top: 3px solid #4a4e5c;
+  padding: 16px;
+  margin-top: 30px;
+  & h3 {
+    font-size: 0.8em;
+    line-height: 1.5;
+    color: #4a4e5c;
+    font-weight: normal;
+  }
+  & .active-item {
+    font-size: 12px;
+    line-height: 1;
+    color: #ff2750;
+    border: 1px solid #ff2750;
+    padding: 4px;
+    min-width: 72px;
+    box-sizing: border-box;
+    text-align: center;
+    margin-right: 10px;
+  }
 }
 </style>

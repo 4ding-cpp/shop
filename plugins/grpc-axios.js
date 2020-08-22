@@ -16,6 +16,7 @@ async function gRPC_callback(err, resp) {
     if (err['grpc-status'] == 16 && nowTime - lastTime > 600) {
       await store.dispatch("account/get_token")
       await store.dispatch("account/whoAmI")
+      location.reload();
     }
     return { code: 0, data: `[${err['grpc-status']}] ${err['grpc-message']} ` };
   }

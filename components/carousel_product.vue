@@ -75,7 +75,7 @@ export default {
   width: 100%;
   overflow-y: hidden;
   overflow-x: auto;
-  height: 100px;
+  // height: 100px;
   display: flex;
   justify-content: flex-start;
   & li {

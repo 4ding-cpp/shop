@@ -110,7 +110,6 @@ export default {
         pageLimit: pageLimit,
       });
       this.page.loading = false;
-      console.log(page);
       if (result.code === 0) {
         alert(result.data);
         return false;

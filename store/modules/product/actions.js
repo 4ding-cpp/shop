@@ -39,18 +39,13 @@ export default {
    * @param {*} context 
    * @param {*} param1 
    */
-  async get_productDetail(context, { app, token, condition = null }) {
+  async browse_product(context, { app, token, condition = null }) {
 
     let metadata = { "x-4d-token": token };
     let method = "BrowseProductGoods";
     let req = new app.prodpb.ProductGoods();
-
     if (condition.id !== null) req.setShellId(condition.id)
-    let product = await app.grpcAxios(app.$axios, method, metadata, req, (err, resp) => {
-      err = (resp.headers["grpc-status"]) ? resp.headers : null;
-      const data = app.prodpb.ProductGoods.deserializeBinary(resp.data);
-      return { code: 200, data: data.toObject() };
-    });
+    let product = await app.grpcAxios(app.$axios, method, metadata, req);
     return product;
 
   },

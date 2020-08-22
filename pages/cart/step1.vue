@@ -38,13 +38,15 @@
 
         <!-- 小計 折價卷 -->
         <div class="row">
-          <div class="col-lg-12 bord-top-dash p-2">
-            <div class="cart-content-container">
+          <div class="col-lg-12 bord-top-dash p-3">
+            <div class="cart-content-container" v-for=" (item,i) in activity">
               <div class="ecoupon-entry__content">
                 <i class="fas fa-cart-plus"></i>
-                <span class="ecoupon-entry__title">折價券</span>
+                <span class="ecoupon-entry__title">{{item.name.tw}}</span>
+                <span class="blink" v-if="item.reached" >已符合!</span>
               </div>
               <div class="ecoupon-entry__action">
+                <span></span>
                 <i class="fa fa-angle-right" aria-hidden="true"></i>
               </div>
             </div>
@@ -150,7 +152,7 @@ export default {
           sku: res.sku,
         };
       });
-      console.log("buy:", buy);
+
       if (cart == null || cart_info.id == null) return;
       let cond = Struct.fromJavaScript({ buy: buy });
 
@@ -164,6 +166,7 @@ export default {
         cart_info = { state: 1, id: result.data.car_id };
         console.log(result);
         this.goods = result.data.goods;
+        this.activity = result.data.activity;
         let data = {};
         for (let i in this.goods) {
           let o = this.goods[i];
@@ -200,8 +203,9 @@ export default {
   },
   mounted: async function () {
     //元素已掛載， el 被建立。
-    this.loading(false);
+    this.loading(true);
     await this.get_completeCar();
+    this.loading(false);
     // let a =await this.get_findCar({token:this.$store.state.account.token})
     // console.log(a)
   },
@@ -222,13 +226,17 @@ export default {
 </script>
 <style lang="scss" scoped>
 .cart-content-container {
-  padding-left: 18px;
-  padding-right: 4px;
-  margin-bottom: 8px;
+  border: 1px solid #d5d1d1;
+  border-top: 0px;
+  padding: 1rem;
+  margin-bottom: 0.1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 15px;
+  &:first-of-type {
+    border-top: 1px solid #d5d1d1;
+  }
   &.ecoupon-entry__content {
     display: flex;
     flex-wrap: wrap;
@@ -271,8 +279,29 @@ p {
   padding-bottom: 0;
   cursor: default;
 }
-.table td,
-.table th {
-  vertical-align: middle;
+.table {
+  border: 1px solid #dee2e6;
+  & td,
+  & th {
+    vertical-align: middle;
+  }
+}
+
+.blink {
+  color: red;
+  font-weight: bold;
+  animation-duration: 1s;
+  animation-name: blink;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: ease-in-out;
+}
+@keyframes blink {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.2;
+  }
 }
 </style>
