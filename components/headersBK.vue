@@ -1,95 +1,5 @@
 <template>
   <header class="fixed-top">
-    <div class="nav-wrapper">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-          <!-- <nuxt-link tag="a" class="navbar-brand" to="/">首頁</nuxt-link> -->
-          <button
-            class="navbar-toggler collapsed"
-            type="button"
-            data-toggle="collapse"
-            data-target="#MenuDropdown"
-            aria-controls="MenuDropdown"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="navbar-collapse justify-content-end collapse" id="MenuDropdown">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <nuxt-link tag="a" class="nav-link" to="/test">
-                  <span v-if="!user.name">尚未登入!!</span>
-                  <span v-if="user.name">歡迎回來,{{user.name}}!!</span>
-                </nuxt-link>
-              </li>
-              <li class="nav-item">
-                <div class="dropdown">
-                  <a
-                    class="nav-link"
-                    role="button"
-                    id="memberMenu"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    <i class="fas fa-user"></i>
-                  </a>
-
-                  <div class="dropdown-menu" aria-labelledby="memberMenu">
-                    <div class="cart-content">
-                      <div class="buttons mb-2" @click="login">
-                        <a class="btn btn-primary btn-block btn-cart">會員登入</a>
-                      </div>
-                      <div class="buttons" v-if="user.name">
-                        <nuxt-link
-                          tag="a"
-                          class="btn btn-primary btn-block btn-cart"
-                          to="/account/"
-                        >訂單查詢</nuxt-link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <li class="nav-item">
-                <div class="dropdown">
-                  <a
-                    class="nav-link"
-                    role="button"
-                    id="dropdownMenuLink"
-                    @click="toggleShow()"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    <i class="fas fa-shopping-cart"></i>
-                    <span class="badge badge-primary badge-pill">{{cart_total}}</span>
-                  </a>
-                  <DropCart :active.sync="active" :count.sync="cart_total" />
-                </div>
-              </li>
-              <li class="nav-item">
-                <div class="dropdown">
-                  <a
-                    class="nav-link"
-                    role="button"
-                  >
-                    <i class="fas fa-search"></i>
-                  </a>
-                  <DropCart :active.sync="active" :count.sync="cart_total" />
-                </div>
-              </li>
-              <li class="nav-item" @click="logout">
-                <a class="nav-link" href="#">
-                  <i class="fas fa-sign-out-alt"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </div>
     <div class="nav-wrapper list">
       <nav class="navbar navbar-expand-lg navbar-light bg-light container">
         <!-- <a class="navbar-brand" href="/">LOGO</a> -->
@@ -105,6 +15,7 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
+        <div class="d-flex flex-column">
         <div class="navbar-collapse justify-content-center collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
             <li class="nav-item" v-for="(item,i) in nav">
@@ -140,6 +51,43 @@
               >{{item.title.tw}}</a>
             </li>
           </ul>
+        </div>
+        <div class="navbar-collapse justify-content-center collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item" v-for="(item,i) in nav">
+              <nuxt-link
+                v-if="item.title.tw === 'all_product' "
+                tag="a"
+                class="nav-link"
+                :to="`/class/?prod=所有商品`"
+              >所有商品</nuxt-link>
+              <nuxt-link
+                v-if="item.title.tw === 'page_contact' "
+                tag="a"
+                class="nav-link"
+                :to="`/pages/contact`"
+              >聯絡我們</nuxt-link>
+              <nuxt-link
+                v-else-if="item.target.class"
+                tag="a"
+                class="nav-link"
+                :to="`/class/${item.target.class[0]}?prod=${item.title.tw}`"
+              >{{item.title.tw}}</nuxt-link>
+              <nuxt-link
+                v-else-if="item.page"
+                tag="a"
+                class="nav-link"
+                :to="`/pages/${item.page}`"
+              >{{item.title.tw}}</nuxt-link>
+              <a
+                v-else-if="item.link"
+                class="nav-link"
+                :target="(item.is_blank)?'_blank':''"
+                :href="`https://${item.link}`"
+              >{{item.title.tw}}</a>
+            </li>
+          </ul>
+        </div>
         </div>
         <modal name="login" width="500px" height="auto">
           <AccountLogin />

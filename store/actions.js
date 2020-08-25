@@ -17,8 +17,8 @@ export default {
         let app = this.app
         let store = this.app.store
         let token = app.$cookies.get('4dingtoken');
-        // token = "637afb46ff16367552fa38af5465ac1c2b9b17cdef2c66db98c410489bfcfe5e";
-        console.log("cookie:", token)
+        console.log("cookie:",token)
+        
         if (token == "" || token === undefined) {
             let resp = await store.dispatch("account/get_token");
             token = resp.data.token;
@@ -27,6 +27,12 @@ export default {
             let resp = await store.dispatch("account/whoAmI");
             console.log(">>>>身分檢查判定:", resp);
         }
+
+        // config相關
+        let conf = await store.dispatch("other/appConf", {
+            token: token,
+        });
+        console.log("appConf>>",conf)
         // 首頁相關
         let result = await store.dispatch("web/get_website", {
             token: token,

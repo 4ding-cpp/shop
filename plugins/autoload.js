@@ -7,6 +7,10 @@ SimpleVueValidation.extendTemplates({
 });
 Vue.use(SimpleVueValidation);
 
+// MD5 
+import MD5 from './md5'
+Vue.prototype.MD5 = MD5
+
 // use grpc
 import sql_pb from '@/assets/shoppb/sql_pb'
 Vue.prototype.sqlpb = sql_pb

@@ -1,53 +1,53 @@
+@charset "UTF-8";
 body {
   font-family: "Noto Sans TC", "Open Sans", "Heiti TC", "LiHei Pro", "Helvetica Neue", Helvetica, Arial, "微軟正黑體", "微软雅黑", "メイリオ", "맑은 고딕", sans-serif;
   font-size: 14px;
   line-height: 1.428571429;
   color: #565656;
   background-color: #fff;
-  }
+}
+
 a {
   cursor: pointer;
   text-decoration: none;
-  -webkit-tap-highlight-color: rgba(255,255,255,0);
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 
 section.content {
-  padding-top:10px ;
+  padding-top: 10px;
   min-height: 90vh;
 }
-// 我的最愛 愛心
-.far.fa-heart{
+
+.far.fa-heart {
   color: red;
 }
 
-// 原價
-.originalPrice{
+.originalPrice {
   color: #aaa;
   font-size: 0.8em;
   text-decoration: line-through;
   margin-bottom: 4px;
 }
-// 特價
-.offer{
+
+.offer {
   color: #ff5353;
   font-size: 1.5em;
 }
 
-// 首頁 推播
 .images-frame {
   background-color: #eee;
   height: 400px;
   width: 100%;
   text-align: center;
-
   /* Firefox, Chrome */
   line-height: 200px;
-
   /* IE */
-  font-size: 180px; /* 200px * 0.9 = 180px */
+  font-size: 180px;
+  /* 200px * 0.9 = 180px */
   font-family: Arial;
 }
-.images-pic{
+
+.images-pic {
   width: 100%;
   height: 100%;
   background-size: contain;
@@ -55,13 +55,14 @@ section.content {
   background-repeat: no-repeat;
 }
 
-
 .ipt-cards {
-  width:80px;
+  width: 80px;
 }
+
 .control-label {
   color: #939ba1;
 }
+
 .form-control {
   height: 50px;
   font-size: 14px;
@@ -70,7 +71,6 @@ section.content {
   padding: 10px 16px;
 }
 
-// 首頁輪播背景顏色
 .carousel {
   background: #dcd5d5;
 }
@@ -80,7 +80,6 @@ section.content {
   border-radius: 5px;
 }
 
-//  reCAPTCHA 隱藏
 .grecaptcha-badge {
   display: none !important;
 }

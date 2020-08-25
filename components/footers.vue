@@ -4,14 +4,14 @@
       <div class="container">
         <div class="row">
           <section class="col-sm-6 col-md-3" v-for="(item,i) in footer">
+            <hr v-if="item.title.tw !== 'fb_plug'" />
             <h5 v-if="item.title.tw === 'footer_contact' ">聯絡資訊</h5>
             <h5 v-else-if="item.title.tw === 'fb_plug' ">
-              <PlugFb />
+              <PlugFb style="width:100%" />
             </h5>
             <h5 v-else>{{item.title.tw}}</h5>
-            
-            <ul v-if="item.layout" >
-              
+
+            <ul v-if="item.layout">
               <template v-for="(o,j) in item.layout">
                 <!-- 聯絡資訊 -->
                 <li v-if="o.title.tw === 'page_contact'"></li>
@@ -29,10 +29,7 @@
                   <nuxt-link tag="a" class :to="`/pages/${o.page}`">{{o.title.tw}}</nuxt-link>
                 </li>
                 <!--  -->
-                <li v-else-if="o.title.tw">
-                  <i class="fas fa-caret-right"></i>
-                  {{o.title.tw}}
-                </li>
+                <li v-else-if="o.title.tw">{{o.title.tw}}</li>
               </template>
             </ul>
           </section>
@@ -69,23 +66,42 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.container {
+  padding: 25px 0 100px;
+}
+.row {
+  border-bottom: 1px solid #aaa;
+}
 .footer {
+  & hr::after {
+    position: absolute;
+    top: 16px;
+    width: 60px;
+    content: "";
+    border-top: 1px solid #000000;
+  }
+  & a {
+    color: #929191;
+    &:hover {
+      color: #000000;
+    }
+  }
   & i {
     margin-right: 10px;
   }
   & h5 {
     margin: 20px 0;
-    color: #565656;
-    font-size: 1.1em;
-    font-weight: 300;
+    color: #818181;
+    font-size: 13px;
+    font-weight: 700;
   }
   & ul {
-    border-top: 1px solid #aaa;
     list-style: none;
     margin-bottom: 15px;
     padding: 0;
     & li {
       font-size: 13px;
+      font-weight: 700;
       line-height: 20px;
       padding: 5px 0 0;
       color: #929191;

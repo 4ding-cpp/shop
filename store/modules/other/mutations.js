@@ -9,9 +9,12 @@
 
 
 export default {
-  // token
-  
-  set_test(state, o) {
-    state.test = o
+  /**
+   * set config
+   * @param {*} state 
+   * @param {*} o 
+   */
+  set_config(state, o) {
+    state.config = o
   },
 }

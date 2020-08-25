@@ -2,10 +2,20 @@
 
 export default {
  
-  async get_template(context, url) {
-    const html = await this.$axios.$get(`${process.env.IMG_URL}${url}`);
-    console.log(html)
-    return html
+  /**
+   * config
+   * @param {*} context 
+   * @param {*} param1 
+   */
+  async appConf(context, { token = null }) {
+    let app = this.app
+    console.log(this.app)
+    let metadata = { "x-4d-token": token };
+    let method = "AppConf";
+    let req = new app.sqlpb.Query();
+    let res = await app.grpcAxios(app.$axios, method, metadata, req);
+    console.log(res)
+    return res;
   },
   
 }

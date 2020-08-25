@@ -5,12 +5,15 @@ import adapter_pb from '@/assets/shoppb/adapter_pb'
 import product_pb from '@/assets/shoppb/product-goods_pb'
 import freeback_pb from '@/assets/shoppb/freeback_pb'
 import customer_pb from '@/assets/shoppb/customer_pb'
+import MD5 from './md5'
 
 
 import grpcFetch from '@/plugins/grpc-fetch'
 import grpcAxios from '@/plugins/grpc-axios'
 
 export default function ({ app , $axios }) {
+  app.MD5 = MD5 ;
+
   app.sqlpb = sql_pb
   app.carpb = car_pb
   app.orderpb = order_pb
