@@ -13,24 +13,6 @@ export default {
     return resp;
   },
 
-  async get_findCar(context, { condition = null }) {
-    let app = this.app
-    let metadata = { "x-4d-token": app.store.state.account.token };
-    let method = "FindCar";
-    let req = new app.sqlpb.Query();
-    // if (condition !== null) req.addCommodity(condition)
-    if (condition !== null) req.addCondition(condition)
-    let product = await app.grpcAxios(app.$axios, method, metadata, req, (err, resp) => {
-      const data = app.sqlpb.Response.deserializeBinary(resp.data);
-      // todo:錯誤時候會跑兩次!?
-      if (err !== null || data.getCode() != 0) {
-        return { code: 0, data: `[${data.getCode()}] ${data.getMessage()} ` };
-      }
-      return { code: 200, data: data.getResult().toJavaScript() };
-    });
-
-    return product;
-  },
   // 鎖定購物車
   async get_lockCar(context, { condition = null }) {
     let app = this.app

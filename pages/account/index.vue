@@ -78,9 +78,9 @@ export default {
         selected: 0,
         list: [
           { key: "order_record", name: "訂單記錄查詢", module: "RecordOrder" },
-          { key: "favorte_list", name: "商品追蹤清單", module: "Nofinish" },
+          { key: "favorte_list", name: "商品追蹤清單", module: "RecordFavorite" },
           { key: "favorte_list", name: "優惠卷清單", module: "RecordCoupon" },
-          { key: "prod_record", name: "商品詢問紀錄", module: "Nofinish" },
+          // { key: "prod_record", name: "商品詢問紀錄", module: "Nofinish" },
           { key: "acc_edit", name: "個人資料修改", module: "AccountEdit" },
         ],
       },

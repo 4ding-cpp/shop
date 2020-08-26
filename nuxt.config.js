@@ -47,6 +47,7 @@ export default {
     '~/assets/layout.scss',
     '~/assets/main.scss',
     '~/assets/input.scss',
+    '~/assets/cart.scss',
     '~/assets/transition.css'
   ],
   /*

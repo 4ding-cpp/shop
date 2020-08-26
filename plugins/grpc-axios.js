@@ -14,6 +14,7 @@ async function gRPC_callback(err, resp) {
   if (err !== null) {
     // token過期 自動重新更新
     if (err['grpc-status'] == 16 && nowTime - lastTime > 600) {
+      alert("e04")
       await store.dispatch("account/get_token")
       await store.dispatch("account/whoAmI")
       location.reload();
@@ -27,7 +28,7 @@ async function gRPC_callback(err, resp) {
   }
   let res = data.getResult() ;
 
-  return { code: 200, data: (res === undefined)? data.getAffectRow() : res.toJavaScript() };
+  return { code: 200, data: (res === undefined)? data.getAffectRow() : res.toJavaScript() , insert:data.getInsertId() ,update:data.getAffectRow()  };
 }
 
 export default function grpcAxios(axios, method, metadata, req, callback = gRPC_callback) {

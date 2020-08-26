@@ -32,7 +32,7 @@
                 <div class="product-name">
                   <div class="cart-button">
                     <a href>
-                      <i class="far fa-heart"></i>
+                      <i class="fas fa-heart fa-2x"></i>
                     </a>
                   </div>
 
@@ -53,9 +53,13 @@
                   </div>
                 </div>
                 <div class="pt-5">
-                  <label for>數量:</label>
-                  <div class="w-50">
-                    <ButtonSubAdd :count.sync="count" />
+                  <div class="input-group">
+                    <div class="col-md-12 mt-3">
+                      <label for>數量:</label>
+                      <div class="w-50">
+                        <ButtonSubAdd :count.sync="count" />
+                      </div>
+                    </div>
                   </div>
                   <div class="input-group">
                     <div class="col-md-6 mt-3">
@@ -65,11 +69,18 @@
                       <button class="w-100 checkout-btn l-btn" @click="toStep1();">立即結帳</button>
                     </div>
                   </div>
+                  <div class="input-group">
+                    <div class="col-md-12 mt-3">
+                      <button class="btn btn-love" @click="addFavorite">
+                        <i class="fas fa-heart"></i>&nbsp;加到最愛
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
             <!-- 規格說明 -->
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <ul class="nav nav-tabs" id="Tab" role="tablist">
               <li class="nav-item" v-for="(item,i) in product_info.block">
                 <a
                   class="nav-link"
@@ -80,7 +91,7 @@
                 >{{item.title.tw}}</a>
               </li>
             </ul>
-            <div class="tab-content mb-5" id="myTabContent">
+            <div class="tab-content mb-5" id="TabContent">
               <div
                 v-for="(item,i) in product_info.block"
                 class="tab-pane fade"
@@ -93,7 +104,7 @@
             <!-- 瀏覽器紀錄 -->
             <div class="history p-2">瀏覽紀錄</div>
             <div class="history-contect mb-5"></div>
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <ul class="nav nav-tabs" id="Tab" role="tablist">
               <li class="nav-item">
                 <a
                   class="nav-link active"
@@ -105,31 +116,14 @@
                   aria-selected="true"
                 >本分類熱銷</a>
               </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link"
-                  id="profile-tab"
-                  data-toggle="tab"
-                  href="#profile"
-                  role="tab"
-                  aria-controls="profile"
-                  aria-selected="false"
-                >全站方式</a>
-              </li>
             </ul>
-            <div class="tab-content mb-2" id="myTabContent">
+            <div class="tab-content mb-2" id="TabContent">
               <div
                 class="tab-pane fade show active"
                 id="home"
                 role="tabpanel"
                 aria-labelledby="home-tab"
               >AAAAAAAAAAAAAAAAAAAAAAAAAAAA</div>
-              <div
-                class="tab-pane fade"
-                id="profile"
-                role="tabpanel"
-                aria-labelledby="profile-tab"
-              >SSSSSSSSSSSSSSSSSSSSSSSSS</div>
             </div>
           </div>
         </div>
@@ -181,14 +175,12 @@ export default {
     if (result.code === 200) {
       for (let i in result.data.block) {
         let item = result.data.block[i];
-        
+        // 取下方商品描述 規格等...
         let h = await app.$axios.get(item.url).then((resp) => {
           return resp.data;
         });
-        // console.log("item",h)
-        result.data.block[i].content = h
+        result.data.block[i].content = h;
       }
-      console.log(result.data)
       data.product_info = result.data;
       data.activity = data.product_info.activity;
       data.specx = data.product_info.specx[0].sku;
@@ -220,7 +212,27 @@ export default {
       });
       return name;
     },
-    cartJoin() {
+    getFavorite: async function () {
+      let cond = new this.sqlpb.Condition();
+      cond.setF("shell_id").setV(this.product_info.shell_id);
+      let result = await this.$store.dispatch("product/get_MyFavorite", {
+        condition: cond,
+      });
+      console.log("ss", result);
+    },
+    addFavorite: async function () {
+      let result = await this.$store.dispatch("product/set_MyFavorite", {
+        condition: {
+          id: this.product_info.shell_id,
+          pid: this.product_info.product_id,
+        },
+      });
+      console.log("addFavorite", result);
+    },
+    /**
+     * 加入購物車
+     */
+    cartJoin: function () {
       let p = this.product_info;
       let data = {
         shell_id: p.shell_id,
@@ -244,16 +256,17 @@ export default {
       await this.cartJoin();
       this.$router.push("/cart/step1");
     },
-    getHTML: async function (url) {
-      let html = await this.$axios.get(url).then((resp) => {
-        return resp.data;
-      });
-    },
+    // getHTML: async function (url) {
+    //   let html = await this.$axios.get(url).then((resp) => {
+    //     return resp.data;
+    //   });
+    // },
   },
   mounted: async function () {
     //元素已掛載， el 被建立。
     this.loading(true);
-    this.getHTML("/static/template/RhHHoIldRg/");
+    // this.getHTML("/static/template/RhHHoIldRg/");
+    this.getFavorite();
     setTimeout(() => {
       this.loading(false);
     }, 2000);
@@ -264,10 +277,16 @@ export default {
 </script>
 
 <style lang="scss" scoped >
+a .fa-heart {
+  color: red;
+  &:hover {
+    color: red;
+  }
+}
 .shipping-item {
   height: auto;
 }
-#myTabContent {
+#TabContent {
   border: 1px solid #e6e6e6;
   border-top: 0px solid #dee2e6;
   padding: 12px;

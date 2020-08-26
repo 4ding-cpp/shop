@@ -1,0 +1,22 @@
+.cart-button {
+  float: left;
+  padding-right: 5px;
+}
+
+
+// 我的最愛 愛心
+.btn.btn-love {
+  margin: 0 20px 0 0;
+  border: 1px solid #808080;
+  background: none;
+  padding: 5px 15px;
+  border-radius: 13px;
+  color: #808080;
+}
+
+.btn.btn-love:hover,
+.btn.btn-love:focus,
+.btn.btn-love:active {
+  color: #fff;
+  background: #808080;
+}

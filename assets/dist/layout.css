@@ -18,10 +18,6 @@ section.content {
   min-height: 90vh;
 }
 
-.far.fa-heart {
-  color: red;
-}
-
 .originalPrice {
   color: #aaa;
   font-size: 0.8em;

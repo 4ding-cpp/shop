@@ -206,8 +206,6 @@ export default {
     this.loading(true);
     await this.get_completeCar();
     this.loading(false);
-    // let a =await this.get_findCar({token:this.$store.state.account.token})
-    // console.log(a)
   },
   beforeUpdate: function () {
     //當資料變化時被呼叫，還不會描繪 View。
