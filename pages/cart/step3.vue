@@ -358,11 +358,12 @@ export default {
       o.payment_adapter = this.order.PaymentAdapter.id;
       o.logistics_adapter = this.order.LogisticsAdapter.id;
       o.other.receiver = this.receiver;
+       console.log("cond:",o)
       let cond = Struct.fromJavaScript(o);
       let result = await this.$store.dispatch("order/create_Order", {
         condition: cond,
       });
-
+     
       if (result.code === 0 || result.data == "") {
         alert(result.data);
         return false;
