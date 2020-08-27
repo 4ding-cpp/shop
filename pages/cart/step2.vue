@@ -234,10 +234,6 @@ export default {
     // SSR此頁面 會觸發
     "$store.state.cart.info": async function (after, before) {
       switch (true) {
-        case after.state == 1 && after.id != "":
-          await this.get_lockCar();
-          this.loading(false);
-          break;
         default:
           this.loading(false);
       }
@@ -258,27 +254,6 @@ export default {
     switchType: function (type) {
       this.active = type;
       // this.active_type = "1";
-    },
-
-    get_lockCar: async function () {
-      // let cart_info = {
-      //   ...this.$store.state.cart.info,
-      //   state: 2,
-      // };
-      // let cond = Struct.fromJavaScript({ car_id: cart_info.id });
-      // let result = await this.$store.dispatch("cart/get_lockCar", {
-      //   condition: cond,
-      // });
-      // console.log(">>>", result);
-      // if (result.code === 200 && result.data === 1) {
-      //   this.$toast.success("商品已鎖定!");
-      //   this._store({ act: "cart/set_cart_info", data: cart_info });
-      // } else if (result.data === "car state != 1") {
-      //   this._store({ act: "cart/set_cart_info", data: cart_info });
-      // } else {
-      //   this.$toast.error(`${result.data},商品鎖定失敗!`);
-      // }
-      return true;
     },
     // 物流
     get_logistics: async function () {
@@ -368,11 +343,6 @@ export default {
     console.log("query:", this.$route.query);
     console.log("物流:", this.delivery);
     console.log("cash:", this.cash);
-    // ssr 過來此頁面 不動作 監聽觸發
-    if (this.$store.state.cart.info.state == 1) {
-      await this.get_lockCar();
-    }
-
     await this.get_logistics();
     await this.get_payment();
     this.loading(false);

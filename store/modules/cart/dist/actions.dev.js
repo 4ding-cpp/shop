@@ -35,24 +35,6 @@ var _default = {
         }
       }
     });
-  },
-  // 鎖定購物車
-  get_lockCar: function get_lockCar(context, _ref2) {
-    var _ref2$condition, condition;
-
-    return regeneratorRuntime.async(function get_lockCar$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            _ref2$condition = _ref2.condition, condition = _ref2$condition === void 0 ? null : _ref2$condition;
-            return _context2.abrupt("return", product);
-
-          case 2:
-          case "end":
-            return _context2.stop();
-        }
-      }
-    });
   }
 };
 exports["default"] = _default;

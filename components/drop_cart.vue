@@ -68,7 +68,6 @@ export default {
     let list = ["/cart/step1", "/cart/step2", "/cart/step3", "/cart/orderList"];
     if (!list.includes(this.$route.path)) {
       // await this.get_completeCar();
-      // await this.get_lockCar();
     }
   },
   methods: {
@@ -122,29 +121,7 @@ export default {
         this._store({ act: "cart/set_cart", data: data });
       }
     },
-    get_lockCar: async function () {
-      // let cart_info = this.$store.state.cart.info;
-      // if (cart_info.id == "") return;
-      // let cond = Struct.fromJavaScript({
-      //   car_id: cart_info.id,
-      // });
-
-      // let result = await this.$store.dispatch("cart/get_lockCar", {
-      //   condition: cond,
-      // });
-
-      // if (result.code === 200) {
-      //   console.log("lockcar:", result.data);
-      //   cart_info = {
-      //     state: 2,
-      //     id: cart_info.id,
-      //   };
-      //   this._store({ act: "cart/set_cart_info", data: cart_info });
-      // } else {
-      //   alert(result.data);
-      // }
-      return true;
-    },
+    
   },
 };
 </script>
