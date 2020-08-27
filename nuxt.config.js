@@ -16,7 +16,8 @@ export default {
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      // { rel: 'stylesheet', src: ' https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css' },
     ],
     script: [
       { src: 'https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js' },
@@ -24,6 +25,8 @@ export default {
       { src: 'https://kit.fontawesome.com/f4948488d3.js' },
       { src: 'https://cdnjs.cloudflare.com/ajax/libs/Swiper/5.3.7/js/swiper.min.js' },
       { src: 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.8.0/popper.min.js' },
+
+      // { crossorigin: "anonymous" , nonce: "t9mAZPs2" , src: 'https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v8.0&appId=364143314072504&autoLogAppEvents=1' },
       // { src: 'https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit' }
     ],
   },
@@ -38,17 +41,24 @@ export default {
   ** Global CSS
   */
   css: [
+    '~/assets/css/pagination.3.3.5.css',
     '~/assets/css/bootstrap.min.css',
     '~/assets/css/swiper.min.css',
     '~/assets/css/aos.css',
     '~/assets/css/style.scss',
     '~/assets/layout.scss',
+    '~/assets/main.scss',
+    '~/assets/input.scss',
+    '~/assets/form-style.scss',
+    '~/assets/cart.scss',
     '~/assets/transition.css'
   ],
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
+    { src: "@/plugins/facebook", ssr: false },
+    { src: "@/plugins/recaptcha", ssr: false },
     { src: "@/plugins/aos", ssr: false },
     { src: "@/components/index", ssr: true },
     { src: "@/filter/index", ssr: true },
@@ -77,8 +87,8 @@ export default {
   ],
 
   toast: {
-    duration: 500 ,
-    theme: "outline", 
+    duration: 3000,
+    theme: "outline",
   },
   /*
   ** Axios module configuration
@@ -87,17 +97,26 @@ export default {
   axios: {
     // prefix: process.env.API_URL,
     proxy: true,
-    prefix: '/api',
-    credentials: true,
+    // prefix: '/api',
+    // credentials: true,
   },
   proxy: {
-    '/api': {
-      target: 'https://ingress.4ding.site',
+    '/static': {
+      target: 'https://4ding.store',
       changeOrigin: true,
-      pathRewrite: {
-        '^/api': '',
-      },
-    }
+    },
+    '/logistics': {
+      target: 'https://4ding.store',
+      changeOrigin: true,
+    },
+    '/payment': {
+      target: 'https://4ding.store',
+      changeOrigin: true,
+    },
+    '/ding4.ShopRPC': {
+      target: 'https://4ding.store',
+      changeOrigin: true,
+    },
   },
   /*
   ** Build configuration

@@ -3,24 +3,27 @@
     <div class="product">
       <nuxt-link
         tag="img"
+        v-if="data.photox!=null"
         :src="IMG_URL+data.photox[0].src"
         class="card-img-top"
-        :to="'/product/'+data.product_id"
+        :to="'/product/'+data.shell_id"
+      ></nuxt-link>
+      <nuxt-link
+        tag="img"
+        v-else
+        src="/images/noprod.png"
+        class="card-img-top"
+        :to="'/product/'+data.shell_id"
       ></nuxt-link>
       <!-- <img :src="data.photo" class="card-img-top" alt="..." /> -->
       <div class="card-body">
         <div class="caption">
-          <h5>{{data.name.tw}}</h5>
-          <div class="originalPrice">NT{{data.price}}</div>
-          <div class="cart-button">
-            <a href>
-              <i class="far fa-heart"></i>
-            </a>
-            <a href>
-              <i class="fas fa-cart-plus"></i>
-            </a>
-          </div>
-          <div class="text-danger">NT{{data.reduce}}</div>
+          <nuxt-link tag="h4" class="text-center" :to="'/product/'+data.shell_id">{{data.name.tw}}</nuxt-link>
+
+          <section class="d-flex justify-content-around ">
+            <div class="text-danger">NT${{data.price}}</div>
+            <div class="originalPrice">${{data.original}}</div>
+          </section>
         </div>
       </div>
     </div>
@@ -31,7 +34,7 @@ export default {
   props: {
     data: {
       type: Object,
-      default: function() {
+      default: function () {
         return {
           is_display: true,
           name: { en: "B7PBHGIK", tw: "JYNSODBS" },
@@ -41,22 +44,25 @@ export default {
           product_id: "ZAEWkDzotw",
           product_link_id: "VF2eIAgAow",
           reduce: 0,
-          status: 1
+          status: 1,
         };
-      }
-    }
+      },
+    },
   },
   data() {
     return {
-     IMG_URL:process.env.IMG_URL
+      IMG_URL: process.env.IMG_URL,
     };
   },
   methods: {
     // 初始
     ToSelect() {
       this.$emit("selected");
-    }
-  }
+    },
+  },
+  created() {
+    console.log("products", this.data);
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -73,6 +79,20 @@ li {
   border-left: 1px solid #ccc;
   &:first-child {
     border-left: 0px solid;
+  }
+}
+
+.caption {
+  & h4 {
+    height: 42px;
+    line-height: 21px;
+    overflow: hidden;
+    margin: 0;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    color: #232323;
+    font-size: 1.1em;
+    font-weight: 400;
   }
 }
 </style>

@@ -10,10 +10,10 @@
           <div class="sidebar col-md-2 pt-3 mb-4">
             <Sidebar />
           </div>
-          <div class="content col-md-10">
-            <div class>
+          <div class="content col-md-10 pt-2">
+            <!-- <div class>
               <img src="/images/banner01.png" class="img-fluid" alt="Responsive image" />
-            </div>
+            </div> -->
             <div class>
               <template v-for="(item,i) in product_list">
                 <Products :data="item" />
@@ -41,16 +41,18 @@ export default {
   },
   async asyncData({ context, app, store, route }) {
     let data = {
-      page_info: { name: "熱門分類", url: "" }
+      page_info: { name: "分類", url: "/class/?prod=所有商品" , prod:route.query.prod  }
     };
-
-
     // 搜尋該分類的產品列表
-    let cond = new app.sqlpb.Condition();
-    cond.setO(10).setV(route.params.id);
+    let cond = null
+    if( route.params.id !== undefined ){
+      cond = new app.sqlpb.Condition(); 
+      cond.setO(10).setV(route.params.id);
+    }
+
     let result = await store.dispatch("product/get_product", {
       app: app,
-      token: store.state.other.token,
+      token: store.state.account.token,
       condition: cond
     });
 
@@ -69,10 +71,6 @@ export default {
     // 初始
     ...mapActions({
       loading: "loading",
-      get_product: "product/get_product"
-    }),
-    ...mapMutations({
-      set_product_list: "product/set_product_list"
     }),
     async test() {}
   },

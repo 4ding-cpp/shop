@@ -1,26 +1,38 @@
+---
+# Source: business/templates/containers.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: default
-  name: shop-client
+  name: web1
+  namespace: test
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: shop-client
-  replicas: 1
+      app: web1
   template:
     metadata:
       labels:
-        app: shop-client
+        app: web1
     spec:
       containers:
-      - name: shop-client-container
-        image: 4ding/shop-client
-        env:
-        - name: "PORT"
-          value: "80"
+      - env:
+        - name: BUSINESS
+          value: "test"
         - name: "BUILD_NUMBER"
           value: "{{build_number}}"
+<<<<<<< HEAD
+        image: 4ding/shop-client:latest
+        name: web1
+        volumeMounts:
+        - mountPath: /assets
+          name: nfs-230
+      volumes:
+      - name: nfs-230
+        nfs:
+          path: /usr/nfs/test
+          server: 192.168.69.230
+=======
 ---
 apiVersion: v1
 kind: Service
@@ -57,8 +69,9 @@ spec:
   entryPoints:
     - http
   routes:
-    - match: Host(`shop.4ding.site`)
+    - match: Host(`4ding.store`)
       kind: Rule
       services:
         - name: shop-client-service
           port: 80
+>>>>>>> 6416e71e833f5fd734e6f37bb08085e689cb7f33

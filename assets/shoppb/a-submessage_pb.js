@@ -269,7 +269,7 @@ proto.ding4.Rule.prototype.toObject = function(opt_includeInstance) {
 proto.ding4.Rule.toObject = function(includeInstance, msg) {
   var f, obj = {
     amount: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    count: jspb.Message.getFieldWithDefault(msg, 2, 0)
+    price: jspb.Message.getFieldWithDefault(msg, 2, 0)
   };
 
   if (includeInstance) {
@@ -312,7 +312,7 @@ proto.ding4.Rule.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 2:
       var value = /** @type {number} */ (reader.readInt32());
-      msg.setCount(value);
+      msg.setPrice(value);
       break;
     default:
       reader.skipField();
@@ -350,7 +350,7 @@ proto.ding4.Rule.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getCount();
+  f = message.getPrice();
   if (f !== 0) {
     writer.writeInt32(
       2,
@@ -379,10 +379,10 @@ proto.ding4.Rule.prototype.setAmount = function(value) {
 
 
 /**
- * optional int32 count = 2;
+ * optional int32 price = 2;
  * @return {number}
  */
-proto.ding4.Rule.prototype.getCount = function() {
+proto.ding4.Rule.prototype.getPrice = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
@@ -391,7 +391,7 @@ proto.ding4.Rule.prototype.getCount = function() {
  * @param {number} value
  * @return {!proto.ding4.Rule} returns this
  */
-proto.ding4.Rule.prototype.setCount = function(value) {
+proto.ding4.Rule.prototype.setPrice = function(value) {
   return jspb.Message.setProto3IntField(this, 2, value);
 };
 
@@ -432,7 +432,7 @@ proto.ding4.Active.toObject = function(includeInstance, msg) {
     isRepeat: jspb.Message.getBooleanFieldWithDefault(msg, 2, false),
     discount: jspb.Message.getFloatingPointFieldWithDefault(msg, 3, 0.0),
     reduce: jspb.Message.getFloatingPointFieldWithDefault(msg, 4, 0.0),
-    giveaway: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    giveaway: jspb.Message.getFieldWithDefault(msg, 5, 0),
     giveawaySku: jspb.Message.getFieldWithDefault(msg, 6, "")
   };
 
@@ -487,7 +487,7 @@ proto.ding4.Active.deserializeBinaryFromReader = function(msg, reader) {
       msg.setReduce(value);
       break;
     case 5:
-      var value = /** @type {string} */ (reader.readString());
+      var value = /** @type {number} */ (reader.readInt32());
       msg.setGiveaway(value);
       break;
     case 6:
@@ -552,8 +552,8 @@ proto.ding4.Active.serializeBinaryToWriter = function(message, writer) {
     );
   }
   f = message.getGiveaway();
-  if (f.length > 0) {
-    writer.writeString(
+  if (f !== 0) {
+    writer.writeInt32(
       5,
       f
     );
@@ -641,20 +641,20 @@ proto.ding4.Active.prototype.setReduce = function(value) {
 
 
 /**
- * optional string giveaway = 5;
- * @return {string}
+ * optional int32 giveaway = 5;
+ * @return {number}
  */
 proto.ding4.Active.prototype.getGiveaway = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
 };
 
 
 /**
- * @param {string} value
+ * @param {number} value
  * @return {!proto.ding4.Active} returns this
  */
 proto.ding4.Active.prototype.setGiveaway = function(value) {
-  return jspb.Message.setProto3StringField(this, 5, value);
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -1004,8 +1004,8 @@ proto.ding4.ProductTarget.deserializeBinaryFromReader = function(msg, reader) {
       msg.addClass(value);
       break;
     case 2:
-      var value = /** @type {string} */ (reader.readString());
-      msg.addItems(value);
+      var value = /** @type {!Array<number>} */ (reader.readPackedInt32());
+      msg.setItemsList(value);
       break;
     default:
       reader.skipField();
@@ -1045,7 +1045,7 @@ proto.ding4.ProductTarget.serializeBinaryToWriter = function(message, writer) {
   }
   f = message.getItemsList();
   if (f.length > 0) {
-    writer.writeRepeatedString(
+    writer.writePackedInt32(
       2,
       f
     );
@@ -1091,16 +1091,16 @@ proto.ding4.ProductTarget.prototype.clearClassList = function() {
 
 
 /**
- * repeated string items = 2;
- * @return {!Array<string>}
+ * repeated int32 items = 2;
+ * @return {!Array<number>}
  */
 proto.ding4.ProductTarget.prototype.getItemsList = function() {
-  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 2));
+  return /** @type {!Array<number>} */ (jspb.Message.getRepeatedField(this, 2));
 };
 
 
 /**
- * @param {!Array<string>} value
+ * @param {!Array<number>} value
  * @return {!proto.ding4.ProductTarget} returns this
  */
 proto.ding4.ProductTarget.prototype.setItemsList = function(value) {
@@ -1109,7 +1109,7 @@ proto.ding4.ProductTarget.prototype.setItemsList = function(value) {
 
 
 /**
- * @param {string} value
+ * @param {number} value
  * @param {number=} opt_index
  * @return {!proto.ding4.ProductTarget} returns this
  */
@@ -2250,9 +2250,10 @@ proto.ding4.StyleColor.LogoStyle.prototype.toObject = function(opt_includeInstan
  */
 proto.ding4.StyleColor.LogoStyle.toObject = function(includeInstance, msg) {
   var f, obj = {
-    hight: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    height: jspb.Message.getFieldWithDefault(msg, 1, ""),
     width: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    paddingTop: jspb.Message.getFieldWithDefault(msg, 3, "")
+    paddingTop: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    navTop: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
@@ -2291,7 +2292,7 @@ proto.ding4.StyleColor.LogoStyle.deserializeBinaryFromReader = function(msg, rea
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.setHight(value);
+      msg.setHeight(value);
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
@@ -2300,6 +2301,10 @@ proto.ding4.StyleColor.LogoStyle.deserializeBinaryFromReader = function(msg, rea
     case 3:
       var value = /** @type {string} */ (reader.readString());
       msg.setPaddingTop(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setNavTop(value);
       break;
     default:
       reader.skipField();
@@ -2330,7 +2335,7 @@ proto.ding4.StyleColor.LogoStyle.prototype.serializeBinary = function() {
  */
 proto.ding4.StyleColor.LogoStyle.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getHight();
+  f = message.getHeight();
   if (f.length > 0) {
     writer.writeString(
       1,
@@ -2351,14 +2356,21 @@ proto.ding4.StyleColor.LogoStyle.serializeBinaryToWriter = function(message, wri
       f
     );
   }
+  f = message.getNavTop();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
+    );
+  }
 };
 
 
 /**
- * optional string hight = 1;
+ * optional string height = 1;
  * @return {string}
  */
-proto.ding4.StyleColor.LogoStyle.prototype.getHight = function() {
+proto.ding4.StyleColor.LogoStyle.prototype.getHeight = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
@@ -2367,7 +2379,7 @@ proto.ding4.StyleColor.LogoStyle.prototype.getHight = function() {
  * @param {string} value
  * @return {!proto.ding4.StyleColor.LogoStyle} returns this
  */
-proto.ding4.StyleColor.LogoStyle.prototype.setHight = function(value) {
+proto.ding4.StyleColor.LogoStyle.prototype.setHeight = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
 };
 
@@ -2405,6 +2417,24 @@ proto.ding4.StyleColor.LogoStyle.prototype.getPaddingTop = function() {
  */
 proto.ding4.StyleColor.LogoStyle.prototype.setPaddingTop = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional string nav_top = 4;
+ * @return {string}
+ */
+proto.ding4.StyleColor.LogoStyle.prototype.getNavTop = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.ding4.StyleColor.LogoStyle} returns this
+ */
+proto.ding4.StyleColor.LogoStyle.prototype.setNavTop = function(value) {
+  return jspb.Message.setProto3StringField(this, 4, value);
 };
 
 

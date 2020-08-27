@@ -12,7 +12,7 @@ export default function grpcFetch(method, metadata, req, callback) {
   ])
   new Uint8Array(ib, 5).set(bi);
 
-  return fetch(`https://shop.4ding.site/ding4.ShopRPC/${method}`, {
+  return fetch(`/ding4.ShopRPC/${method}`, {
     method: "POST",
     headers: {
       "content-type": "application/grpc-web+proto",
@@ -22,7 +22,7 @@ export default function grpcFetch(method, metadata, req, callback) {
 
     body: new Uint8Array(ib),
   }).then(response => {
-    //   response.headers.forEach(function(val, key) { console.log(key + ' -> ' + val); });
+      response.headers.forEach(function(val, key) { console.log(key + ' -> ' + val); });
     return response.arrayBuffer();
   }).then(ab => {
     return callback(null, ab.slice(5));

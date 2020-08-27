@@ -47,7 +47,7 @@
                         </div>
                       </div>
                     </button>
-                  </div> -->
+                  </div>-->
                 </div>
                 <!-- 超商選項 -->
                 <div class="from-group mb-3">
@@ -73,7 +73,7 @@
                   <div class="row">
                     <div class="col-md-2 float-left control-label">付款方式</div>
                     <div class="col-md-10 float-left">
-                      <div class="row" v-if="cash.show===true" >
+                      <div class="row" v-if="cash.show===true">
                         <div v-for="(item,i) in cash.list" class="col-md-4 pr-2 mb-3">
                           <ButtonChoice
                             :title="item.title"
@@ -83,13 +83,9 @@
                           />
                         </div>
                       </div>
-                      <div class="row" v-if="cash.show===false" >
+                      <div class="row" v-if="cash.show===false">
                         <div class="col-md-4 pr-2 mb-3">
-                          <ButtonChoice
-                            title="取貨付款"
-                            :free="false"
-                            :active="true"
-                          />
+                          <ButtonChoice title="取貨付款" :free="false" :active="true" />
                         </div>
                       </div>
                     </div>
@@ -182,9 +178,7 @@
                 </li>
                 <li>
                   運費
-                  <span class="float-right">
-                    {{ total.fee_logistics }}
-                  </span>
+                  <span class="float-right">{{ total.fee_logistics }}</span>
                 </li>
                 <li>
                   應付總額
@@ -217,7 +211,7 @@ export default {
       forms: null,
       free_shipping: false,
       //統計 運費 , 總金額
-      total:{
+      total: {
         fee_logistics: 0,
         money: 0,
       },
@@ -225,68 +219,46 @@ export default {
       // 物流
       delivery: {
         selected: 0,
-        list: []
+        list: [],
       },
       // 金流
       cash: {
-        show:true,
+        show: true,
         selected: 0,
-        list: []
+        list: [],
       },
-      render_id: ""
+      render_id: "",
     };
   },
   watch: {
     // SSR此頁面 會觸發
-    "$store.state.cart.info": async function(after, before) {
+    "$store.state.cart.info": async function (after, before) {
       switch (true) {
-        case after.state == 1 && after.id != "":
-          await this.get_lockCar();
-          this.loading(false);
-          break;
         default:
           this.loading(false);
       }
     },
     // 監聽物流選擇
-    "delivery.selected": async function(after, before) {
-      let data = this.delivery.list[this.delivery.selected].data ;
-      this.total.fee_logistics = data.logistics_fee
-      this.cash.show = (data.payment_type == 6)? false : true ;
+    "delivery.selected": async function (after, before) {
+      let data = this.delivery.list[this.delivery.selected].data;
+      this.total.fee_logistics = data.logistics_fee;
+      this.cash.show = data.payment_type == 6 ? false : true;
     },
   },
   methods: {
     ...mapActions({
       loading: "loading",
-      _store: "_store"
+      _store: "_store",
     }),
 
-    switchType: function(type) {
+    switchType: function (type) {
       this.active = type;
       // this.active_type = "1";
     },
-
-    get_lockCar: async function() {
-      let cart_info = this.$store.state.cart.info;
-      let cond = Struct.fromJavaScript({
-        car_id: cart_info.id
-      });
-
-      let result = await this.$store.dispatch("cart/get_lockCar", {
-        condition: cond
-      });
-
-      if (result.code === 200) {
-        console.log("lockcar:", result.data);
-      } else {
-        alert(result.data);
-      }
-      return true;
-    },
     // 物流
-    get_logistics: async function() {
+    get_logistics: async function () {
       let result = await this.$store.dispatch("cash/get_logistics", {
-        condition: null
+        condition: null,
       });
       console.log("result>>>", result);
       if (result.code === 0) {
@@ -300,21 +272,21 @@ export default {
           id: i,
           title:
             d.remark != "" ? `${d.name.tw}<br>(${d.remark})` : `${d.name.tw}`,
-          data: d
+          data: d,
         };
         // 物流
         this.delivery.list.push(o);
-        if(i==0) {
-          this.total.fee_logistics = d.logistics_fee 
-          this.cash.show = (d.payment_type == 6 )? false : true ;
+        if (i == 0) {
+          this.total.fee_logistics = d.logistics_fee;
+          this.cash.show = d.payment_type == 6 ? false : true;
         }
       }
       return true;
     },
     // 付款方式
-    get_payment: async function() {
+    get_payment: async function () {
       let result = await this.$store.dispatch("cash/get_payment", {
-        condition: null
+        condition: null,
       });
       console.log("result>>>", result);
       if (result.code === 0) {
@@ -328,55 +300,53 @@ export default {
           id: i,
           title:
             d.remark != "" ? `${d.name.tw}<br>(${d.remark})` : `${d.name.tw}`,
-          data: d
+          data: d,
         };
         this.cash.list.push(o);
       }
       return true;
     },
     // 選擇取貨門市
-    get_cvsStore: async function() {
+    get_cvsStore: async function () {
       let id = this.delivery.list[this.delivery.selected].data.adapter_id;
       let redirect = `${process.env.REDIRECT_URL}/cart/step2`;
       window.location = `${process.env.PAYMENT_URL}a=${id}&&redirect=${redirect}`;
     },
 
-
-    toStep3: async function() {
-
+    toStep3: async function () {
       localStorage.setItem(
         "order",
         JSON.stringify({
-          LogisticsAdapter: { 
-           id: this.delivery.list[this.delivery.selected].data.adapter_id , 
-           service: this.delivery.list[this.delivery.selected].data.service , 
+          LogisticsAdapter: {
+            id: this.delivery.list[this.delivery.selected].data.adapter_id,
+            service: this.delivery.list[this.delivery.selected].data.service,
           },
-          PaymentAdapter: { 
-            id: (this.cash.show === true)? this.cash.list[this.cash.selected].data.adapter_id : '' ,
-            service: (this.cash.show === true)? this.cash.list[this.cash.selected].data.service : '' ,
-          } 
+          PaymentAdapter: {
+            id:
+              this.cash.show === true
+                ? this.cash.list[this.cash.selected].data.adapter_id
+                : "",
+            service:
+              this.cash.show === true
+                ? this.cash.list[this.cash.selected].data.service
+                : "",
+          },
         })
       );
       this.$router.push({
-        path: "/cart/step3"
+        path: "/cart/step3",
       });
-    }
+    },
   },
-  mounted: async function() {
+  mounted: async function () {
     this.loading(true);
     console.log("query:", this.$route.query);
     console.log("物流:", this.delivery);
     console.log("cash:", this.cash);
-    // ssr 過來此頁面 不動作 監聽觸發
-    if (this.$store.state.cart.info.state == 1) {
-      await this.get_lockCar();
-      // this._store({ act: "cart/set_cart_info", data: cart_info });
-    }
-
     await this.get_logistics();
     await this.get_payment();
     this.loading(false);
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>

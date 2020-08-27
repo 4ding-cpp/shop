@@ -7,8 +7,8 @@ export class Rule extends jspb.Message {
   getAmount(): number;
   setAmount(value: number): void;
 
-  getCount(): number;
-  setCount(value: number): void;
+  getPrice(): number;
+  setPrice(value: number): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Rule.AsObject;
@@ -21,7 +21,7 @@ export class Rule extends jspb.Message {
 export namespace Rule {
   export type AsObject = {
     amount: number,
-    count: number,
+    price: number,
   }
 }
 
@@ -38,8 +38,8 @@ export class Active extends jspb.Message {
   getReduce(): number;
   setReduce(value: number): void;
 
-  getGiveaway(): string;
-  setGiveaway(value: string): void;
+  getGiveaway(): number;
+  setGiveaway(value: number): void;
 
   getGiveawaySku(): string;
   setGiveawaySku(value: string): void;
@@ -58,7 +58,7 @@ export namespace Active {
     isRepeat: boolean,
     discount: number,
     reduce: number,
-    giveaway: string,
+    giveaway: number,
     giveawaySku: string,
   }
 }
@@ -101,10 +101,10 @@ export class ProductTarget extends jspb.Message {
   clearClassList(): void;
   addClass(value: string, index?: number): void;
 
-  getItemsList(): Array<string>;
-  setItemsList(value: Array<string>): void;
+  getItemsList(): Array<number>;
+  setItemsList(value: Array<number>): void;
   clearItemsList(): void;
-  addItems(value: string, index?: number): void;
+  addItems(value: number, index?: number): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ProductTarget.AsObject;
@@ -117,7 +117,7 @@ export class ProductTarget extends jspb.Message {
 export namespace ProductTarget {
   export type AsObject = {
     classList: Array<string>,
-    itemsList: Array<string>,
+    itemsList: Array<number>,
   }
 }
 
@@ -277,14 +277,17 @@ export namespace StyleColor {
   }
 
   export class LogoStyle extends jspb.Message {
-    getHight(): string;
-    setHight(value: string): void;
+    getHeight(): string;
+    setHeight(value: string): void;
 
     getWidth(): string;
     setWidth(value: string): void;
 
     getPaddingTop(): string;
     setPaddingTop(value: string): void;
+
+    getNavTop(): string;
+    setNavTop(value: string): void;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): LogoStyle.AsObject;
@@ -296,9 +299,10 @@ export namespace StyleColor {
 
   export namespace LogoStyle {
     export type AsObject = {
-      hight: string,
+      height: string,
       width: string,
       paddingTop: string,
+      navTop: string,
     }
   }
 

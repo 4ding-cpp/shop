@@ -53,7 +53,7 @@ export default {
       setTimeout(() => {
         // 只有一張圖片 or 沒有設定秒數
         // if (this.item.image.length == 1 || this.second == 0 ) return;
-        $(".carousel-control-next").click();
+        //$(".carousel-control-next").click();
         // this.run_carousel();
       }, this.second);
     }
@@ -62,6 +62,7 @@ export default {
   mounted() {
     // this.second = Number(this.item.second) * 1000 ;
     this.run_carousel();
+    console.log(this.item)
   }
 };
 </script>
@@ -74,7 +75,7 @@ export default {
   width: 100%;
   overflow-y: hidden;
   overflow-x: auto;
-  height: 100px;
+  // height: 100px;
   display: flex;
   justify-content: flex-start;
   & li {

@@ -15,4 +15,8 @@ export default {
   set_home_layout(state, o) {
     state.home.layout = o
   },
+  set_menu(state, o) {
+    state.menu = o
+  },
+
 }

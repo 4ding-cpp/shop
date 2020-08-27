@@ -5,4 +5,6 @@ export default {
   timestamp:0,
   // 產品列表
   list: [],
+  // 我的最愛list
+  favorte:[]
 }

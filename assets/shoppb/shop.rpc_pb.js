@@ -14,12 +14,14 @@ var global = Function('return this')();
 
 var pingpong_pb = require('./pingpong_pb.js');
 goog.object.extend(proto, pingpong_pb);
+var password_pb = require('./password_pb.js');
+goog.object.extend(proto, password_pb);
 var sql_pb = require('./sql_pb.js');
 goog.object.extend(proto, sql_pb);
 var customer_pb = require('./customer_pb.js');
 goog.object.extend(proto, customer_pb);
-var product_pb = require('./product_pb.js');
-goog.object.extend(proto, product_pb);
+var product$goods_pb = require('./product-goods_pb.js');
+goog.object.extend(proto, product$goods_pb);
 var car_pb = require('./car_pb.js');
 goog.object.extend(proto, car_pb);
 var activity$coupon_pb = require('./activity-coupon_pb.js');

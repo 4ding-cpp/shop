@@ -6,5 +6,7 @@ export default {
   // 首頁資訊
   home:{
     layout:{}
-  }
+  },
+  // 左側MENU 
+  menu: []
 }

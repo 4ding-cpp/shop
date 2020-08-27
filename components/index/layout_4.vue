@@ -1,8 +1,8 @@
 <template>
-  <div id="picText-type4" class="container">
+  <div :id="`picText-type4-${randID}`" class="container">
     <!-- 標題 -->
     <div v-if="item.title" class="w-100 d-flex justify-content-center">
-      <b>{{item.title}}</b>
+      <b>{{item.title.tw}}</b>
     </div>
     <!--  -->
     <section class="pt-5 pb-5">
@@ -33,11 +33,18 @@ export default {
       default: function() {
         return {};
       }
-    }
+    },
+    randID: {
+      type: [String, Number],
+      default: function () {
+        return Math.floor(Math.random() * 10000) + 1;
+      },
+    },
   },
   data() {
     return {
       _: this.item,
+      _: this.randID,
       IMG_URL: process.env.IMG_URL
     };
   }

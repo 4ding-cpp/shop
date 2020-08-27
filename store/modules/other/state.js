@@ -3,6 +3,6 @@
 export default {
   // token
   token: '',
-
+  config: {},
   test: '',
 }

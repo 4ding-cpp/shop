@@ -1,59 +1,112 @@
 <template>
   <div class="wrapper">
     <nav id="sidebar">
-      <ul class="list-unstyled components">
-        <p>全部商品</p>
-        <li class v-for="(item,i) in class_list">
-          <nuxt-link tag="a" class="dropdown-toggle" :to="`/class/${item.class_id}`">{{item.name.tw}}</nuxt-link>
-        </li>
+      <ul class="list-unstyled">
+        <template v-for="(item,i) in menu">
+          <!-- 所有商品 -->
+          <li v-if="item.title.tw === 'all_product'">
+            <nuxt-link tag="a" class :to="`/class/?prod=所有商品`">所有商品</nuxt-link>
+          </li>
+          <!-- 聯絡資訊 -->
+          <li v-if="item.title.tw === 'page_contact'">
+            <nuxt-link tag="a" class :to="`/pages/contact`">聯絡資訊</nuxt-link>
+          </li>
+          <!-- 自訂 -->
+          <li v-if="item.page">
+            <nuxt-link tag="a" class="dropdown-toggle" :to="`/pages/${item.page}`">{{item.title.tw}}</nuxt-link>
+          </li>
+          <!-- 另開連結 -->
+          <li v-if="item.link">
+            <a
+              :href="`${(!(item.link).match(/^http?:\/\//i) || !(item.link).match(/^https?:\/\//i))? `http://${item.link}` :  item.link}`"
+              target="_blank"
+            >{{item.title.tw}}</a>
+          </li>
+          <!-- 產品明細 -->
+          <li v-if="item.class">
+            <a :href="`#Submenu`+i" data-toggle="collapse" class="dropdown-toggle">{{item.title.tw}}</a>
+            <ul
+              v-if="item.class"
+              class="collapse list-unstyled"
+              :class="{'show':true }"
+              :id="`Submenu`+i"
+            >
+              <li v-for="(o,j) in item.class" :key="j" class="dropright">
+                <nuxt-link
+                  tag="a"
+                  class="dropdown-toggle"
+                  :to="`/class/${o.class_id}`"
+                >{{o.name.tw}}</nuxt-link>
+              </li>
+            </ul>
+          </li>
+        </template>
       </ul>
     </nav>
   </div>
 </template>
 
 <script>
-import { mapActions, mapMutations } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   data() {
     return {
-      class_list: [],
-      left: [
-        { title: "優勢特色", link: "/home" },
-        { title: "系統簡介", link: "/introduction" },
-        { title: "計畫費用", link: "/cost" },
-        { title: "常見問題", link: "/question" }
-      ],
-      right: [
-        { title: "開通帳號", link: "/registered" }
-        // { title: "登入", link: "/login" }
-      ]
+      menu: [],
+      // todo 點選某一個menu
+      selected: {
+        hash: "",
+      },
     };
   },
-  async mounted() {
-    let cond = new this.sqlpb.Condition();
-    let result = await this.get_productClass({
-      app: this,
-      token: this.$store.state.other.token,
-      condition: null
-    });
-    this.class_list = result.data;
+  async created() {
+    this.menu = this.get_headerMenu();
+  },
+  // 監聽,當路由發生變化的時候執行
+  watch: {
+    "$store.state.web.style"(status) {
+      this.menu = this.get_headerMenu();
+    },
   },
   methods: {
     // 初始
     ...mapActions({
       loading: "loading",
-      get_productClass: "product/get_productClass"
     }),
-    async test() {}
-  }
+    ...mapGetters({
+      get_headerMenu: "web/get_headerMenu",
+    }),
+    async test() {},
+  },
 };
 </script>
 <style lang="scss" scoped>
+.sidebar ul:first-child {
+  border: 1px solid #ddd;
+}
 li {
   border-color: transparent;
   margin-bottom: 0px;
   border-bottom: 1px dashed #e9e9e9;
   padding: 10px;
+  & > ul > li:last-child {
+    border-bottom: 0px;
+  }
+}
+.dropdown-toggle::after {
+  position: absolute;
+  right: 2rem;
+  margin-top: 0.5rem;
+}
+
+.dropright {
+  & .dropdown-toggle {
+    margin-left: 2rem;
+    &::after {
+      position: absolute;
+      left: 1rem;
+      margin-top: 0.5rem;
+    }
+  }
 }
 </style>

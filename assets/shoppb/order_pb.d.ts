@@ -17,6 +17,9 @@ export class Order extends jspb.Message {
   getCustomerId(): string;
   setCustomerId(value: string): void;
 
+  getName(): string;
+  setName(value: string): void;
+
   getEmail(): string;
   setEmail(value: string): void;
 
@@ -32,17 +35,20 @@ export class Order extends jspb.Message {
   getCouponId(): string;
   setCouponId(value: string): void;
 
-  getCount(): number;
-  setCount(value: number): void;
+  getAmount(): number;
+  setAmount(value: number): void;
 
   getFreight(): number;
   setFreight(value: number): void;
 
-  getAmount(): number;
-  setAmount(value: number): void;
+  getPrice(): number;
+  setPrice(value: number): void;
 
   getOrderCharge(): number;
   setOrderCharge(value: number): void;
+
+  getBusinessCharge(): number;
+  setBusinessCharge(value: number): void;
 
   getSalesCharge(): number;
   setSalesCharge(value: number): void;
@@ -83,6 +89,9 @@ export class Order extends jspb.Message {
   getLogisticsSubType(): number;
   setLogisticsSubType(value: number): void;
 
+  getIsTimeout(): boolean;
+  setIsTimeout(value: boolean): void;
+
   getPickupAt(): string;
   setPickupAt(value: string): void;
 
@@ -109,10 +118,10 @@ export class Order extends jspb.Message {
   hasOther(): boolean;
   clearOther(): void;
 
-  getCommodityList(): Array<OrderCommomdity>;
-  setCommodityList(value: Array<OrderCommomdity>): void;
-  clearCommodityList(): void;
-  addCommodity(value?: OrderCommomdity, index?: number): OrderCommomdity;
+  getGoodsList(): Array<OrderGoods>;
+  setGoodsList(value: Array<OrderGoods>): void;
+  clearGoodsList(): void;
+  addGoods(value?: OrderGoods, index?: number): OrderGoods;
 
   getLabelxMap(): jspb.Map<string, number>;
   clearLabelxMap(): void;
@@ -159,15 +168,17 @@ export namespace Order {
     storeId: string,
     salesId: string,
     customerId: string,
+    name: string,
     email: string,
     phone: string,
     isCustomer: boolean,
     carId: string,
     couponId: string,
-    count: number,
-    freight: number,
     amount: number,
+    freight: number,
+    price: number,
     orderCharge: number,
+    businessCharge: number,
     salesCharge: number,
     paymentCharge: number,
     logisticsCharge: number,
@@ -181,6 +192,7 @@ export namespace Order {
     logisticsService: string,
     logisticsType: number,
     logisticsSubType: number,
+    isTimeout: boolean,
     pickupAt: string,
     closeAt: string,
     payAt: string,
@@ -189,7 +201,7 @@ export namespace Order {
     device: string,
     remark: string,
     other?: OrderOther.AsObject,
-    commodityList: Array<OrderCommomdity.AsObject>,
+    goodsList: Array<OrderGoods.AsObject>,
     labelxMap: Array<[string, number]>,
     operator: string,
     createAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
@@ -200,12 +212,18 @@ export namespace Order {
   }
 }
 
-export class OrderCommomdity extends jspb.Message {
+export class OrderGoods extends jspb.Message {
   getOrderId(): string;
   setOrderId(value: string): void;
 
   getStoreId(): string;
   setStoreId(value: string): void;
+
+  getSalesId(): string;
+  setSalesId(value: string): void;
+
+  getActivityId(): string;
+  setActivityId(value: string): void;
 
   getProductId(): string;
   setProductId(value: string): void;
@@ -226,17 +244,19 @@ export class OrderCommomdity extends jspb.Message {
   setPrice(value: number): void;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): OrderCommomdity.AsObject;
-  static toObject(includeInstance: boolean, msg: OrderCommomdity): OrderCommomdity.AsObject;
-  static serializeBinaryToWriter(message: OrderCommomdity, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): OrderCommomdity;
-  static deserializeBinaryFromReader(message: OrderCommomdity, reader: jspb.BinaryReader): OrderCommomdity;
+  toObject(includeInstance?: boolean): OrderGoods.AsObject;
+  static toObject(includeInstance: boolean, msg: OrderGoods): OrderGoods.AsObject;
+  static serializeBinaryToWriter(message: OrderGoods, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): OrderGoods;
+  static deserializeBinaryFromReader(message: OrderGoods, reader: jspb.BinaryReader): OrderGoods;
 }
 
-export namespace OrderCommomdity {
+export namespace OrderGoods {
   export type AsObject = {
     orderId: string,
     storeId: string,
+    salesId: string,
+    activityId: string,
     productId: string,
     sku: string,
     photoSrc: string,
@@ -321,15 +341,13 @@ export class OrderOther extends jspb.Message {
   getLogisticsNo(): string;
   setLogisticsNo(value: string): void;
 
+  getReturnNo(): string;
+  setReturnNo(value: string): void;
+
   getSender(): ContactInfo | undefined;
   setSender(value?: ContactInfo): void;
   hasSender(): boolean;
   clearSender(): void;
-
-  getBuyer(): ContactInfo | undefined;
-  setBuyer(value?: ContactInfo): void;
-  hasBuyer(): boolean;
-  clearBuyer(): void;
 
   getReceiver(): ContactInfo | undefined;
   setReceiver(value?: ContactInfo): void;
@@ -354,13 +372,22 @@ export namespace OrderOther {
     bankAccount: string,
     cvsNo: string,
     logisticsNo: string,
+    returnNo: string,
     sender?: ContactInfo.AsObject,
-    buyer?: ContactInfo.AsObject,
     receiver?: ContactInfo.AsObject,
   }
 }
 
 export class OrderBatch extends jspb.Message {
+  getState(): number;
+  setState(value: number): void;
+
+  getPaymentState(): number;
+  setPaymentState(value: number): void;
+
+  getLogisticsState(): number;
+  setLogisticsState(value: number): void;
+
   getOrderList(): Array<Order>;
   setOrderList(value: Array<Order>): void;
   clearOrderList(): void;
@@ -381,6 +408,9 @@ export class OrderBatch extends jspb.Message {
 
 export namespace OrderBatch {
   export type AsObject = {
+    state: number,
+    paymentState: number,
+    logisticsState: number,
     orderList: Array<Order.AsObject>,
     self?: google_protobuf_struct_pb.Struct.AsObject,
   }

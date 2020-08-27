@@ -20,6 +20,9 @@ export class Customer extends jspb.Message {
   getName(): string;
   setName(value: string): void;
 
+  getFbAccesstoken(): string;
+  setFbAccesstoken(value: string): void;
+
   getEmail(): string;
   setEmail(value: string): void;
 
@@ -99,6 +102,7 @@ export namespace Customer {
     storeId: string,
     status: number,
     name: string,
+    fbAccesstoken: string,
     email: string,
     phone: string,
     password: string,

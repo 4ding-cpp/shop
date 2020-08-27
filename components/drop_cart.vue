@@ -4,15 +4,15 @@
       <div class="cart_list">
         <div class="product_item" v-for="(item, key, index) in cart">
           <div class="float-left">
-            <img :src="`${IMG_URL}${item.photo.src}`" alt />
+            <img :src="`${IMG_URL}${item.photox[0].src}`" alt />
           </div>
           <div class="product-name">
             <p class="title">
               <a href>{{item.name.tw}}</a>
             </p>
             <span class="price">
-              NT${{ item.count * item.price }}元
-              <span class="color-gray-text">*{{item.count}}</span>
+              NT${{ item.price }}元
+              <span class="color-gray-text">*{{item.amount}}</span>
             </span>
           </div>
         </div>
@@ -34,6 +34,12 @@ import _values from "lodash/values";
 
 export default {
   props: {
+    count: {
+      active: [Number, String],
+      default: function () {
+        return 0;
+      },
+    },
     data: {
       active: Boolean,
       default: function () {
@@ -51,16 +57,17 @@ export default {
   watch: {
     "$store.state.cart.content": {
       handler(val) {
-        this.cart = Object.assign({}, val)
+        this.cart = Object.assign({}, val);
       },
       deep: true,
     },
   },
   mounted: async function () {
-    let list = ["/cart/step1", "/cart/step2"];
+  
+    this.cart = this.$store.state.cart.content;
+    let list = ["/cart/step1", "/cart/step2", "/cart/step3", "/cart/orderList"];
     if (!list.includes(this.$route.path)) {
-      await this.get_completeCar();
-      await this.get_lockCar();
+      // await this.get_completeCar();
     }
   },
   methods: {
@@ -69,31 +76,36 @@ export default {
       loading: "loading",
       _store: "_store",
     }),
-    // 初始
+    /**
+     * 計算購物車
+     */
     total() {
       let money = 0;
+      let amount = 0;
       Object.keys(this.cart).forEach((k) => {
-        money += Number(this.cart[k].price) * Number(this.cart[k].count);
+        amount += Number(this.cart[k].amount);
+        money += Number(this.cart[k].price) * Number(this.cart[k].amount);
       });
+      this.$emit("update:count", amount);
       return money;
     },
     // 將目前購物車 送出取得可套用活動相關資訊
     get_completeCar: async function () {
       let data = {};
-      let cart = JSON.parse(localStorage.getItem("cart"));
+      let cart = this.$store.state.cart.content;
       let cart_info = this.$store.state.cart.info;
+      if (cart == "" || cart_info.id == "") return;
 
-      if (cart == null || cart_info.id == null) return;
       let cond = Struct.fromJavaScript({
         commodity: _values(cart),
       });
 
       let result = await this.$store.dispatch("cart/get_completeCar", {
         app: this,
-        token: this.$store.state.other.token,
+        token: this.$store.state.account.token,
         condition: cond,
       });
-      console.log("get_completeCar>>>>", result);
+
       if (result.code === 200) {
         cart_info = {
           state: 1,
@@ -102,34 +114,14 @@ export default {
         this.cart = result.data.commodity;
         let data = {};
         for (let i in this.cart) {
-          data[`${this.cart[i].normal}-${this.cart[i].sku}`] = this.cart[i];
+          data[`${this.cart[i].shell_id }-${this.cart[i].sku}`] = this.cart[i];
         }
+        console.log(result);
         this._store({ act: "cart/set_cart_info", data: cart_info });
         this._store({ act: "cart/set_cart", data: data });
       }
     },
-    get_lockCar: async function () {
-      let cart_info = this.$store.state.cart.info;
-      let cond = Struct.fromJavaScript({
-        car_id: cart_info.id,
-      });
-
-      let result = await this.$store.dispatch("cart/get_lockCar", {
-        condition: cond,
-      });
-
-      if (result.code === 200) {
-        console.log("lockcar:", result.data);
-        cart_info = {
-          state: 2,
-          id: cart_info.id,
-        };
-        this._store({ act: "cart/set_cart_info", data: cart_info });
-      } else {
-        alert(result.data);
-      }
-      return true;
-    },
+    
   },
 };
 </script>

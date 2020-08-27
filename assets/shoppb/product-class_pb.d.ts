@@ -3,7 +3,7 @@ import * as jspb from "google-protobuf"
 import * as seo_pb from './seo_pb';
 import * as sql_pb from './sql_pb';
 import * as a$submessage_pb from './a-submessage_pb';
-import * as product_pb from './product_pb';
+import * as product$shell_pb from './product-shell_pb';
 import * as google_protobuf_struct_pb from 'google-protobuf/google/protobuf/struct_pb';
 import * as google_protobuf_timestamp_pb from 'google-protobuf/google/protobuf/timestamp_pb';
 
@@ -35,10 +35,10 @@ export class ProductClass extends jspb.Message {
   hasPhoto(): boolean;
   clearPhoto(): void;
 
-  getProductList(): Array<product_pb.Product>;
-  setProductList(value: Array<product_pb.Product>): void;
-  clearProductList(): void;
-  addProduct(value?: product_pb.Product, index?: number): product_pb.Product;
+  getProductShellList(): Array<product$shell_pb.ProductShell>;
+  setProductShellList(value: Array<product$shell_pb.ProductShell>): void;
+  clearProductShellList(): void;
+  addProductShell(value?: product$shell_pb.ProductShell, index?: number): product$shell_pb.ProductShell;
 
   getLabelxMap(): jspb.Map<string, number>;
   clearLabelxMap(): void;
@@ -88,7 +88,7 @@ export namespace ProductClass {
     urn: string,
     seo?: seo_pb.SEO.AsObject,
     photo?: a$submessage_pb.Image.AsObject,
-    productList: Array<product_pb.Product.AsObject>,
+    productShellList: Array<product$shell_pb.ProductShell.AsObject>,
     labelxMap: Array<[string, number]>,
     operator: string,
     createAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,

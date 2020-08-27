@@ -168,8 +168,6 @@ export namespace Condition {
     LIKE = 6,
     LABEL = 7,
     UNLABEL = 8,
-    LEVEL = 9,
-    CLASS = 10,
   }
 }
 
@@ -183,6 +181,11 @@ export class Query extends jspb.Message {
   setSortList(value: Array<Sort>): void;
   clearSortList(): void;
   addSort(value?: Sort, index?: number): Sort;
+
+  getInnerList(): Array<Condition>;
+  setInnerList(value: Array<Condition>): void;
+  clearInnerList(): void;
+  addInner(value?: Condition, index?: number): Condition;
 
   getConditionList(): Array<Condition>;
   setConditionList(value: Array<Condition>): void;
@@ -211,6 +214,7 @@ export namespace Query {
   export type AsObject = {
     pageLimit?: PageLimit.AsObject,
     sortList: Array<Sort.AsObject>,
+    innerList: Array<Condition.AsObject>,
     conditionList: Array<Condition.AsObject>,
     extraList: Array<string>,
     self?: google_protobuf_struct_pb.Struct.AsObject,

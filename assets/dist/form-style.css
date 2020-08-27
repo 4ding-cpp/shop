@@ -1,0 +1,25 @@
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #dee2e6;
+  color: #9a9ea2;
+  background-color: #f0f1f3;
+  border: 1px solid #f0f1f3;
+  text-align: center;
+}
+
+.table td,
+.table th {
+  padding: 0.75rem;
+  vertical-align: middle;
+  text-align: center;
+  border-top: 1px solid #dee2e6;
+}
+
+.table td {
+  color: #928c8c;
+}
+
+.table tbody tr {
+  border: 1px solid #f0f1f3;
+  background-color: white;
+}

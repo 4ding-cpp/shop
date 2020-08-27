@@ -35,7 +35,7 @@ export default {
   async fetch({ store, $axios, app }) {
 
     // store.commit('other/set_test', 66666)
-    // let metadata = { "x-4d-token": store.state.other.token };
+    // let metadata = { "x-4d-token": store.state.account.token };
     // let method = "MyCar";
     // let q = new app.sqlpb.Query();
 
@@ -50,7 +50,7 @@ export default {
     // ]);
     // new Uint8Array(ib, 5).set(bi);
     // console.log("ib>>>", ib);
-    // fetch(`https://shop.4ding.site/ding4.ShopRPC/${method}`, {
+    // fetch(`https://4ding.store/ding4.ShopRPC/${method}`, {
     //   method: "POST",
     //   headers: {
     //     "content-type": "application/grpc-web+proto",
@@ -81,7 +81,7 @@ export default {
 
     // let rpc = app.aa ;
     // let c = new app.cc.Customer();
-    // rpc.signIn(c, { "x-4d-token": store.state.other.token }, (err, resp) => {
+    // rpc.signIn(c, { "x-4d-token": store.state.account.token }, (err, resp) => {
     //     console.log(err);
     //     console.log(resp.getResult().toJavaScript());
     //   });
