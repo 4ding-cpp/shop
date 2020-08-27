@@ -47,6 +47,9 @@ export class Order extends jspb.Message {
   getOrderCharge(): number;
   setOrderCharge(value: number): void;
 
+  getBusinessCharge(): number;
+  setBusinessCharge(value: number): void;
+
   getSalesCharge(): number;
   setSalesCharge(value: number): void;
 
@@ -115,10 +118,10 @@ export class Order extends jspb.Message {
   hasOther(): boolean;
   clearOther(): void;
 
-  getCommodityList(): Array<OrderCommomdity>;
-  setCommodityList(value: Array<OrderCommomdity>): void;
-  clearCommodityList(): void;
-  addCommodity(value?: OrderCommomdity, index?: number): OrderCommomdity;
+  getGoodsList(): Array<OrderGoods>;
+  setGoodsList(value: Array<OrderGoods>): void;
+  clearGoodsList(): void;
+  addGoods(value?: OrderGoods, index?: number): OrderGoods;
 
   getLabelxMap(): jspb.Map<string, number>;
   clearLabelxMap(): void;
@@ -175,6 +178,7 @@ export namespace Order {
     freight: number,
     price: number,
     orderCharge: number,
+    businessCharge: number,
     salesCharge: number,
     paymentCharge: number,
     logisticsCharge: number,
@@ -197,7 +201,7 @@ export namespace Order {
     device: string,
     remark: string,
     other?: OrderOther.AsObject,
-    commodityList: Array<OrderCommomdity.AsObject>,
+    goodsList: Array<OrderGoods.AsObject>,
     labelxMap: Array<[string, number]>,
     operator: string,
     createAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
@@ -208,12 +212,15 @@ export namespace Order {
   }
 }
 
-export class OrderCommomdity extends jspb.Message {
+export class OrderGoods extends jspb.Message {
   getOrderId(): string;
   setOrderId(value: string): void;
 
   getStoreId(): string;
   setStoreId(value: string): void;
+
+  getSalesId(): string;
+  setSalesId(value: string): void;
 
   getActivityId(): string;
   setActivityId(value: string): void;
@@ -237,17 +244,18 @@ export class OrderCommomdity extends jspb.Message {
   setPrice(value: number): void;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): OrderCommomdity.AsObject;
-  static toObject(includeInstance: boolean, msg: OrderCommomdity): OrderCommomdity.AsObject;
-  static serializeBinaryToWriter(message: OrderCommomdity, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): OrderCommomdity;
-  static deserializeBinaryFromReader(message: OrderCommomdity, reader: jspb.BinaryReader): OrderCommomdity;
+  toObject(includeInstance?: boolean): OrderGoods.AsObject;
+  static toObject(includeInstance: boolean, msg: OrderGoods): OrderGoods.AsObject;
+  static serializeBinaryToWriter(message: OrderGoods, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): OrderGoods;
+  static deserializeBinaryFromReader(message: OrderGoods, reader: jspb.BinaryReader): OrderGoods;
 }
 
-export namespace OrderCommomdity {
+export namespace OrderGoods {
   export type AsObject = {
     orderId: string,
     storeId: string,
+    salesId: string,
     activityId: string,
     productId: string,
     sku: string,
