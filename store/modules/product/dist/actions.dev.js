@@ -198,11 +198,12 @@ var _default = {
               console.log("ArrayID", ArrayID);
             }
 
+            context.commit("set_favorite", ArrayID);
             return _context4.abrupt("return", _objectSpread({}, list, {
               data: ArrayID
             }));
 
-          case 12:
+          case 13:
           case "end":
             return _context4.stop();
         }

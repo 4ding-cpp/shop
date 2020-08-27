@@ -38,7 +38,7 @@ var _default = {
    * @param {*} context 
    */
   init: function init(context) {
-    var app, store, token, resp, _resp, conf, result;
+    var app, store, token, resp, _resp, conf, favorte, result;
 
     return regeneratorRuntime.async(function init$(_context2) {
       while (1) {
@@ -86,37 +86,46 @@ var _default = {
 
           case 19:
             conf = _context2.sent;
-            console.log("appConf>>", conf); // 首頁相關
+            console.log("appConf>>", conf); // 我的最愛列表
 
             _context2.next = 23;
+            return regeneratorRuntime.awrap(store.dispatch("product/get_MyFavorite", {
+              condition: null
+            }));
+
+          case 23:
+            favorte = _context2.sent;
+            console.log("favorte>>", favorte); // 首頁相關
+
+            _context2.next = 27;
             return regeneratorRuntime.awrap(store.dispatch("web/get_website", {
               token: token,
               condition: null
             }));
 
-          case 23:
+          case 27:
             result = _context2.sent;
             console.log(">>", _typeof(null), result.data);
 
             if (!(result.data !== undefined && result.data.length !== 0)) {
-              _context2.next = 30;
+              _context2.next = 34;
               break;
             }
 
-            _context2.next = 28;
+            _context2.next = 32;
             return regeneratorRuntime.awrap(store.dispatch("web/init_layout", {
               token: token,
               layout: result.data[0].layout
             }));
 
-          case 28:
-            _context2.next = 30;
+          case 32:
+            _context2.next = 34;
             return regeneratorRuntime.awrap(store.dispatch("web/init_menu", {
               token: token,
               menu: result.data[0].menu
             }));
 
-          case 30:
+          case 34:
           case "end":
             return _context2.stop();
         }

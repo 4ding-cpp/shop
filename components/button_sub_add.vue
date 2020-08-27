@@ -1,30 +1,19 @@
 <template>
-  <div class="input-group">
-    <div class="input-group-prepend">
-      <button
-        style="min-width: 2.5rem"
-        class="btn btn-decrement btn-outline-secondary"
-        type="button"
-        @click="add(-1)"
-      >
+  <div class="input-group align-items-center justify-content-center">
+    <div class="input-group-prepend" style="height:25px">
+      <button class="btn btn-sm btn-decrement btn-outline-secondary" type="button" @click="add(-1)">
         <strong>-</strong>
       </button>
     </div>
     <input
       type="text"
       inputmode="decimal"
-      style="text-align: center"
-      class="form-control"
+      class="form-control count"
       v-model="total"
       @change="change()"
     />
-    <div class="input-group-append">
-      <button
-        style="min-width: 2.5rem"
-        class="btn btn-increment btn-outline-secondary"
-        type="button"
-        @click="add(1)"
-      >
+    <div class="input-group-append" style="height:25px">
+      <button class="btn btn-sm btn-increment btn-outline-secondary" type="button" @click="add(1)">
         <strong>+</strong>
       </button>
     </div>
@@ -36,63 +25,64 @@ export default {
   props: {
     data: {
       type: Object,
-      default: function() {
+      default: function () {
         return {};
-      }
+      },
     },
     count: {
       type: Number,
-      default: function() {
+      default: function () {
         return 1;
-      }
+      },
     },
-    after_change:{
+    after_change: {
       type: Function,
-      default: function(v) {
+      default: function (v) {
         return false;
-      }
+      },
     },
-
   },
   data() {
     return {
-      total: this.count
+      total: this.count,
     };
   },
   watch: {
     //監聽值
     count(to, from) {
       this.total = to;
-    }
+    },
   },
   methods: {
     // 初始
     add(value) {
-      this.total = Number(this.total) + Number(value)
+      this.total = Number(this.total) + Number(value);
       this.change();
-
     },
     change() {
       this.$emit("update:count", Number(this.total));
-      this.$emit("after_change",this.data)
-    }
-  }
+      this.$emit("after_change", this.data);
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
-.logo {
-  height: 50px;
+.btn {
+  line-height: 0;
+  min-width: 1.5rem;
+  border: 1px solid #ced4da;
+  color: #ced4da ;
 }
-.nav-wrapper.list {
-  background-color: white;
-  border-bottom: 1px solid #ccc;
+// 左右按鈕
+.input-group-prepend,
+.input-group-append {
+  height: 25px;
+  padding: 0px 4px;
 }
-li {
-  padding-left: 20px;
-  padding-right: 20px;
-  border-left: 1px solid #ccc;
-  &:first-child {
-    border-left: 0px solid;
-  }
+
+input.count {
+  text-align: center;
+  flex: 0.5 1 auto !important;
+  height: 25px !important;
 }
 </style>

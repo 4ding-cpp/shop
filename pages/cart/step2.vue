@@ -261,23 +261,23 @@ export default {
     },
 
     get_lockCar: async function () {
-      let cart_info = {
-        ...this.$store.state.cart.info,
-        state: 2,
-      };
-      let cond = Struct.fromJavaScript({ car_id: cart_info.id });
-      let result = await this.$store.dispatch("cart/get_lockCar", {
-        condition: cond,
-      });
-      console.log(">>>", result);
-      if (result.code === 200 && result.data === 1) {
-        this.$toast.success("商品已鎖定!");
-        this._store({ act: "cart/set_cart_info", data: cart_info });
-      } else if (result.data === "car state != 1") {
-        this._store({ act: "cart/set_cart_info", data: cart_info });
-      } else {
-        this.$toast.error(`${result.data},商品鎖定失敗!`);
-      }
+      // let cart_info = {
+      //   ...this.$store.state.cart.info,
+      //   state: 2,
+      // };
+      // let cond = Struct.fromJavaScript({ car_id: cart_info.id });
+      // let result = await this.$store.dispatch("cart/get_lockCar", {
+      //   condition: cond,
+      // });
+      // console.log(">>>", result);
+      // if (result.code === 200 && result.data === 1) {
+      //   this.$toast.success("商品已鎖定!");
+      //   this._store({ act: "cart/set_cart_info", data: cart_info });
+      // } else if (result.data === "car state != 1") {
+      //   this._store({ act: "cart/set_cart_info", data: cart_info });
+      // } else {
+      //   this.$toast.error(`${result.data},商品鎖定失敗!`);
+      // }
       return true;
     },
     // 物流

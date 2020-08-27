@@ -107,7 +107,7 @@ export default {
       console.log("ArrayID", ArrayID)
     }
 
-
+    context.commit("set_favorite", ArrayID)
     return {...list,data:ArrayID};
 
   },

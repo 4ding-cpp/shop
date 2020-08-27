@@ -33,6 +33,11 @@ export default {
             token: token,
         });
         console.log("appConf>>",conf)
+        // 我的最愛列表
+        let favorte = await store.dispatch("product/get_MyFavorite", {
+            condition: null,
+        });
+        console.log("favorte>>",favorte)
         // 首頁相關
         let result = await store.dispatch("web/get_website", {
             token: token,

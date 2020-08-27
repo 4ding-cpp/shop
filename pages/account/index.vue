@@ -65,6 +65,8 @@
 import { mapActions } from "vuex";
 import { Struct } from "google-protobuf/google/protobuf/struct_pb";
 export default {
+  // layout:"common",
+  middleware:"login",
   name: "",
   props: {},
   data: function () {

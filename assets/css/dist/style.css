@@ -232,7 +232,7 @@ h6 {
 /*結帳頁step2右側*/
 .checkout-amount-wrap {
   background-color: #fff;
-  padding: 5px 20px;
+  padding: 5px;
 }
 
 .checkout-amount {
@@ -245,8 +245,9 @@ h6 {
   padding: 10px 0;
 }
 
-.checkout-amount li:last-child {
+.checkout-amount li.totoal-money {
   border-bottom: none;
+  line-height: 33px;
 }
 
 .amount-title {
@@ -255,7 +256,7 @@ h6 {
 }
 
 .price {
-  color: #007bff;
+  color: #ff6855;
 }
 
 .color-gray-text {
@@ -263,8 +264,8 @@ h6 {
 }
 
 .total {
-  font-size: 20px;
-  font-weight: 500;
+  font-size: 22px;
+  vertical-align: bottom;
 }
 
 /* 結帳頁step3 */

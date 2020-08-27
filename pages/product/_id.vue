@@ -31,8 +31,12 @@
               <div class="col-md-6">
                 <div class="product-name">
                   <div class="cart-button">
-                    <a href>
-                      <i class="fas fa-heart fa-2x"></i>
+                    <a href="#">
+                      <i
+                        class="fas fa-heart fa-2x"
+                        :class="{'no':favorte===false}"
+                        @click="toggleFavorte"
+                      ></i>
                     </a>
                   </div>
 
@@ -144,6 +148,7 @@ import { Struct } from "google-protobuf/google/protobuf/struct_pb";
 export default {
   data() {
     return {
+      favorte: false,
       // Breadcrumb
       breadcrumb_info: {},
       product_info: {},
@@ -171,7 +176,6 @@ export default {
         id: route.params.id,
       },
     });
-    console.log("browe:", result);
     if (result.code === 200) {
       for (let i in result.data.block) {
         let item = result.data.block[i];
@@ -220,6 +224,33 @@ export default {
       });
       console.log("ss", result);
     },
+    toggleFavorte: function () {
+      if (this.favorte) {
+        this.delFavorite();
+      } else {
+        this.addFavorite()
+      }
+    },
+    /**
+     * 取消
+     */
+    delFavorite: async function () {
+      // let cond = new this.sqlpb.Condition();
+      // cond.setF("shell_id").setV(id);
+      let result = await this.$store.dispatch("product/del_MyFavorite", {
+        condition: { id: this.product_info.shell_id },
+      });
+      console.log("del:", result);
+      if (result.code == 200) {
+        this.$toast.success("已取消我的最愛");
+        this.favorte = false;
+      } else {
+        this.$toast.error(`取消失敗 ${result.data}`);
+      }
+    },
+    /**
+     * 新增我得最愛
+     */
     addFavorite: async function () {
       let result = await this.$store.dispatch("product/set_MyFavorite", {
         condition: {
@@ -228,6 +259,12 @@ export default {
         },
       });
       console.log("addFavorite", result);
+      if (result.code == 200) {
+        this.$toast.success("已新增我的最愛");
+        this.favorte = true;
+      } else {
+        this.$toast.error(`新增失敗 ${result.data}`);
+      }
     },
     /**
      * 加入購物車
@@ -279,8 +316,14 @@ export default {
 <style lang="scss" scoped >
 a .fa-heart {
   color: red;
-  &:hover {
-    color: red;
+  &:hover{
+    color:#cccccc;
+  }
+  &.no {
+    color: #cccccc;
+    &:hover{
+      color: red;
+    }
   }
 }
 .shipping-item {

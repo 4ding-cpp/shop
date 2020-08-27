@@ -13,7 +13,7 @@
       </thead>
       <tbody>
         <tr v-if="list.length===0">
-          <td class="align-middle">無資料</td>
+          <td class="align-middle" colspan="5" >無資料</td>
         </tr>
         <tr v-for="(item,i) in list  ">
           <td>
@@ -24,7 +24,7 @@
           <td class="align-middle">{{ item.original }}</td>
           <td class="align-middle">
             <nuxt-link tag="span" class :to="`/product/${item.shell_id}`">查看</nuxt-link>|
-            <a href="">刪除</a>
+            <span href="" @click="delFavorite(item.shell_id)" >刪除</span>
           </td>
         </tr>
       </tbody>
@@ -119,6 +119,14 @@ export default {
       console.log("rrrr", result);
       if(result.code === 0) return ;
       this.list = result.data
+    },
+    delFavorite: async function (id) {
+      // let cond = new this.sqlpb.Condition();
+      // cond.setF("shell_id").setV(id);
+      let result = await this.$store.dispatch("product/del_MyFavorite", {
+        condition: {id:id},
+      });
+      console.log("del:",result);
     },
   },
   //BEGIN--生命週期

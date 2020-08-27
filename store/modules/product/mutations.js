@@ -13,4 +13,12 @@ export default {
   set_product_list(state, o) {
     state.list = o
   },
+  /**
+   * 
+   * @param {*} state 
+   * @param {*} o 
+   */
+  set_favorite(state, o) {
+    state.favorte = o
+  },
 }
