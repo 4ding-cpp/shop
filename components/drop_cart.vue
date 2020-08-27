@@ -123,26 +123,26 @@ export default {
       }
     },
     get_lockCar: async function () {
-      let cart_info = this.$store.state.cart.info;
-      if (cart_info.id == "") return;
-      let cond = Struct.fromJavaScript({
-        car_id: cart_info.id,
-      });
+      // let cart_info = this.$store.state.cart.info;
+      // if (cart_info.id == "") return;
+      // let cond = Struct.fromJavaScript({
+      //   car_id: cart_info.id,
+      // });
 
-      let result = await this.$store.dispatch("cart/get_lockCar", {
-        condition: cond,
-      });
+      // let result = await this.$store.dispatch("cart/get_lockCar", {
+      //   condition: cond,
+      // });
 
-      if (result.code === 200) {
-        console.log("lockcar:", result.data);
-        cart_info = {
-          state: 2,
-          id: cart_info.id,
-        };
-        this._store({ act: "cart/set_cart_info", data: cart_info });
-      } else {
-        alert(result.data);
-      }
+      // if (result.code === 200) {
+      //   console.log("lockcar:", result.data);
+      //   cart_info = {
+      //     state: 2,
+      //     id: cart_info.id,
+      //   };
+      //   this._store({ act: "cart/set_cart_info", data: cart_info });
+      // } else {
+      //   alert(result.data);
+      // }
       return true;
     },
   },
