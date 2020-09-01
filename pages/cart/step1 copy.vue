@@ -164,8 +164,8 @@ export default {
 
       if (result.code === 200) {
         cart_info = { state: 1, id: result.data.car_id };
-        console.log(result);
-        this.goods = result.data.goods;
+        console.log("get_completeCar",result.data);
+        // this.goods = result.data.goods;
         this.activity = result.data.activity;
         let data = {};
         for (let i in this.goods) {

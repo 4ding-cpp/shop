@@ -77,7 +77,6 @@
                   >
                     <i class="fas fa-search"></i>
                   </a>
-                  <DropCart :active.sync="active" :count.sync="cart_total" />
                 </div>
               </li>
               <li class="nav-item" @click="logout">

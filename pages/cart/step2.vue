@@ -306,12 +306,7 @@ export default {
       }
       return true;
     },
-    // 選擇取貨門市
-    get_cvsStore: async function () {
-      let id = this.delivery.list[this.delivery.selected].data.adapter_id;
-      let redirect = `${process.env.REDIRECT_URL}/cart/step2`;
-      window.location = `${process.env.PAYMENT_URL}a=${id}&&redirect=${redirect}`;
-    },
+ 
 
     toStep3: async function () {
       localStorage.setItem(

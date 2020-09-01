@@ -2,7 +2,9 @@
   <div
     class="onloading"
     :class="{'active':data.loading===true,'anim-opacity2':data.loading===false}"
+    :style="{height:height}"
   >
+  {{autoheight}}
     <!-- <div class="onloading" :class="{'active':show===true,'anim-opacity2':show===false }"> -->
     <!-- <div class="onloading" :class="{'active':show===true,'anim-opacity2':show===false }"> -->
     <div :class="{'top':top===true}">
@@ -27,7 +29,23 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      height:'100%',
+
+    };
+  },
+  watch: {
+    "$store.state.act.loading"(to, from) {
+     
+      console.log("load",to,from , document.getElementById("page").offsetHeight );
+    },
+  },
+  computed: {
+    autoheight(){
+      if(this.$store.state.act.loading === false || document.getElementById("page") === null ) return  ;
+      console.log("auto", document.getElementById("page"))
+      this.height =  document.getElementById("page").offsetHeight + 'px' ;
+    }
   },
   methods: {
     // 初始
@@ -43,6 +61,7 @@ export default {
   width: 100%;
   height: 100%;
   background: #f9f9f9;
+  // background: red ;
   z-index: 99;
   // display: none;
   &.active {
@@ -57,7 +76,7 @@ export default {
   color: #ccc;
   display: flex;
   justify-content: center;
-  padding-top:5px;
+  padding-top: 5px;
 
   &.top {
     margin-top: 20vh;
