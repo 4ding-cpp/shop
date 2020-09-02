@@ -1,5 +1,6 @@
 <template>
   <div class="wrapper">
+    <!--  -->
     <nav id="sidebar">
       <ul class="list-unstyled">
         <template v-for="(item,i) in menu">
@@ -13,7 +14,7 @@
           </li>
           <!-- 自訂 -->
           <li v-if="item.page">
-            <nuxt-link tag="a" class="dropdown-toggle" :to="`/pages/${item.page}`">{{item.title.tw}}</nuxt-link>
+            <nuxt-link tag="a" class="dropdown-toggle-right" :to="`/pages/${item.page}`">{{item.title.tw}}</nuxt-link>
           </li>
           <!-- 另開連結 -->
           <li v-if="item.link">
@@ -24,19 +25,16 @@
           </li>
           <!-- 產品明細 -->
           <li v-if="item.class">
-            <a :href="`#Submenu`+i" data-toggle="collapse" class="dropdown-toggle">{{item.title.tw}}</a>
-            <ul
-              v-if="item.class"
-              class="collapse list-unstyled"
-              :class="{'show':true }"
-              :id="`Submenu`+i"
-            >
+            <a :href="`#Submenu`+i" data-toggle="collapse" aria-expanded="false">
+              {{item.title.tw}}
+              <i class="fas float-right"></i>
+            </a>
+            <ul v-if="item.class" class="collapse list-unstyled" :id="`Submenu`+i">
               <li v-for="(o,j) in item.class" :key="j" class="dropright">
-                <nuxt-link
-                  tag="a"
-                  class="dropdown-toggle"
-                  :to="`/class/${o.class_id}`"
-                >{{o.name.tw}}</nuxt-link>
+                <nuxt-link tag="a" class="dropdown-toggle-right" :to="`/class/${o.class_id}`">
+                  <i class="fas float-left"></i>
+                  {{o.name.tw}}
+                </nuxt-link>
               </li>
             </ul>
           </li>
@@ -81,6 +79,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+i {
+  line-height: 1.4;
+}
+
 .sidebar ul:first-child {
   border: 1px solid #ddd;
 }
@@ -93,20 +95,39 @@ li {
     border-bottom: 0px;
   }
 }
-.dropdown-toggle::after {
+.dropdown-toggle-right::after {
   position: absolute;
   right: 2rem;
   margin-top: 0.5rem;
 }
 
 .dropright {
-  & .dropdown-toggle {
-    margin-left: 2rem;
+  & .dropdown-toggle-right {
+    margin-left: 1rem;
     &::after {
       position: absolute;
       left: 1rem;
       margin-top: 0.5rem;
     }
+    & .fas:before {
+      content: "\f054";
+      float: right;
+    }
   }
+}
+
+
+
+[data-toggle="collapse"] .fas:before {
+  content: "\f054";
+  float: right;
+  transition: all 0.5s;
+  transform: rotate(90deg);
+}
+
+[aria-expanded="true"] .fas:before {
+  content: "\f054";
+  transition: all 0.5s;
+  transform: rotate(-90deg);
 }
 </style>

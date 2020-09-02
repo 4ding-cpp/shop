@@ -9,8 +9,16 @@ body {
 
 a {
   cursor: pointer;
+  font-family: "Noto Sans TC", "Open Sans", "Heiti TC", "LiHei Pro", "Helvetica Neue", Helvetica, Arial, "微軟正黑體", "微软雅黑", "メイリオ", "맑은 고딕", sans-serif;
+  font-size: 12px;
+  line-height: 1.428571429;
+  color: #565656;
   text-decoration: none;
+  font-weight: 700;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+a:hover {
+  color: #000000;
 }
 
 section.content {
@@ -19,6 +27,7 @@ section.content {
 }
 
 .originalPrice {
+  padding-left: 10px;
   color: #aaa;
   font-size: 0.8em;
   text-decoration: line-through;

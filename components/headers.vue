@@ -92,7 +92,7 @@
     <div class="nav-wrapper list">
       <nav class="navbar navbar-expand-lg navbar-light bg-light container">
         <!-- <a class="navbar-brand" href="/">LOGO</a> -->
-        <img src="/images/icon/logo.png" class="logo" alt />
+        <nuxt-link tag="img" class="logo" src="/images/icon/logo.png"  to="/"></nuxt-link>
         <button
           class="navbar-toggler collapsed"
           type="button"

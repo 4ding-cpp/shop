@@ -19,11 +19,18 @@
       <div class="card-body">
         <div class="caption">
           <nuxt-link tag="h4" class="text-center" :to="'/product/'+data.shell_id">{{data.name.tw}}</nuxt-link>
-
-          <section class="d-flex justify-content-around ">
+          <nuxt-link
+            tag="section"
+            class="d-flex justify-content-center"
+            :to="'/product/'+data.shell_id"
+          >
+            <span class="price">NT${{data.price}}</span>
+            <span class="originalPrice">${{data.original}}</span>
+          </nuxt-link>
+          <!-- <section class="d-flex justify-content-center ">
             <div class="text-danger">NT${{data.price}}</div>
             <div class="originalPrice">${{data.original}}</div>
-          </section>
+          </section>-->
         </div>
       </div>
     </div>
@@ -81,18 +88,23 @@ li {
     border-left: 0px solid;
   }
 }
-
+img {
+  cursor: pointer;
+}
 .caption {
+  cursor: pointer;
   & h4 {
-    height: 42px;
+    // height: 42px;
     line-height: 21px;
     overflow: hidden;
     margin: 0;
     margin-top: 7px;
     margin-bottom: 7px;
-    color: #232323;
     font-size: 1.1em;
     font-weight: 400;
+  }
+  & span.price{
+    color: #232323;
   }
 }
 </style>

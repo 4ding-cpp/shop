@@ -659,7 +659,7 @@ export default {
         return false;
       } else {
         alert("createOrder OK:" + result.data);
-        let service = this.order.PaymentAdapter.service;
+        let service = this.cash.list[this.cash.selected].data.service;
         if (service == "") {
           this.$router.push(`/cart/orderList?id=${result.data}`);
           return true;
