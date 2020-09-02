@@ -46,7 +46,7 @@
                     <th>名稱</th>
                     <th>規格</th>
                     <th>單價</th>
-                    <th>數量</th>
+                    <th style="width:200px">數量</th>
                     <th>小計</th>
                     <th>xx</th>
                   </thead>
@@ -610,6 +610,7 @@ export default {
      */
     async del_cart(i) {
       this._store({ act: "cart/del_cart", data: this.goods[i] });
+      console.log(this.goods,i)
       this.goods.splice(i, 1);
       this.checked.step = false;
     },
@@ -647,7 +648,7 @@ export default {
         this.logistic.selected
       ].data.adapter_id;
       o.other.receiver = this.receiver;
-
+  console.log("create_Order",o)
       let cond = Struct.fromJavaScript(o);
       let result = await this.$store.dispatch("order/create_Order", {
         condition: cond,
