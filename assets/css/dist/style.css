@@ -47,6 +47,7 @@ h6 {
 
 #page {
   margin-top: 122px;
+  width: 100%;
 }
 
 .breadcrumb {
@@ -197,8 +198,8 @@ h6 {
 }
 
 .shipping-item:hover {
-  color: #007bff;
-  border: 2px solid #007bff !important;
+  color: #ff6855;
+  border: 2px solid #ff6855 !important;
 }
 
 .shipping-item .fas {
@@ -212,8 +213,8 @@ h6 {
 }
 
 .on-active {
-  border: 2px solid #007bff !important;
-  color: #007bff;
+  border: 2px solid #ff6855 !important;
+  color: #ff6855;
 }
 
 .pick-btn {

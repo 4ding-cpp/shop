@@ -252,7 +252,6 @@ export default {
         { id: 4, title: "自然人憑證" },
         { id: 5, title: "捐贈碼" },
       ],
-
       // 購買人
       buyer: {
         phone: "",

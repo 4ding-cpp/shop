@@ -176,6 +176,7 @@ export default {
         id: route.params.id,
       },
     });
+    console.log("p:",result)
     if (result.code === 200) {
       for (let i in result.data.block) {
         let item = result.data.block[i];
@@ -187,7 +188,7 @@ export default {
       }
       data.product_info = result.data;
       data.activity = data.product_info.activity;
-      data.specx = data.product_info.specx[0].sku;
+      data.specx = (data.product_info.specx !== null)? data.product_info.specx[0].sku : "" ;
       data.breadcrumb_info.url += data.product_info.class_id;
       data.breadcrumb_info.prod = data.product_info.name.tw;
     }
@@ -271,6 +272,7 @@ export default {
      */
     cartJoin: function () {
       let p = this.product_info;
+      console.log(p)
       let data = {
         shell_id: p.shell_id,
         sku: this.specx,
@@ -279,7 +281,7 @@ export default {
         photox: [
           {
             src:
-              p.photox.length === 0
+              p.photox === null
                 ? "/images/noprod.png"
                 : `${p.photox[0].src}`,
           },
