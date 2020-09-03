@@ -489,7 +489,7 @@ export default {
       let id = this.logistic.list[this.logistic.selected].data.adapter_id;
       let service = this.logistic.list[this.logistic.selected].data.service;
       let redirect = `${process.env.REDIRECT_URL}/cart/step1`;
-      // window.location = `/logistics/${service}/storemap?a=${id}&redirect=${redirect}`;
+      window.location = `/logistics/${service}/storemap?a=${id}&redirect=${redirect}`;
     },
     /**
      * 物流
