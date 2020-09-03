@@ -61,28 +61,6 @@ export class ShopRPCClient {
       callback);
   }
 
-  methodInfoGuest = new grpcWeb.AbstractClientBase.MethodInfo(
-    sql_pb.Response,
-    (request: customer_pb.Customer) => {
-      return request.serializeBinary();
-    },
-    sql_pb.Response.deserializeBinary
-  );
-
-  guest(
-    request: customer_pb.Customer,
-    metadata: grpcWeb.Metadata | null,
-    callback: (err: grpcWeb.Error,
-               response: sql_pb.Response) => void) {
-    return this.client_.rpcCall(
-      this.hostname_ +
-        '/ding4.ShopRPC/Guest',
-      request,
-      metadata || {},
-      this.methodInfoGuest,
-      callback);
-  }
-
   methodInfoSignIn = new grpcWeb.AbstractClientBase.MethodInfo(
     sql_pb.Response,
     (request: customer_pb.Customer) => {
@@ -124,6 +102,28 @@ export class ShopRPCClient {
       request,
       metadata || {},
       this.methodInfoSignUp,
+      callback);
+  }
+
+  methodInfoSignFb = new grpcWeb.AbstractClientBase.MethodInfo(
+    sql_pb.Response,
+    (request: customer_pb.Customer) => {
+      return request.serializeBinary();
+    },
+    sql_pb.Response.deserializeBinary
+  );
+
+  signFb(
+    request: customer_pb.Customer,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.Error,
+               response: sql_pb.Response) => void) {
+    return this.client_.rpcCall(
+      this.hostname_ +
+        '/ding4.ShopRPC/SignFb',
+      request,
+      metadata || {},
+      this.methodInfoSignFb,
       callback);
   }
 

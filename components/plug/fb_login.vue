@@ -1,10 +1,5 @@
 <template>
-  <button v-if="type==='login'" class="w-100 btn l-btn btn-facebook btn-sm" @click="FBsignIn">
-    使用FACEBOOK登入xx
-  </button>
-    <button v-else-if="type==='signUp'" class="w-100 btn l-btn btn-facebook btn-sm" @click="FBsignUp">
-    使用FACEBOOK註冊xx
-  </button>
+  <button class="w-100 btn l-btn btn-facebook btn-sm" @click="FBLogin">使用FACEBOOK{{title}}xx</button>
 </template>
 <script>
 import { Struct } from "google-protobuf/google/protobuf/struct_pb";
@@ -26,15 +21,16 @@ export default {
     },
     signCheck: {
       type: Function,
-      default: function(){
-        return ;
-      }
-    }
+      default: function () {
+        return;
+      },
+    },
   },
   data: function () {
     // 資料
     return {
-      app_id:"" ,
+      title: "",
+      app_id: "",
       accesstoken: "",
     };
   },
@@ -53,9 +49,13 @@ export default {
       await FB.login(
         (response) => {
           if (response.authResponse) {
-            console.log("FB",response)
+            console.log("FB", response);
             this.accesstoken = response.authResponse.accessToken;
-            this.$emit("update:fb_accesstoken",  response.authResponse.accessToken);
+            this.$emit(
+              "update:fb_accesstoken",
+              response.authResponse.accessToken
+            );
+            this.FBsignIn();
           } else {
             console.log("User cancelled login or did not fully authorize.");
           }
@@ -65,46 +65,29 @@ export default {
           return_scopes: true,
         }
       );
-      console.log("FB login end")
+      console.log("FB login end");
     },
     FBsignIn: async function () {
-      await this.FBLogin();
       let address = await this.signCheck();
-      let o = { address , ...this.accesstoken };
+      let o = { address, ...this.accesstoken };
       let cond = Struct.fromJavaScript(o);
-      let result = await this.$store.dispatch("account/signIn", {
+      let result = await this.$store.dispatch("account/signFb", {
         condition: cond,
       });
 
       if (result.code === 200) {
         await this.$store.dispatch("account/whoAmI");
-        this.$toast.success("FB登入成功");
+        this.$toast.success(`FB${this.title}成功`);
         this.$modal.hide("login");
       } else {
-        this.$toast.success(`${result.data} FB登入失敗`);
-      }
-    },
-    FBsignUp: async function () {
-      await this.FBLogin();
-      let address = await this.signCheck();
-      let o = { address , ...this.accesstoken };
-      console.log("FBSing up",o)
-      let cond = Struct.fromJavaScript(o);
-      let result = await this.$store.dispatch("account/signUp", {
-        condition: cond,
-      });
-      if (result.code === 200) {
-        await this.$store.dispatch("account/whoAmI");
-        this.$toast.success("FB註冊成功");
-        this.$modal.hide("login");
-      } else {
-        this.$toast.success(`${result.data} FB註冊失敗!!`);
+        this.$toast.success(`${result.data} FB${this.title}失敗`);
       }
     },
   },
   created: function () {
-    this.app_id = this.$store.state.other.config.facebook_sign.app_id
-    this.FBinit()
+    this.title = this.type === "login" ? "登入" : "註冊";
+    this.app_id = this.$store.state.other.config.facebook_sign.app_id;
+    this.FBinit();
   },
 };
 </script>

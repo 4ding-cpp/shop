@@ -33,7 +33,26 @@ export default {
     if (condition !== null) req.setSelf(condition)
 
     let res = await app.grpcAxios(app.$axios, method, metadata, req);
+    if(res.code === 200) context.commit("set_token", { token: res.data, t: true })
     console.log("signUp", res)
+    return res;
+  },
+  /**
+   * FB登入 / 註冊
+   * @param {*} context 
+   * @param {*} param1 
+   */
+  async signFb(context, { condition = null }) {
+    let app = this.app
+    console.log(this.app)
+    let metadata = { "x-4d-token": app.store.state.account.token };
+    let method = "SignFb";
+    let req = new app.customerpb.Customer();
+    if (condition !== null) req.setSelf(condition)
+
+    let res = await app.grpcAxios(app.$axios, method, metadata, req);
+    if(res.code === 200) context.commit("set_token", { token: res.data, t: true })
+    console.log("SignFb", res)
     return res;
   },
   /**
