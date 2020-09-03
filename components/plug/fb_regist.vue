@@ -1,5 +1,5 @@
 <template>
-  <button class="w-100 btn l-btn btn-facebook btn-sm" @click="FBsignIn">使用FACEBOOK登入xx</button>
+  <button class="w-100 btn l-btn btn-facebook btn-sm" @click="FBsignIn">使用FACEBOOK註冊xx</button>
 </template>
 <script>
 import { Struct } from "google-protobuf/google/protobuf/struct_pb";
@@ -44,7 +44,7 @@ export default {
           if (response.authResponse) {
             console.log("FB",response)
             this.accesstoken = response.authResponse.accessToken;
-            this.$emit("update:fb_accesstoken",  response.authResponse.accessToken);
+             this.$emit("update:fb_accesstoken",  response.authResponse.accessToken);
           } else {
             console.log("User cancelled login or did not fully authorize.");
           }
@@ -57,8 +57,8 @@ export default {
     },
     FBsignIn: async function () {
       await this.FBLogin();
-      let address = await this.signCheck();
-      let o = { address , ...this.accesstoken };
+      this.registered.address = await this.signCheck();
+      let o = { ...this.accesstoken };
       let cond = Struct.fromJavaScript(o);
       let result = await this.$store.dispatch("account/signIn", {
         condition: cond,

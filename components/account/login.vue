@@ -23,8 +23,8 @@
                 tag="button"
                 @click="FBsignIn"
                 class="w-100 btn l-btn btn-facebook  btn-sm"
-              >使用FACEBOOK登入</button> -->
-              <PlugFbLogin />
+              >使用FACEBOOK登入</button>-->
+              <PlugFbLogin :fb_accesstoken="fb_accesstoken" :signCheck="signCheck" />
             </div>
             <hr class="divider" />
             <div class="col-md-12 p-3">
@@ -202,48 +202,48 @@ export default {
         });
       return resp;
     },
-    FBinit: function () {
-      FB.init({
-        appId: "364143314072504",
-        autoLogAppEvents: true,
-        xfbml: true,
-        version: "v8.0",
-      });
-    },
-    FBLogin: async function () {
-      // this.fb_accesstoken = "AAA"+new Date().getTime();
-      // return ;
-      FB.login(
-        (response) => {
-          if (response.authResponse) {
-            this.fb_accesstoken = response.authResponse.accessToken;
-          } else {
-            console.log("User cancelled login or did not fully authorize.");
-          }
-        },
-        {
-          scope: "email,user_likes",
-          return_scopes: true,
-        }
-      );
-    },
-    FBsignIn: async function () {
-      await this.FBLogin();
-      this.registered.address = await this.signCheck();
-      let o = { ...this.fb_accesstoken };
-      let cond = Struct.fromJavaScript(o);
-      let result = await this.$store.dispatch("account/signIn", {
-        condition: cond,
-      });
+    // FBinit: function () {
+    //   FB.init({
+    //     appId: "364143314072504",
+    //     autoLogAppEvents: true,
+    //     xfbml: true,
+    //     version: "v8.0",
+    //   });
+    // },
+    // FBLogin: async function () {
+    //   // this.fb_accesstoken = "AAA"+new Date().getTime();
+    //   // return ;
+    //   FB.login(
+    //     (response) => {
+    //       if (response.authResponse) {
+    //         this.fb_accesstoken = response.authResponse.accessToken;
+    //       } else {
+    //         console.log("User cancelled login or did not fully authorize.");
+    //       }
+    //     },
+    //     {
+    //       scope: "email,user_likes",
+    //       return_scopes: true,
+    //     }
+    //   );
+    // },
+    // FBsignIn: async function () {
+    //   await this.FBLogin();
+    //   this.registered.address = await this.signCheck();
+    //   let o = { ...this.fb_accesstoken };
+    //   let cond = Struct.fromJavaScript(o);
+    //   let result = await this.$store.dispatch("account/signIn", {
+    //     condition: cond,
+    //   });
 
-      if (result.code === 200) {
-        await this.$store.dispatch("account/whoAmI");
-        this.$toast.success("FB登入成功");
-        this.$modal.hide("login");
-      } else {
-        this.$toast.success(`${result.data} FB登入失敗`);
-      }
-    },
+    //   if (result.code === 200) {
+    //     await this.$store.dispatch("account/whoAmI");
+    //     this.$toast.success("FB登入成功");
+    //     this.$modal.hide("login");
+    //   } else {
+    //     this.$toast.success(`${result.data} FB登入失敗`);
+    //   }
+    // },
   },
   //BEGIN--生命週期
   beforeCreate: function () {
