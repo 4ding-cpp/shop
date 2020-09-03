@@ -50,7 +50,7 @@ export default {
     FBLogin: async function () {
       // this.fb_accesstoken = "AAA"+new Date().getTime();
       // return ;
-      FB.login(
+      await FB.login(
         (response) => {
           if (response.authResponse) {
             console.log("FB",response)
@@ -65,6 +65,7 @@ export default {
           return_scopes: true,
         }
       );
+      console.log("FB login end")
     },
     FBsignIn: async function () {
       await this.FBLogin();
