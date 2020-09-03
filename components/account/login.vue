@@ -66,8 +66,6 @@
           <div v-if="tab.selected == 0" class="tab_content">
             <AccountRegister
               :signCheck="signCheck"
-              :fb_accesstoken.sync="fb_accesstoken"
-              :FBLogin="FBLogin"
             />
           </div>
         </div>
@@ -257,7 +255,7 @@ export default {
   },
   mounted: async function () {
     //元素已掛載， el 被建立。
-    this.FBinit();
+    // this.FBinit();
   },
   beforeUpdate: function () {
     //當資料變化時被呼叫，還不會描繪 View。

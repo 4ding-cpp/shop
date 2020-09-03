@@ -1,5 +1,10 @@
 <template>
-  <button class="w-100 btn l-btn btn-facebook btn-sm" @click="FBsignIn">使用FACEBOOK登入xx</button>
+  <button v-if="type==='login'" class="w-100 btn l-btn btn-facebook btn-sm" @click="FBsignIn">
+    使用FACEBOOK登入xx
+  </button>
+    <button v-else-if="type==='signUp'" class="w-100 btn l-btn btn-facebook btn-sm" @click="FBsignUp">
+    使用FACEBOOK註冊xx
+  </button>
 </template>
 <script>
 import { Struct } from "google-protobuf/google/protobuf/struct_pb";
@@ -11,6 +16,12 @@ export default {
       type: String,
       default: function () {
         return "";
+      },
+    },
+    type: {
+      type: String,
+      default: function () {
+        return "login";
       },
     },
     signCheck: {
@@ -70,6 +81,23 @@ export default {
         this.$modal.hide("login");
       } else {
         this.$toast.success(`${result.data} FB登入失敗`);
+      }
+    },
+    FBsignUp: async function () {
+      await this.FBLogin();
+      let address = await this.signCheck();
+      let o = { address , ...this.accesstoken };
+      console.log("FBSing up",o)
+      let cond = Struct.fromJavaScript(o);
+      let result = await this.$store.dispatch("account/signUp", {
+        condition: cond,
+      });
+      if (result.code === 200) {
+        await this.$store.dispatch("account/whoAmI");
+        this.$toast.success("FB註冊成功");
+        this.$modal.hide("login");
+      } else {
+        this.$toast.success(`${result.data} FB註冊失敗!!`);
       }
     },
   },
