@@ -69,7 +69,7 @@ export default {
     },
     FBsignIn: async function () {
       let address = await this.signCheck();
-      let o = { address, ...this.accesstoken };
+      let o = { address, fb_accesstoken:this.accesstoken };
       let cond = Struct.fromJavaScript(o);
       let result = await this.$store.dispatch("account/signFb", {
         condition: cond,
