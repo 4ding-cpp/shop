@@ -1,37 +1,39 @@
 <template>
   <div>
+    <PlugGtm />
+    <PlugFbPixel />
     <Loading />
     <Headers />
     <nuxt data-aos="fade-up" data-aos-delay="300" />
   </div>
 </template>
 <script>
-import { mapActions , mapMutations } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 export default {
   transition: "fadeOpacity",
   middleware: "auth",
   data() {
-    return {};
+    return {
+      app_id: "123",
+    };
   },
   // 監聽,當路由發生變化的時候執行
   watch: {
     $route(to, from) {
       console.log(to.path);
-    }
+    },
   },
   methods: {
     // 初始
     ...mapActions({
       _store: "_store",
-      loading: "loading"
+      loading: "loading",
     }),
   },
 
-  beforeMount: async function() {
-
-  },
-  mounted: async function() {},
-  destroyed() {}
+  beforeMount: async function () {},
+ 
+  destroyed() {},
 };
 </script>
 <style>

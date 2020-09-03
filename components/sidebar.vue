@@ -31,7 +31,7 @@
             </a>
             <ul v-if="item.class" class="collapse list-unstyled" :id="`Submenu`+i">
               <li v-for="(o,j) in item.class" :key="j" class="dropright">
-                <nuxt-link tag="a" class="dropdown-toggle-right" :to="`/class/${o.class_id}`">
+                <nuxt-link tag="a" class="dropdown-toggle-right" :to="`/class/${o.class_id}?prod=${o.name.tw}`">
                   <i class="fas float-left"></i>
                   {{o.name.tw}}
                 </nuxt-link>

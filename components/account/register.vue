@@ -1,11 +1,6 @@
 <template>
   <div class>
     <div class="col-md-12 p-3">
-      <!-- <button
-        tag="button"
-        @click="FBsignUp()"
-        class="w-100 btn l-btn btn-facebook  btn-sm"
-      >使用FACEBOOK註冊</button> -->
       <PlugFbLogin :signCheck="signCheck" type="signUp" />
     </div>
     <div class="col-md-12 p-3">
@@ -140,22 +135,6 @@ export default {
         this.$toast.success(`${result.data} 註冊失敗!!`);
       }
     },
-    // FBsignUp: async function () {
-    //   await this.FBLogin();
-    //   this.registered.address = await this.signCheck();
-    //   let o = { ...this.registered, ...this.fb_accesstoken };
-    //   let cond = Struct.fromJavaScript(o);
-    //   let result = await this.$store.dispatch("account/signUp", {
-    //     condition: cond,
-    //   });
-    //   if (result.code === 200) {
-    //     await this.$store.dispatch("account/whoAmI");
-    //     this.$toast.success("FB註冊成功");
-    //     this.$modal.hide("login");
-    //   } else {
-    //     this.$toast.success(`${result.data} FB註冊失敗!!`);
-    //   }
-    // },
   },
   //BEGIN--生命週期
   beforeCreate: function () {

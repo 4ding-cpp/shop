@@ -33,6 +33,18 @@
                 </li>
               </ul>
             </div>
+            <div class="checkout-amount-wrap">
+              <ul class="list-unstyled components checkout-amount">
+                <li>優惠碼</li>
+                <li>
+                  輸入優惠碼
+                  <div style="height: 30px;">
+                    <input type="text" class="w-50 h-100" />
+                    <button type="button" class="btn btn-outline-danger btn-sm">確認</button>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
           <!-- 右側 -->
           <div class="col-md-10">
@@ -48,7 +60,7 @@
                     <th>單價</th>
                     <th style="width:200px">數量</th>
                     <th>小計</th>
-                    <th>xx</th>
+                    <th></th>
                   </thead>
                   <tbody>
                     <tr v-for="(item,i) in goods">
@@ -78,11 +90,17 @@
                 </table>
               </div>
               <div class="col-md-12 pl-0 mb-3">
+              
                 <button
                   @click="get_completeCar"
                   type="button"
                   class="btn btn-danger mr-2 w-25 float-right"
                 >修改購物車</button>
+                  <button
+                  @click="clear_cart"
+                  type="button"
+                  class="btn btn-secondary mr-2 w-25 float-right"
+                >清空購物車</button>
               </div>
             </div>
             <!-- step2 -->
@@ -216,22 +234,29 @@
                     placeholder="購買人聯絡電話，例：0987654321"
                   />
                 </div>
+                <div class="col-md-2 float-left control-label">
+                  聯絡地址
+                </div>
+                <div class="col-md-10 mb-3 float-left">
+                  <input
+                    class="form-control"
+                    v-model="buyer.address"
+                    :class="{'is-invalid': validation.hasError('buyer.address')}"
+                    type="text"
+                    placeholder="請輸入購買人地址"
+                  />
+                </div>
               </div>
               <div class="row">
                 <div class="col-md-12">
                   <div class="w-100">
-                    <!-- <input
+                    <input
                     class="form-check-input mt-2"
                     href="#receiverForm"
                     type="checkbox"
                     v-model="checked.userData.value"
                     data-toggle="collapse"
                     aria-expanded="false"
-                    />-->
-                    <input
-                      class="form-check-input mt-2"
-                      type="checkbox"
-                      v-model="checked.userData.value"
                     />
                     <label
                       class="form-check-label check-label ml-4"
@@ -240,8 +265,8 @@
                   </div>
                 </div>
               </div>
-              <!-- <div class="row mb-3 collapse list-unstyled" id="receiverForm"> -->
-              <div class="row mb-3" id="receiverForm">
+              <div class="row mb-3 collapse list-unstyled" id="receiverForm">
+              <!-- <div class="row mb-3" id="receiverForm"> -->
                 <div class="col-md-12 mt-3">
                   <hr />
                 </div>
@@ -376,6 +401,7 @@ export default {
         phone: "",
         email: "",
         name: "",
+        address: "",
         remark: "",
       },
       // 收件人
@@ -463,6 +489,7 @@ export default {
       this.receiver.name = this.buyer.name;
       this.receiver.phone = this.buyer.phone;
       this.receiver.email = this.buyer.email;
+      this.receiver.address = this.buyer.address;
     },
   },
   methods: {
@@ -610,11 +637,18 @@ export default {
      */
     async del_cart(i) {
       this._store({ act: "cart/del_cart", data: this.goods[i] });
-      console.log(this.goods,i)
+      console.log(this.goods, i);
       this.goods.splice(i, 1);
       this.checked.step = false;
     },
-
+    /**
+     * 減少購物車
+     */
+    async clear_cart(i) {
+      this._store({ act: "cart/set_cart", data: [] });
+      this.goods = [] ;
+      this.checked.step = false;
+    },
     /**
      * 檢查表單
      */
@@ -648,7 +682,7 @@ export default {
         this.logistic.selected
       ].data.adapter_id;
       o.other.receiver = this.receiver;
-  console.log("create_Order",o)
+      console.log("create_Order", o);
       let cond = Struct.fromJavaScript(o);
       let result = await this.$store.dispatch("order/create_Order", {
         condition: cond,
@@ -678,6 +712,7 @@ export default {
       this.buyer.email = store.email ? store.email : "";
       this.buyer.phone = store.phone ? store.phone : "";
       this.buyer.name = store.name ? store.name : "";
+      this.buyer.address = store.address ? store.address : "";
     },
   },
   //BEGIN--生命週期
