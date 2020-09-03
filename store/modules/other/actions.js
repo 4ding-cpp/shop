@@ -14,7 +14,7 @@ export default {
     let method = "AppConf";
     let req = new app.sqlpb.Query();
     let res = await app.grpcAxios(app.$axios, method, metadata, req);
-    console.log(res)
+    if(res.code === 200) context.commit("set_config", res.data)
     return res;
   },
   

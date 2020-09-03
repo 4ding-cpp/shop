@@ -75,7 +75,7 @@ export default {
       token: store.state.account.token,
       condition: cond,
     });
-
+console.log("get prod",result)
     if (result.code === 200) data.product_list = result.data;
 
     return data;

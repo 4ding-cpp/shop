@@ -19,11 +19,12 @@
           <!-- 登入 -->
           <div v-if="tab.selected == 1" class="tab_content">
             <div class="col-md-12 p-3">
-              <button
+              <!-- <button
                 tag="button"
                 @click="FBsignIn"
                 class="w-100 btn l-btn btn-facebook  btn-sm"
-              >使用FACEBOOK登入</button>
+              >使用FACEBOOK登入</button> -->
+              <PlugFbLogin />
             </div>
             <hr class="divider" />
             <div class="col-md-12 p-3">
