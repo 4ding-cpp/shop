@@ -8,11 +8,11 @@
       </div>
       <div class="container">
         <div class="row">
-          <div class="sidebar col-md-2 pt-3 mb-4">
+          <div class="sidebar col-md-3 pt-3 mb-4">
             <Sidebar />
           </div>
-          <div class="content col-md-10" v-if="product_info.name">
-            <div class="row pt-5 pb-5">
+          <div class="content col-md-9" v-if="product_info.name">
+            <div class="row pb-5">
               <!-- 左側圖片導覽 -->
               <div class="col-md-6">
                 <section class>
@@ -29,7 +29,7 @@
               </div>
               <!-- 右側規格數量 -->
               <div class="col-md-6">
-                <div class="product-name">
+                <div class="product-info">
                   <div class="cart-button">
                     <a href="#">
                       <i
@@ -40,10 +40,7 @@
                     </a>
                   </div>
 
-                  <h4>{{product_info.name.tw}}-{{specx}}</h4>
-                  <div class="originalPrice">NT{{product_info.original}}</div>
-                  <div class="offer">NT{{product_info.price}}</div>
-                  <br />
+                  <h4>{{product_info.name.tw}}</h4>
                   <div>規格:</div>
                   <div class="row">
                     <div v-for="(o,id) in product_info.specx" class="col-md-4 p-2 mb-3">
@@ -55,27 +52,38 @@
                       />
                     </div>
                   </div>
-                </div>
-                <div class="pt-5">
-                  <div class="input-group">
-                    <div class="col-md-12 mt-3">
-                      <label for>數量:</label>
-                      <div class="w-50">
-                        <ButtonSubAdd :count.sync="count" />
+                  <div class="row flex-md-column">
+                    <div class="title">優惠售價</div>
+                    <div class="price">
+                      <span class="offer line-through">NT$ {{product_info.price}}</span>
+                      <span class="originalPrice">NT${{product_info.original}}</span>
+                    </div>
+                    <hr style="margin: 25px 0 30px;" />
+                  </div>
+                  <div class="row flex-md-column">
+                    <div class="title">供貨狀況</div>
+                    <div class="d-flex">
+                      <div class="col-md-6 p-1">
+                        <Select1
+                          :opt="[{ 'title':`NT$ ${product_info.price} (市價:NT$ ${product_info.original})` , 'value':product_info.price }]"
+                        />
+                      </div>
+                      <div class="col-md-6 p-1">
+                        <ButtonSubAdd :count.sync="count" type="full" />
+                      </div>
+                    </div>
+                    <div class="d-flex mt-1">
+                      <div class="col-md-6 p-1">
+                        <button class="btn-block l-btn btn-secondary" @click="cartJoin()">加入購物車</button>
+                      </div>
+                      <div class="col-md-6 p-1">
+                        <button class="w-100 checkout-btn l-btn" @click="toStep1();">立即結帳</button>
                       </div>
                     </div>
                   </div>
-                  <div class="input-group">
-                    <div class="col-md-6 mt-3">
-                      <button class="w-100 btn-block pick-btn l-btn" @click="cartJoin()">加入購物車</button>
-                    </div>
-                    <div class="col-md-6 mt-3">
-                      <button class="w-100 checkout-btn l-btn" @click="toStep1();">立即結帳</button>
-                    </div>
-                  </div>
-                  <div class="input-group">
-                    <div class="col-md-12 mt-3">
-                      <button class="btn btn-love" @click="addFavorite">
+                  <div class="row mt-3">
+                    <div class="col-md-12 p-1">
+                      <button class="btn btn-sm btn-love" @click="addFavorite">
                         <i class="fas fa-heart"></i>&nbsp;加到最愛
                       </button>
                     </div>
@@ -84,7 +92,7 @@
               </div>
             </div>
             <!-- 規格說明 -->
-            <ul class="nav nav-tabs" id="Tab" role="tablist">
+            <ul v-if="product_info.block!==null" class="nav nav-tabs" id="Tab" role="tablist">
               <li class="nav-item" v-for="(item,i) in product_info.block">
                 <a
                   class="nav-link"
@@ -95,7 +103,7 @@
                 >{{item.title.tw}}</a>
               </li>
             </ul>
-            <div class="tab-content mb-5" id="TabContent">
+            <div v-if="product_info.block!==null" class="tab-content mb-5" id="TabContent">
               <div
                 v-for="(item,i) in product_info.block"
                 class="tab-pane fade"
@@ -127,7 +135,7 @@
                 id="home"
                 role="tabpanel"
                 aria-labelledby="home-tab"
-              >AAAAAAAAAAAAAAAAAAAAAAAAAAAA</div>
+              ></div>
             </div>
           </div>
         </div>
@@ -176,7 +184,7 @@ export default {
         id: route.params.id,
       },
     });
-    console.log("p:",result)
+    console.log("p:", result);
     if (result.code === 200) {
       for (let i in result.data.block) {
         let item = result.data.block[i];
@@ -188,7 +196,8 @@ export default {
       }
       data.product_info = result.data;
       data.activity = data.product_info.activity;
-      data.specx = (data.product_info.specx !== null)? data.product_info.specx[0].sku : "" ;
+      data.specx =
+        data.product_info.specx !== null ? data.product_info.specx[0].sku : "";
       data.breadcrumb_info.url += data.product_info.class_id;
       data.breadcrumb_info.prod = data.product_info.name.tw;
     }
@@ -223,13 +232,20 @@ export default {
       let result = await this.$store.dispatch("product/get_MyFavorite", {
         condition: cond,
       });
-      console.log("ss", result);
+
+      if (result.code === 0) {
+        this.$toast.error(`請求異常:${result.data}`);
+        return false;
+      }
+      if (result.data.includes(String(this.product_info.shell_id))) {
+        this.favorte = true;
+      }
     },
     toggleFavorte: function () {
       if (this.favorte) {
         this.delFavorite();
       } else {
-        this.addFavorite()
+        this.addFavorite();
       }
     },
     /**
@@ -272,7 +288,7 @@ export default {
      */
     cartJoin: function () {
       let p = this.product_info;
-      console.log(p)
+      console.log(p);
       let data = {
         shell_id: p.shell_id,
         sku: this.specx,
@@ -281,9 +297,7 @@ export default {
         photox: [
           {
             src:
-              p.photox === null
-                ? "/images/noprod.png"
-                : `${p.photox[0].src}`,
+              p.photox === null ? "/images/noprod.png" : `${p.photox[0].src}`,
           },
         ],
         amount: this.count,
@@ -305,7 +319,7 @@ export default {
     //元素已掛載， el 被建立。
     this.loading(true);
     // this.getHTML("/static/template/RhHHoIldRg/");
-    this.getFavorite();
+    await this.getFavorite();
     setTimeout(() => {
       this.loading(false);
     }, 2000);
@@ -318,12 +332,12 @@ export default {
 <style lang="scss" scoped >
 a .fa-heart {
   color: red;
-  &:hover{
-    color:#cccccc;
+  &:hover {
+    color: #cccccc;
   }
   &.no {
     color: #cccccc;
-    &:hover{
+    &:hover {
       color: red;
     }
   }
@@ -335,6 +349,7 @@ a .fa-heart {
   border: 1px solid #e6e6e6;
   border-top: 0px solid #dee2e6;
   padding: 12px;
+  min-height: 50px;
 }
 .active-block {
   box-sizing: border-box;
@@ -362,6 +377,15 @@ a .fa-heart {
     box-sizing: border-box;
     text-align: center;
     margin-right: 10px;
+  }
+}
+
+.product-info {
+  & .title {
+    color: #898989;
+    margin: 5px 0;
+    font-weight: 300;
+    font-size: smaller;
   }
 }
 </style>

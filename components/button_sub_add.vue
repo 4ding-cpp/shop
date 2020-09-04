@@ -9,6 +9,7 @@
       type="text"
       inputmode="decimal"
       class="form-control count"
+      :class="{'full':this.type === 'full'}"
       v-model="total"
       @change="change()"
     />
@@ -27,6 +28,12 @@ export default {
       type: Object,
       default: function () {
         return {};
+      },
+    },
+    type: {
+      type: String,
+      default: function () {
+        return "";
       },
     },
     count: {
@@ -70,8 +77,8 @@ export default {
 .btn {
   line-height: 0;
   min-width: 1.5rem;
-  border: 1px solid #ced4da;
-  color: #ced4da ;
+  border: 1px solid #898989;
+  color: #ced4da;
 }
 // 左右按鈕
 .input-group-prepend,
@@ -84,5 +91,9 @@ input.count {
   text-align: center;
   flex: 0.5 1 auto !important;
   height: 25px !important;
+  border: 1px solid #898989;
+  &.full {
+    width: calc(100% - 70px);
+  }
 }
 </style>
