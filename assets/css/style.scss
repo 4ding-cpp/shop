@@ -197,21 +197,19 @@ h6 {
   background-color: #fff;
   color: #7c7c7c;
   position: relative;
-}
-
-.shipping-item:hover {
-  color: #ff6855;
-  border: 1px solid #ff6855 !important;
-}
-
-.shipping-item .fas {
-  position: absolute;
-  top: -8px;
-  right: 10px;
-  font-size: 20px;
-  background: #fff;
-  border-radius: 50%;
-  padding-right: 0 !important;
+  &:hover {
+    color: #ff6855;
+    border: 1px solid #ff6855 !important;
+  }
+  & .fas {
+    position: absolute;
+    top: -8px;
+    right: 10px;
+    font-size: 20px;
+    background: #fff;
+    border-radius: 50%;
+    padding-right: 0 !important;
+  }
 }
 
 .on-active {

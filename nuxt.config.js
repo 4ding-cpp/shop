@@ -12,7 +12,6 @@ export default {
     title: process.env.npm_package_name || '',
     meta: [
       { charset: 'utf-8' },
-      // <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE"></META>
       { 'http-equiv': 'pragma', content: 'no-cache' },
       { 'http-equiv': 'cache-control', content: 'no-cache' },
       { 'http-equiv': 'expires', content: '0' },

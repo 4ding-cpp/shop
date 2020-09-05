@@ -196,12 +196,10 @@ h6 {
   color: #7c7c7c;
   position: relative;
 }
-
 .shipping-item:hover {
   color: #ff6855;
   border: 1px solid #ff6855 !important;
 }
-
 .shipping-item .fas {
   position: absolute;
   top: -8px;
