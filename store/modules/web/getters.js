@@ -17,7 +17,7 @@ export default {
    * 取上方menu 分類
    */
   get_headerMenu: state => {
-    return  state.menu
+    return state.menu
   },
   /**
    * 取下方footer 分類
@@ -30,5 +30,19 @@ export default {
     })
     return res
   },
-
+  /**
+   * 
+   */
+  get_styleColor: state => {
+    let res = {}
+    if (state.style === null) return res
+    Object.keys(state.style).forEach(index => {
+      res = {
+        ...state.style[index].style_color, 
+        logo: state.style[index].logo, 
+        style: state.style[index].style
+      }
+    })
+    return res
+  },
 }

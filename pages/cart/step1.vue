@@ -90,13 +90,12 @@
                 </table>
               </div>
               <div class="col-md-12 pl-0 mb-3">
-              
-                <button
+                <!-- <button
                   @click="get_completeCar"
                   type="button"
                   class="btn btn-danger mr-2 w-25 float-right"
-                >修改購物車</button>
-                  <button
+                >修改購物車</button>-->
+                <button
                   @click="clear_cart"
                   type="button"
                   class="btn btn-secondary mr-2 w-25 float-right"
@@ -234,9 +233,7 @@
                     placeholder="購買人聯絡電話，例：0987654321"
                   />
                 </div>
-                <div class="col-md-2 float-left control-label">
-                  聯絡地址
-                </div>
+                <div class="col-md-2 float-left control-label">聯絡地址</div>
                 <div class="col-md-10 mb-3 float-left">
                   <input
                     class="form-control"
@@ -251,12 +248,12 @@
                 <div class="col-md-12">
                   <div class="w-100">
                     <input
-                    class="form-check-input mt-2"
-                    href="#receiverForm"
-                    type="checkbox"
-                    v-model="checked.userData.value"
-                    data-toggle="collapse"
-                    aria-expanded="false"
+                      class="form-check-input mt-2"
+                      href="#receiverForm"
+                      type="checkbox"
+                      v-model="checked.userData.value"
+                      data-toggle="collapse"
+                      aria-expanded="false"
                     />
                     <label
                       class="form-check-label check-label ml-4"
@@ -266,7 +263,7 @@
                 </div>
               </div>
               <div class="row mb-3 collapse list-unstyled" id="receiverForm">
-              <!-- <div class="row mb-3" id="receiverForm"> -->
+                <!-- <div class="row mb-3" id="receiverForm"> -->
                 <div class="col-md-12 mt-3">
                   <hr />
                 </div>
@@ -421,6 +418,11 @@ export default {
       total: {
         fee_logistics: 0,
         money: 0,
+      },
+      // 計數
+      timer: {
+        c: 0,
+        t: 0,
       },
       // 購物車
       cart: {
@@ -587,7 +589,7 @@ export default {
     //   return money;
     // },
     // 將目前購物車 送出取得可套用活動相關資訊
-    async get_completeCar() {
+    async get_completeCar(focus = true) {
       let data = {};
       let cart = this.goods;
       let cart_info = this.$store.state.cart.info;
@@ -600,6 +602,10 @@ export default {
       });
 
       if (cart == null || cart_info.id == null) return;
+      let nowTime = new Date().getTime() / 1000;
+      let lastTime = this.timer.t;
+      if (nowTime - lastTime < 5 && focus === false) return;
+      this.timer.t = new Date().getTime() / 1000;
       let cond = Struct.fromJavaScript({ buy: buy });
 
       let result = await this.$store.dispatch("cart/get_completeCar", {
@@ -630,24 +636,42 @@ export default {
      */
     async add_cart(o) {
       await this._store({ act: "cart/set_one_cart", data: o });
-      this.checked.step = false;
+      this.counter();
+      // this.checked.step = false;
     },
     /**
      * 減少購物車
      */
     async del_cart(i) {
       this._store({ act: "cart/del_cart", data: this.goods[i] });
-      console.log(this.goods, i);
       this.goods.splice(i, 1);
-      this.checked.step = false;
+      this.counter();
+      // this.checked.step = false;
     },
     /**
-     * 減少購物車
+     * 清空購物車
      */
     async clear_cart(i) {
       this._store({ act: "cart/set_cart", data: [] });
-      this.goods = [] ;
+      this.goods = [];
       this.checked.step = false;
+      clearInterval(this.timer.t);
+    },
+    delay_cart() {
+      if (this.timer.c > 0) {
+        setTimeout(() => {
+          this.timer.c--;
+          this.delay_cart();
+        }, 1000);
+      } else {
+        console.log("do");
+        this.get_completeCar(false);
+      }
+    },
+    countDownTimer() {},
+    counter() {
+      this.timer.c = 5;
+      this.delay_cart();
     },
     /**
      * 檢查表單
