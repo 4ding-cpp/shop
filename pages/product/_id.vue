@@ -232,11 +232,9 @@ export default {
       let result = await this.$store.dispatch("product/get_MyFavorite", {
         condition: cond,
       });
+    
+      if (result.code === 0) return false;
 
-      if (result.code === 0) {
-        this.$toast.error(`請求異常:${result.data}`);
-        return false;
-      }
       if (result.data.includes(String(this.product_info.shell_id))) {
         this.favorte = true;
       }

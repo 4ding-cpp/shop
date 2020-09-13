@@ -5,7 +5,7 @@
       <div class="container">
         <section class="row">
           <!-- 左側 -->
-          <div class="col-md-2">
+          <div class="col-md-2" style="padding-right:10px">
             <div class="checkout-amount-wrap">
               <ul class="list-unstyled components checkout-amount">
                 <li>
@@ -17,18 +17,24 @@
                 <div class="collapse list-unstyled" id="leftProdCounter">
                   <li>
                     商品小計
-                    <span class="float-right">489</span>
+                    <span class="float-right">{{calculateCart()}}</span>
                   </li>
                 </div>
                 <li>
                   運費
-                  <span class="float-right">{{ total.fee_logistics }}</span>
+                  <span
+                    v-if="logistic.list[logistic.selected]"
+                    class="float-right"
+                  >{{ logistic.list[logistic.selected].data.logistics_fee }}</span>
                 </li>
                 <li class="totoal-money font-weight-bolder">
                   應付總額
                   <span class="price float-right">
                     NT$
-                    <span class="total">{{total.money}}</span>
+                    <span
+                      v-if="logistic.list[logistic.selected]"
+                      class="total"
+                    >{{cart.money + logistic.list[logistic.selected].data.logistics_fee}}</span>
                   </span>
                 </li>
               </ul>
@@ -39,7 +45,7 @@
                 <li>
                   輸入優惠碼
                   <div style="height: 30px;">
-                    <input type="text" class="w-50 h-100" />
+                    <input type="text" style="width:95px" class="h-100" />
                     <button type="button" class="btn btn-outline-danger btn-sm">確認</button>
                   </div>
                 </li>
@@ -49,7 +55,7 @@
           <!-- 右側 -->
           <div class="col-md-10">
             <!-- step1 -->
-            <div class="row">
+            <div class>
               <div class="circle-head w-100">購物車內容</div>
               <div class="col-md-12 pl-0 table-responsive">
                 <table class="table">
@@ -63,14 +69,14 @@
                     <th></th>
                   </thead>
                   <tbody>
-                    <tr v-for="(item,i) in goods">
+                    <tr v-for="(item,i) in cart.list">
                       <td>
-                        <img :src="`${imgesUrl}${item.photox[0].src}`" alt width="80px" />
+                        <img :src="`${imgesUrl}${item.photox[0].src}`" alt width="100px" />
                         <!-- <img src="/images/noprod.png" alt width="80px" /> -->
                       </td>
                       <td>{{item.name.tw}}</td>
                       <td>{{item.sku }}</td>
-                      <td>NT${{item.price}}</td>
+                      <td class="font-size-16">NT${{item.price}}</td>
                       <td>
                         <ButtonSubAdd
                           :data.sync="item"
@@ -78,12 +84,12 @@
                           @after_change="add_cart"
                         />
                       </td>
-                      <td>{{ item.amount * item.price }}</td>
+                      <td class="font-size-16">{{ item.amount * item.price }}</td>
                       <td>
                         <i @click="del_cart(i)" class="fas fa-trash-alt"></i>
                       </td>
                     </tr>
-                    <tr v-if="goods.length==0">
+                    <tr v-if="cart.list.length==0">
                       <td class="text-center text-danger" colspan="7">無資料</td>
                     </tr>
                   </tbody>
@@ -95,16 +101,16 @@
                   type="button"
                   class="btn btn-danger mr-2 w-25 float-right"
                 >修改購物車</button>-->
-                <button
+                <!-- <button
                   @click="clear_cart"
                   type="button"
                   class="btn btn-secondary mr-2 w-25 float-right"
-                >清空購物車</button>
+                >清空購物車</button>-->
               </div>
             </div>
             <!-- step2 -->
 
-            <div v-if="checked.step===true" class="step2 row d-flex flex-column">
+            <div v-if="checked.step===true" class="step2 d-flex flex-column">
               <div class="circle-head">會員專區</div>
               <div class="mb-2 font-weight-bolder">
                 會員登入
@@ -141,10 +147,10 @@
             </div>
             <!-- step3 -->
             <div v-if="checked.step===true" class="step3">
-              <div class="row d-flex flex-column pt-4">
+              <div class="d-flex flex-column pt-4">
                 <div class="circle-head">付款運送方式</div>
               </div>
-              <div class="row">
+              <div class>
                 <div class="col-md-6 pl-0 pr-2 mb-3 shipping">
                   <button type="button" class="shipping-method on-active">
                     <div class="shipping-label">
@@ -220,6 +226,10 @@
                     type="text"
                     placeholder="購買人姓名"
                   />
+                  <div
+                    v-if="validation.hasError('buyer.name')"
+                    class="hint-label mt-2"
+                  >*{{ validation.firstError('buyer.name') }}</div>
                 </div>
                 <div class="col-md-2 float-left control-label">
                   <span class="hint-label">*</span>聯絡電話
@@ -232,6 +242,10 @@
                     type="text"
                     placeholder="購買人聯絡電話，例：0987654321"
                   />
+                  <div
+                    v-if="validation.hasError('buyer.phone')"
+                    class="hint-label mt-2"
+                  >*{{ validation.firstError('buyer.phone') }}</div>
                 </div>
                 <div class="col-md-2 float-left control-label">聯絡地址</div>
                 <div class="col-md-10 mb-3 float-left">
@@ -306,6 +320,10 @@
                     type="text"
                     placeholder="聯絡信箱"
                   />
+                  <div
+                    v-if="validation.hasError('receiver.email')"
+                    class="hint-label mt-2"
+                  >*{{ validation.firstError('receiver.email') }}</div>
                 </div>
                 <div class="col-md-2 float-left control-label">聯絡地址</div>
                 <div class="col-md-10 float-left mb-3">
@@ -428,11 +446,11 @@ export default {
       cart: {
         count: 0,
         money: 0,
-        list: {},
+        list: [],
       },
       imgesUrl: process.env.IMG_URL,
 
-      goods: [],
+      // goods: [],
       activity: [],
       purchase: [
         {
@@ -547,6 +565,7 @@ export default {
         //   this.cash.show = d.payment_type == 6 ? false : true;
         // }
       }
+      console.log("logist", this.logistic);
       return true;
     },
     /**
@@ -576,22 +595,22 @@ export default {
     /**
      * 計算購物車
      */
-    // total() {
-    //   let cart = this.$store.state.cart;
-    //   let money = 0;
-    //   let amount = 0;
-    //   Object.keys(cart.content).forEach((k) => {
-    //     amount += Number(cart.content[k].amount);
-    //     money += Number(cart.content[k].price) * Number(cart.content[k].amount);
-    //   });
-    //   this.cart.money = money;
-    //   this.cart.count = amount;
-    //   return money;
-    // },
+    calculateCart() {
+      let cart = this.cart.list;
+      let money = 0;
+      let amount = 0;
+      console.log("calculateCart", cart);
+      Object.keys(cart).forEach((k) => {
+        amount += Number(cart[k].amount);
+        money += Number(cart[k].price) * Number(cart[k].amount);
+      });
+      this.cart.money = money;
+      return money;
+    },
     // 將目前購物車 送出取得可套用活動相關資訊
     async get_completeCar(focus = true) {
       let data = {};
-      let cart = this.goods;
+      let cart = this.cart.list;
       let cart_info = this.$store.state.cart.info;
       let buy = _values(cart).map((res) => {
         return {
@@ -617,11 +636,11 @@ export default {
       this.checked.step = true;
       if (result.code === 200) {
         cart_info = { state: 1, id: result.data.car_id };
-        this.goods = result.data.goods;
+        this.cart.list = result.data.goods;
         this.activity = result.data.activity;
         let data = {};
-        for (let i in this.goods) {
-          let o = this.goods[i];
+        for (let i in this.cart.list) {
+          let o = this.cart.list[i];
           data[`${o.shell_id}-${o.sku}`] = o;
         }
         this._store({
@@ -643,8 +662,8 @@ export default {
      * 減少購物車
      */
     async del_cart(i) {
-      this._store({ act: "cart/del_cart", data: this.goods[i] });
-      this.goods.splice(i, 1);
+      this._store({ act: "cart/del_cart", data: this.cart.list[i] });
+      this.cart.list.splice(i, 1);
       this.counter();
       // this.checked.step = false;
     },
@@ -653,7 +672,7 @@ export default {
      */
     async clear_cart(i) {
       this._store({ act: "cart/set_cart", data: [] });
-      this.goods = [];
+      this.cart.list = [];
       this.checked.step = false;
       clearInterval(this.timer.t);
     },
@@ -756,7 +775,7 @@ export default {
     this.order = JSON.parse(localStorage.getItem("order"));
     localStorage.removeItem("order");
     // console.log("local:",this.order);
-    this.goods = this.$store.state.cart.content;
+    this.cart.list = this.$store.state.cart.content;
     await this.get_completeCar();
     await this.get_logistics();
     await this.get_payment();

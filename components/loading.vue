@@ -35,10 +35,6 @@ export default {
     };
   },
   watch: {
-    "$store.state.act.loading"(to, from) {
-     
-      console.log("load",to,from , document.getElementById("page").offsetHeight );
-    },
   },
   computed: {
     autoheight(){
