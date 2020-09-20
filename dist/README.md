@@ -1,11 +1,16 @@
-# STATIC
 
-**This directory is not required, you can delete it if you don't want to use it.**
+## products
+### /products findProductGoods
+### /products/{{product.urn}}   browseProductGoods
+### /products/class/{{class.urn}} findProductClass
+### /products/activity/{{activity.urn}} findProductGoods
 
-This directory contains your static files.
-Each file inside this directory is mapped to `/`.
-Thus you'd want to delete this README.md before deploying to production.
+## page
+#### /static/pages/{{page.urn}} findWebPage
 
-Example: `/static/robots.txt` is mapped as `/robots.txt`.
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/guide/assets#static).
+## order
+### /order/complete findOrder 訂單完成時
+### /order/view findOrder 查看歷史訂單時
+
+
