@@ -121,6 +121,28 @@ export namespace ProductTarget {
   }
 }
 
+export class ActivityTarget extends jspb.Message {
+  getActivityId(): string;
+  setActivityId(value: string): void;
+
+  getUrn(): string;
+  setUrn(value: string): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): ActivityTarget.AsObject;
+  static toObject(includeInstance: boolean, msg: ActivityTarget): ActivityTarget.AsObject;
+  static serializeBinaryToWriter(message: ActivityTarget, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): ActivityTarget;
+  static deserializeBinaryFromReader(message: ActivityTarget, reader: jspb.BinaryReader): ActivityTarget;
+}
+
+export namespace ActivityTarget {
+  export type AsObject = {
+    activityId: string,
+    urn: string,
+  }
+}
+
 export class Image extends jspb.Message {
   getSrc(): string;
   setSrc(value: string): void;
@@ -212,6 +234,11 @@ export class Layout extends jspb.Message {
   hasTarget(): boolean;
   clearTarget(): void;
 
+  getActivity(): ActivityTarget | undefined;
+  setActivity(value?: ActivityTarget): void;
+  hasActivity(): boolean;
+  clearActivity(): void;
+
   getTemplate(): seo_pb.Template | undefined;
   setTemplate(value?: seo_pb.Template): void;
   hasTemplate(): boolean;
@@ -237,6 +264,7 @@ export namespace Layout {
     imageList: Array<Image.AsObject>,
     layoutList: Array<Layout.AsObject>,
     target?: ProductTarget.AsObject,
+    activity?: ActivityTarget.AsObject,
     template?: seo_pb.Template.AsObject,
   }
 }

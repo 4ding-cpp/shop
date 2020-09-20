@@ -3029,7 +3029,7 @@ proto.ding4.OrderOther.prototype.hasReceiver = function() {
  * @private {!Array<number>}
  * @const
  */
-proto.ding4.OrderBatch.repeatedFields_ = [4];
+proto.ding4.OrderBatch.repeatedFields_ = [7];
 
 
 
@@ -3065,6 +3065,9 @@ proto.ding4.OrderBatch.toObject = function(includeInstance, msg) {
     state: jspb.Message.getFieldWithDefault(msg, 1, 0),
     paymentState: jspb.Message.getFieldWithDefault(msg, 2, 0),
     logisticsState: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    temperature: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    specification: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    pickupTime: jspb.Message.getFieldWithDefault(msg, 6, ""),
     orderList: jspb.Message.toObjectList(msg.getOrderList(),
     proto.ding4.Order.toObject, includeInstance),
     self: (f = msg.getSelf()) && google_protobuf_struct_pb.Struct.toObject(includeInstance, f)
@@ -3117,11 +3120,23 @@ proto.ding4.OrderBatch.deserializeBinaryFromReader = function(msg, reader) {
       msg.setLogisticsState(value);
       break;
     case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setTemperature(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setSpecification(value);
+      break;
+    case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setPickupTime(value);
+      break;
+    case 7:
       var value = new proto.ding4.Order;
       reader.readMessage(value,proto.ding4.Order.deserializeBinaryFromReader);
       msg.addOrder(value);
       break;
-    case 5:
+    case 8:
       var value = new google_protobuf_struct_pb.Struct;
       reader.readMessage(value,google_protobuf_struct_pb.Struct.deserializeBinaryFromReader);
       msg.setSelf(value);
@@ -3176,10 +3191,31 @@ proto.ding4.OrderBatch.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
+  f = message.getTemperature();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
+    );
+  }
+  f = message.getSpecification();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
+      f
+    );
+  }
+  f = message.getPickupTime();
+  if (f.length > 0) {
+    writer.writeString(
+      6,
+      f
+    );
+  }
   f = message.getOrderList();
   if (f.length > 0) {
     writer.writeRepeatedMessage(
-      4,
+      7,
       f,
       proto.ding4.Order.serializeBinaryToWriter
     );
@@ -3187,7 +3223,7 @@ proto.ding4.OrderBatch.serializeBinaryToWriter = function(message, writer) {
   f = message.getSelf();
   if (f != null) {
     writer.writeMessage(
-      5,
+      8,
       f,
       google_protobuf_struct_pb.Struct.serializeBinaryToWriter
     );
@@ -3250,12 +3286,66 @@ proto.ding4.OrderBatch.prototype.setLogisticsState = function(value) {
 
 
 /**
- * repeated Order order = 4;
+ * optional string temperature = 4;
+ * @return {string}
+ */
+proto.ding4.OrderBatch.prototype.getTemperature = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.ding4.OrderBatch} returns this
+ */
+proto.ding4.OrderBatch.prototype.setTemperature = function(value) {
+  return jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+/**
+ * optional string specification = 5;
+ * @return {string}
+ */
+proto.ding4.OrderBatch.prototype.getSpecification = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.ding4.OrderBatch} returns this
+ */
+proto.ding4.OrderBatch.prototype.setSpecification = function(value) {
+  return jspb.Message.setProto3StringField(this, 5, value);
+};
+
+
+/**
+ * optional string pickup_time = 6;
+ * @return {string}
+ */
+proto.ding4.OrderBatch.prototype.getPickupTime = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.ding4.OrderBatch} returns this
+ */
+proto.ding4.OrderBatch.prototype.setPickupTime = function(value) {
+  return jspb.Message.setProto3StringField(this, 6, value);
+};
+
+
+/**
+ * repeated Order order = 7;
  * @return {!Array<!proto.ding4.Order>}
  */
 proto.ding4.OrderBatch.prototype.getOrderList = function() {
   return /** @type{!Array<!proto.ding4.Order>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.ding4.Order, 4));
+    jspb.Message.getRepeatedWrapperField(this, proto.ding4.Order, 7));
 };
 
 
@@ -3264,7 +3354,7 @@ proto.ding4.OrderBatch.prototype.getOrderList = function() {
  * @return {!proto.ding4.OrderBatch} returns this
 */
 proto.ding4.OrderBatch.prototype.setOrderList = function(value) {
-  return jspb.Message.setRepeatedWrapperField(this, 4, value);
+  return jspb.Message.setRepeatedWrapperField(this, 7, value);
 };
 
 
@@ -3274,7 +3364,7 @@ proto.ding4.OrderBatch.prototype.setOrderList = function(value) {
  * @return {!proto.ding4.Order}
  */
 proto.ding4.OrderBatch.prototype.addOrder = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 4, opt_value, proto.ding4.Order, opt_index);
+  return jspb.Message.addToRepeatedWrapperField(this, 7, opt_value, proto.ding4.Order, opt_index);
 };
 
 
@@ -3288,12 +3378,12 @@ proto.ding4.OrderBatch.prototype.clearOrderList = function() {
 
 
 /**
- * optional google.protobuf.Struct self = 5;
+ * optional google.protobuf.Struct self = 8;
  * @return {?proto.google.protobuf.Struct}
  */
 proto.ding4.OrderBatch.prototype.getSelf = function() {
   return /** @type{?proto.google.protobuf.Struct} */ (
-    jspb.Message.getWrapperField(this, google_protobuf_struct_pb.Struct, 5));
+    jspb.Message.getWrapperField(this, google_protobuf_struct_pb.Struct, 8));
 };
 
 
@@ -3302,7 +3392,7 @@ proto.ding4.OrderBatch.prototype.getSelf = function() {
  * @return {!proto.ding4.OrderBatch} returns this
 */
 proto.ding4.OrderBatch.prototype.setSelf = function(value) {
-  return jspb.Message.setWrapperField(this, 5, value);
+  return jspb.Message.setWrapperField(this, 8, value);
 };
 
 
@@ -3320,7 +3410,7 @@ proto.ding4.OrderBatch.prototype.clearSelf = function() {
  * @return {boolean}
  */
 proto.ding4.OrderBatch.prototype.hasSelf = function() {
-  return jspb.Message.getField(this, 5) != null;
+  return jspb.Message.getField(this, 8) != null;
 };
 
 

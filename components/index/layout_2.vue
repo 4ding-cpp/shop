@@ -6,7 +6,7 @@
           tag="img"
           :src="IMG_URL+data.photox[0].src"
           class="card-img-top"
-          :to="'/product/'+data.shell_id"
+          :to="'/product/'+data.urn"
         ></nuxt-link>
         <!-- <img :src="data.photo" class="card-img-top" alt="..." /> -->
         <div class="card-body">
@@ -54,7 +54,6 @@ export default {
     };
   },
   created() {
-    console.log("layout3:>>>>",this.item);
   }
 };
 </script>

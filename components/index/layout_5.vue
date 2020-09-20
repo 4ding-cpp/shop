@@ -72,9 +72,6 @@ export default {
   },
 
   created() {
-    // this.run_carousel();
-    // console.log(this.item);
-     console.log("type5:",this.item)
   },
 };
 </script>

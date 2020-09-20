@@ -186,7 +186,6 @@ export default {
           action: "signCheck",
         })
         .then(function (token) {
-          console.log("token:", token);
           return token;
         })
         .catch((err) => {

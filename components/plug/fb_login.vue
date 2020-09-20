@@ -49,7 +49,6 @@ export default {
       await FB.login(
         (response) => {
           if (response.authResponse) {
-            console.log("FB", response);
             this.accesstoken = response.authResponse.accessToken;
             this.$emit(
               "update:fb_accesstoken",
@@ -65,7 +64,6 @@ export default {
           return_scopes: true,
         }
       );
-      console.log("FB login end");
     },
     FBsignIn: async function () {
       let address = await this.signCheck();

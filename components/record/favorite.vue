@@ -23,7 +23,7 @@
           <td class="align-middle">{{ item.price }}</td>
           <td class="align-middle">{{ item.original }}</td>
           <td class="align-middle">
-            <nuxt-link tag="span" class :to="`/product/${item.shell_id}`">查看</nuxt-link>|
+            <nuxt-link tag="span" class :to="`/product/${item.urn}`">查看</nuxt-link>|
             <span href="" @click="delFavorite(item.shell_id)" >刪除</span>
           </td>
         </tr>
@@ -93,7 +93,6 @@ export default {
      * clickCallback
      */
     clickCallback: async function (pageNum) {
-      console.log("clickCallback", pageNum);
       this.page.now = pageNum;
       this.getFavorite();
     },
@@ -107,7 +106,6 @@ export default {
     },
     getProduct: async function () {
       let cond = null;
-      console.log(">>", this.sqlpb);
       cond = new this.sqlpb.Condition();
       cond.setF("shell_id").setO(5).setSList(this.plist);
 
@@ -116,7 +114,6 @@ export default {
         token: this.$store.state.account.token,
         condition: cond,
       });
-      console.log("rrrr", result);
       if(result.code === 0) return ;
       this.list = result.data
     },
@@ -126,7 +123,6 @@ export default {
       let result = await this.$store.dispatch("product/del_MyFavorite", {
         condition: {id:id},
       });
-      console.log("del:",result);
     },
   },
   //BEGIN--生命週期

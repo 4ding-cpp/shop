@@ -535,7 +535,7 @@ export default {
       );
       let id = this.logistic.list[this.logistic.selected].data.adapter_id;
       let service = this.logistic.list[this.logistic.selected].data.service;
-      let redirect = `${process.env.REDIRECT_URL}/cart/step1`;
+      let redirect = `/cart/step1`;
       window.location = `/logistics/${service}/storemap?a=${id}&redirect=${redirect}`;
     },
     /**
@@ -738,10 +738,10 @@ export default {
         alert("createOrder OK:" + result.data);
         let service = this.cash.list[this.cash.selected].data.service;
         if (service == "") {
-          this.$router.push(`/cart/orderList?id=${result.data}`);
+          this.$router.push(`/order/complete?id=${result.data}`);
           return true;
         }
-        let redirect = `${process.env.REDIRECT_URL}/cart/orderList?id=${result.data}`;
+        let redirect = `/order/complete?id=${result.data}`;
         let url = `/payment/${service}/order/${result.data}?&redirect=${redirect}`;
         window.location = url;
       }

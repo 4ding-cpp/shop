@@ -388,6 +388,15 @@ export class OrderBatch extends jspb.Message {
   getLogisticsState(): number;
   setLogisticsState(value: number): void;
 
+  getTemperature(): string;
+  setTemperature(value: string): void;
+
+  getSpecification(): string;
+  setSpecification(value: string): void;
+
+  getPickupTime(): string;
+  setPickupTime(value: string): void;
+
   getOrderList(): Array<Order>;
   setOrderList(value: Array<Order>): void;
   clearOrderList(): void;
@@ -411,6 +420,9 @@ export namespace OrderBatch {
     state: number,
     paymentState: number,
     logisticsState: number,
+    temperature: string,
+    specification: string,
+    pickupTime: string,
     orderList: Array<Order.AsObject>,
     self?: google_protobuf_struct_pb.Struct.AsObject,
   }

@@ -7,11 +7,8 @@ export default {
     let method = "CreateOrder";
     let req = new app.orderpb.Order();
     if (condition !== null) req.setSelf(condition)
-    // console.log("create_Order>>>",req.getConditionList())
     let product = await app.grpcAxios(app.$axios, method, metadata, req, (err, resp) => {
-      console.log("create_Order 3>>>>>", resp)
       const data = app.sqlpb.Response.deserializeBinary(resp.data);
-      console.log("create_Order 2>>>>>",data.getCode(),data.getInsertId(),data.getAffectRow())
       // todo:錯誤時候會跑兩次!?
       if (err !== null || data.getCode() != 0) {
         return { code: 0, data: `[${data.getCode()}] ${data.getMessage()} ` };

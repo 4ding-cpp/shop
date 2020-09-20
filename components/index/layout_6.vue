@@ -37,7 +37,6 @@ export default {
     };
   },
   created() {
-    console.log("type6:",this.item)
   },
 };
 </script>

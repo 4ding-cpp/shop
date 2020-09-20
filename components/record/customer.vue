@@ -153,7 +153,6 @@ export default {
       let result = await this.$store.dispatch("freeback/get_Freeback", {
         condition: cond,
       });
-      console.log("res", result);
       this.list = [];
       if ((result.code == 200) & (result.data !== null))
         this.list = result.data;
@@ -179,17 +178,8 @@ export default {
         condition: cond,
         dialogue: null,
       });
-
-      console.log("create_freeback res", result);
     },
-    // appendFree: async function (cond) {
-    //    let result = await this.$store.dispatch("freeback/append_Freeback", {
-    //     condition: cond,
-    //     dialogue: null,
-    //   });
 
-    //   console.log("create_freeback res", result);
-    // },
   },
   //BEGIN--生命週期
   beforeCreate: function () {
@@ -203,7 +193,6 @@ export default {
   },
   mounted: async function () {
     //元素已掛載， el 被建立。
-    console.log(this.data);
     await this.find_record();
   },
   beforeUpdate: function () {

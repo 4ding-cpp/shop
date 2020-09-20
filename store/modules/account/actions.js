@@ -26,7 +26,6 @@ export default {
    */
   async signUp(context, { condition = null }) {
     let app = this.app
-    console.log(this.app)
     let metadata = { "x-4d-token": app.store.state.account.token };
     let method = "SignUp";
     let req = new app.customerpb.Customer();
@@ -34,7 +33,6 @@ export default {
 
     let res = await app.grpcAxios(app.$axios, method, metadata, req);
     if(res.code === 200) context.commit("set_token", { token: res.data, t: true })
-    console.log("signUp", res)
     return res;
   },
   /**

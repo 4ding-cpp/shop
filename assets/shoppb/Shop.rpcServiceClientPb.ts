@@ -9,7 +9,6 @@
 
 import * as grpcWeb from 'grpc-web';
 
-import * as pingpong_pb from './pingpong_pb';
 import * as password_pb from './password_pb';
 import * as sql_pb from './sql_pb';
 import * as customer_pb from './customer_pb';
@@ -37,28 +36,6 @@ export class ShopRPCClient {
     this.hostname_ = hostname;
     this.credentials_ = credentials;
     this.options_ = options;
-  }
-
-  methodInfoPing = new grpcWeb.AbstractClientBase.MethodInfo(
-    pingpong_pb.PingPong,
-    (request: pingpong_pb.PingPong) => {
-      return request.serializeBinary();
-    },
-    pingpong_pb.PingPong.deserializeBinary
-  );
-
-  ping(
-    request: pingpong_pb.PingPong,
-    metadata: grpcWeb.Metadata | null,
-    callback: (err: grpcWeb.Error,
-               response: pingpong_pb.PingPong) => void) {
-    return this.client_.rpcCall(
-      this.hostname_ +
-        '/ding4.ShopRPC/Ping',
-      request,
-      metadata || {},
-      this.methodInfoPing,
-      callback);
   }
 
   methodInfoSignIn = new grpcWeb.AbstractClientBase.MethodInfo(
@@ -322,6 +299,28 @@ export class ShopRPCClient {
       request,
       metadata || {},
       this.methodInfoFindProductGoods,
+      callback);
+  }
+
+  methodInfoFindProductGoodsOfActivity = new grpcWeb.AbstractClientBase.MethodInfo(
+    sql_pb.Response,
+    (request: activity$coupon_pb.Activity) => {
+      return request.serializeBinary();
+    },
+    sql_pb.Response.deserializeBinary
+  );
+
+  findProductGoodsOfActivity(
+    request: activity$coupon_pb.Activity,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.Error,
+               response: sql_pb.Response) => void) {
+    return this.client_.rpcCall(
+      this.hostname_ +
+        '/ding4.ShopRPC/FindProductGoodsOfActivity',
+      request,
+      metadata || {},
+      this.methodInfoFindProductGoodsOfActivity,
       callback);
   }
 

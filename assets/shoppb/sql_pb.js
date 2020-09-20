@@ -1405,7 +1405,7 @@ proto.ding4.Condition.prototype.setO = function(value) {
  * @private {!Array<number>}
  * @const
  */
-proto.ding4.Query.repeatedFields_ = [2,3,4,5];
+proto.ding4.Query.repeatedFields_ = [2,3,4,6];
 
 
 
@@ -1445,7 +1445,8 @@ proto.ding4.Query.toObject = function(includeInstance, msg) {
     proto.ding4.Condition.toObject, includeInstance),
     conditionList: jspb.Message.toObjectList(msg.getConditionList(),
     proto.ding4.Condition.toObject, includeInstance),
-    extraList: (f = jspb.Message.getRepeatedField(msg, 5)) == null ? undefined : f,
+    alias: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    extraList: (f = jspb.Message.getRepeatedField(msg, 6)) == null ? undefined : f,
     self: (f = msg.getSelf()) && google_protobuf_struct_pb.Struct.toObject(includeInstance, f)
   };
 
@@ -1505,9 +1506,13 @@ proto.ding4.Query.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 5:
       var value = /** @type {string} */ (reader.readString());
-      msg.addExtra(value);
+      msg.setAlias(value);
       break;
     case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addExtra(value);
+      break;
+    case 7:
       var value = new google_protobuf_struct_pb.Struct;
       reader.readMessage(value,google_protobuf_struct_pb.Struct.deserializeBinaryFromReader);
       msg.setSelf(value);
@@ -1573,17 +1578,24 @@ proto.ding4.Query.serializeBinaryToWriter = function(message, writer) {
       proto.ding4.Condition.serializeBinaryToWriter
     );
   }
+  f = message.getAlias();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
+      f
+    );
+  }
   f = message.getExtraList();
   if (f.length > 0) {
     writer.writeRepeatedString(
-      5,
+      6,
       f
     );
   }
   f = message.getSelf();
   if (f != null) {
     writer.writeMessage(
-      6,
+      7,
       f,
       google_protobuf_struct_pb.Struct.serializeBinaryToWriter
     );
@@ -1743,11 +1755,29 @@ proto.ding4.Query.prototype.clearConditionList = function() {
 
 
 /**
- * repeated string extra = 5;
+ * optional string alias = 5;
+ * @return {string}
+ */
+proto.ding4.Query.prototype.getAlias = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.ding4.Query} returns this
+ */
+proto.ding4.Query.prototype.setAlias = function(value) {
+  return jspb.Message.setProto3StringField(this, 5, value);
+};
+
+
+/**
+ * repeated string extra = 6;
  * @return {!Array<string>}
  */
 proto.ding4.Query.prototype.getExtraList = function() {
-  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 5));
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 6));
 };
 
 
@@ -1756,7 +1786,7 @@ proto.ding4.Query.prototype.getExtraList = function() {
  * @return {!proto.ding4.Query} returns this
  */
 proto.ding4.Query.prototype.setExtraList = function(value) {
-  return jspb.Message.setField(this, 5, value || []);
+  return jspb.Message.setField(this, 6, value || []);
 };
 
 
@@ -1766,7 +1796,7 @@ proto.ding4.Query.prototype.setExtraList = function(value) {
  * @return {!proto.ding4.Query} returns this
  */
 proto.ding4.Query.prototype.addExtra = function(value, opt_index) {
-  return jspb.Message.addToRepeatedField(this, 5, value, opt_index);
+  return jspb.Message.addToRepeatedField(this, 6, value, opt_index);
 };
 
 
@@ -1780,12 +1810,12 @@ proto.ding4.Query.prototype.clearExtraList = function() {
 
 
 /**
- * optional google.protobuf.Struct self = 6;
+ * optional google.protobuf.Struct self = 7;
  * @return {?proto.google.protobuf.Struct}
  */
 proto.ding4.Query.prototype.getSelf = function() {
   return /** @type{?proto.google.protobuf.Struct} */ (
-    jspb.Message.getWrapperField(this, google_protobuf_struct_pb.Struct, 6));
+    jspb.Message.getWrapperField(this, google_protobuf_struct_pb.Struct, 7));
 };
 
 
@@ -1794,7 +1824,7 @@ proto.ding4.Query.prototype.getSelf = function() {
  * @return {!proto.ding4.Query} returns this
 */
 proto.ding4.Query.prototype.setSelf = function(value) {
-  return jspb.Message.setWrapperField(this, 6, value);
+  return jspb.Message.setWrapperField(this, 7, value);
 };
 
 
@@ -1812,7 +1842,7 @@ proto.ding4.Query.prototype.clearSelf = function() {
  * @return {boolean}
  */
 proto.ding4.Query.prototype.hasSelf = function() {
-  return jspb.Message.getField(this, 6) != null;
+  return jspb.Message.getField(this, 7) != null;
 };
 
 

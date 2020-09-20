@@ -48,7 +48,6 @@ export default {
     };
   },
   mounted: async function () {
-    console.log(this.item);
   },
 };
 </script>

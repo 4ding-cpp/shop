@@ -39,7 +39,6 @@ export default {
   computed: {
     autoheight(){
       if(this.$store.state.act.loading === false || document.getElementById("page") === null ) return  ;
-      console.log("auto", document.getElementById("page"))
       this.height =  document.getElementById("page").offsetHeight + 'px' ;
     }
   },

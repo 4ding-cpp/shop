@@ -19,9 +19,7 @@ export default {
   },
   // 監聽,當路由發生變化的時候執行
   watch: {
-    $route(to, from) {
-      console.log(to.path);
-    },
+
   },
   methods: {
     // 初始

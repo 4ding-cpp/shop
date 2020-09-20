@@ -62,7 +62,6 @@ export default {
   mounted() {
     // this.second = Number(this.item.second) * 1000 ;
     this.run_carousel();
-    console.log(this.item)
   }
 };
 </script>

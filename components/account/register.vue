@@ -110,7 +110,6 @@ export default {
     // 檢查表單
     submit: async function () {
       return this.$validate().then((success, e) => {
-        console.log(this.validation.allErrors());
         return { res: success, message: this.validation.allErrors() };
       });
     },

@@ -39,7 +39,7 @@
 
                   <div class="dropdown-menu" aria-labelledby="memberMenu">
                     <div class="cart-content">
-                      <div class="buttons mb-2" @click="login">
+                      <div class="buttons" @click="login">
                         <a class="btn btn-primary btn-block btn-cart">會員登入</a>
                       </div>
                       <div class="buttons" v-if="user.name">
@@ -167,9 +167,7 @@ export default {
   // 監聽,當路由發生變化的時候執行
   watch: {
     "$store.state.web.style"(status) {
-      console.log("watch header");
       this.nav = this.get_headerNav();
-      console.log(this.nav);
     },
     "$store.state.account.user"(to, from) {
       this.user = { ...to };
@@ -222,7 +220,7 @@ export default {
         break;
       default:
     }
-    $("header.header a").css("color", this.style.config.header_style.color);
+    $("header.header a").siblings().not('.dropdown-menu').css("color", this.style.config.header_style.color);
   },
 };
 </script>

@@ -64,7 +64,7 @@ export default {
   },
 
   mounted() {
-    console.log("type1:", this.item);
+
     this.second = this.item.second ? Number(this.item.second) * 1000 : 0;
     if (this.second === 0) return;
     $(`#banner-type1-${this.randID}`).carousel({

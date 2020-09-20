@@ -6,23 +6,23 @@
         v-if="data.photox!=null"
         :src="IMG_URL+data.photox[0].src"
         class="card-img-top"
-        :to="'/product/'+data.shell_id"
+        :to="'/product/'+data.urn"
       ></nuxt-link>
       <nuxt-link
         tag="img"
         v-else
         src="/images/noprod.png"
         class="card-img-top"
-        :to="'/product/'+data.shell_id"
+        :to="'/product/'+data.urn"
       ></nuxt-link>
       <!-- <img :src="data.photo" class="card-img-top" alt="..." /> -->
       <div class="card-body">
         <div class="caption">
-          <nuxt-link tag="h4" class="text-center" :to="'/product/'+data.shell_id">{{data.name.tw}}</nuxt-link>
+          <nuxt-link tag="h4" class="text-center" :to="'/product/'+data.urn">{{data.name.tw}}</nuxt-link>
           <nuxt-link
             tag="section"
             class="d-flex justify-content-center"
-            :to="'/product/'+data.shell_id"
+            :to="'/product/'+data.urn"
           >
             <span class="price">NT${{data.price}}</span>
             <span class="originalPrice">${{data.original}}</span>
@@ -68,7 +68,7 @@ export default {
     },
   },
   created() {
-    console.log("products", this.data);
+
   },
 };
 </script>

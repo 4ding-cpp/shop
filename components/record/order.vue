@@ -27,7 +27,7 @@
             <span @click="freeback(item.order_id)">
               <i class="fas fa-comment-dots"></i> 詢問
             </span> ｜
-            <nuxt-link tag="span" class :to="`/cart/orderList?id=${item.order_id}`">查看</nuxt-link>
+            <nuxt-link tag="span" class :to="`/order/complete?id=${item.order_id}`">查看</nuxt-link>
           </td>
         </tr>
       </tbody>
@@ -94,7 +94,6 @@ export default {
      * clickCallback
      */
     clickCallback: async function (pageNum) {
-      console.log("clickCallback", pageNum);
       this.page.now = pageNum;
       this.find_list();
     },

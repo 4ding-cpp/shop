@@ -140,9 +140,9 @@
           </div>
         </div>
       </div>
-      <div class="chat">
+      <!-- <div class="chat">
         <i class="fas fa-comments"></i>
-      </div>
+      </div> -->
     </section>
 
     <Footers />
@@ -181,7 +181,7 @@ export default {
       app: app,
       token: store.state.account.token,
       condition: {
-        id: route.params.id,
+        urn: route.params.id,
       },
     });
     console.log("p:", result);
@@ -250,8 +250,6 @@ export default {
      * 取消
      */
     delFavorite: async function () {
-      // let cond = new this.sqlpb.Condition();
-      // cond.setF("shell_id").setV(id);
       let result = await this.$store.dispatch("product/del_MyFavorite", {
         condition: { id: this.product_info.shell_id },
       });

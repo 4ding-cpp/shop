@@ -17,7 +17,6 @@ export default {
         let app = this.app
         let store = this.app.store
         let token = app.$cookies.get('4dingtoken');
-        console.log("cookie:",token)
         
         if (token == "" || token === undefined) {
             let resp = await store.dispatch("account/get_token");
@@ -25,19 +24,17 @@ export default {
         } else {
             await store.commit('account/set_token', { token: token, t: false })
             let resp = await store.dispatch("account/whoAmI");
-            console.log(">>>>身分檢查判定:", resp);
         }
 
         // config相關
-        let conf = await store.dispatch("other/appConf", {
+        let conf = store.dispatch("other/appConf", {
             token: token,
         });
-        console.log("appConf>>",conf)
         // 我的最愛列表
-        let favorte = await store.dispatch("product/get_MyFavorite", {
+        let favorte = store.dispatch("product/get_MyFavorite", {
             condition: null,
         });
-        console.log("favorte>>",favorte)
+
         // 首頁相關
         let result = await store.dispatch("web/get_website", {
             token: token,

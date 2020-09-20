@@ -44,7 +44,7 @@ export default {
     let metadata = { "x-4d-token": token };
     let method = "BrowseProductGoods";
     let req = new app.prodpb.ProductGoods();
-    if (condition.id !== null) req.setShellId(condition.id)
+    if (condition.urn !== null) req.setUrn(condition.urn)
     let product = await app.grpcAxios(app.$axios, method, metadata, req);
     return product;
 

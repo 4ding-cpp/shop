@@ -152,7 +152,6 @@ export default {
     //監聽值
     "$store.state.account.user"(to, from) {
       this.user = { ...to };
-      console.log("user:", this.user);
     },
   },
   computed: {

@@ -1,7 +1,7 @@
 <template>
   <div class="dropdown-menu" :class="{'show':active==true}" aria-labelledby="dropdownMenuLink">
     <div class="cart-content">
-      <div class="cart_list">
+      <div class="cart_list" v-if="cart.length > 0" >
         <div class="product_item" v-for="(item, key, index) in cart">
           <div class="float-left">
             <img :src="`${IMG_URL}${item.photox[0].src}`" alt />
@@ -65,7 +65,7 @@ export default {
   mounted: async function () {
   
     this.cart = this.$store.state.cart.content;
-    let list = ["/cart/step1", "/cart/step2", "/cart/step3", "/cart/orderList"];
+    let list = ["/cart/step1", "/order/complete"];
     if (!list.includes(this.$route.path)) {
       // await this.get_completeCar();
     }
@@ -116,7 +116,7 @@ export default {
         for (let i in this.cart) {
           data[`${this.cart[i].shell_id }-${this.cart[i].sku}`] = this.cart[i];
         }
-        console.log(result);
+
         this._store({ act: "cart/set_cart_info", data: cart_info });
         this._store({ act: "cart/set_cart", data: data });
       }

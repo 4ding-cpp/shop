@@ -105,7 +105,6 @@ export default {
      * clickCallback
      */
     clickCallback: async function (pageNum) {
-      console.log("clickCallback", pageNum);
       this.page.now = pageNum;
       this.find_list();
     },
@@ -123,12 +122,10 @@ export default {
         pageLimit: pageLimit,
       });
       this.page.loading = false;
-      console.log(page);
       if (result.code === 0) {
         alert(result.data);
         return false;
       } else {
-        console.log(result);
         let total = parseInt(result.limit.length / result.limit.pageSize);
         this.page.total = total == 0 ? 1 : total;
         this.list = result.data;

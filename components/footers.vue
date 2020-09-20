@@ -51,7 +51,6 @@ export default {
   },
   async created() {
     this.footer = this.get_footer();
-    console.log(this.footer);
   },
   methods: {
     // 初始
