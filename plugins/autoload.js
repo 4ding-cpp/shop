@@ -1,4 +1,4 @@
-console.log('plugins autoload')
+
 import Vue from 'vue'
 import SimpleVueValidation from 'simple-vue-validator';
 Vue.prototype.Validator = window.Validator = SimpleVueValidation.Validator;

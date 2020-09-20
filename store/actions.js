@@ -40,8 +40,9 @@ export default {
             token: token,
             condition: null
         });
-        console.log(">>",typeof null ,result.data)
+      
         if ( result.data !== undefined && result.data.length !== 0) {
+   
             // 搜尋該分類的產品列表
             await store.dispatch("web/init_layout", {
                 token: token,

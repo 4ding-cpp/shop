@@ -122,11 +122,13 @@ export namespace ProductTarget {
 }
 
 export class ActivityTarget extends jspb.Message {
-  getActivityId(): string;
-  setActivityId(value: string): void;
-
   getUrn(): string;
   setUrn(value: string): void;
+
+  getName(): google_protobuf_struct_pb.Value | undefined;
+  setName(value?: google_protobuf_struct_pb.Value): void;
+  hasName(): boolean;
+  clearName(): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ActivityTarget.AsObject;
@@ -138,8 +140,8 @@ export class ActivityTarget extends jspb.Message {
 
 export namespace ActivityTarget {
   export type AsObject = {
-    activityId: string,
     urn: string,
+    name?: google_protobuf_struct_pb.Value.AsObject,
   }
 }
 

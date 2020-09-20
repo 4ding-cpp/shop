@@ -116,7 +116,7 @@
             <!-- 瀏覽器紀錄 -->
             <div class="history p-2">瀏覽紀錄</div>
             <div class="history-contect mb-5"></div>
-            <ul class="nav nav-tabs" id="Tab" role="tablist">
+            <!-- <ul class="nav nav-tabs" id="Tab" role="tablist">
               <li class="nav-item">
                 <a
                   class="nav-link active"
@@ -136,7 +136,7 @@
                 role="tabpanel"
                 aria-labelledby="home-tab"
               ></div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -173,7 +173,7 @@ export default {
       breadcrumb_info: {
         name: "熱門商品",
         key: "product",
-        url: "/class/",
+        url: "/products/class/",
         prod: "",
       },
     };
@@ -184,7 +184,7 @@ export default {
         urn: route.params.id,
       },
     });
-    console.log("p:", result);
+    
     if (result.code === 200) {
       for (let i in result.data.block) {
         let item = result.data.block[i];
@@ -253,7 +253,7 @@ export default {
       let result = await this.$store.dispatch("product/del_MyFavorite", {
         condition: { id: this.product_info.shell_id },
       });
-      console.log("del:", result);
+
       if (result.code == 200) {
         this.$toast.success("已取消我的最愛");
         this.favorte = false;
@@ -271,7 +271,7 @@ export default {
           pid: this.product_info.product_id,
         },
       });
-      console.log("addFavorite", result);
+     
       if (result.code == 200) {
         this.$toast.success("已新增我的最愛");
         this.favorte = true;
@@ -284,7 +284,6 @@ export default {
      */
     cartJoin: function () {
       let p = this.product_info;
-      console.log(p);
       let data = {
         shell_id: p.shell_id,
         sku: this.specx,

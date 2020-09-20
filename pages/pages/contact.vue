@@ -30,7 +30,7 @@ export default {
       token: store.state.account.token,
       condition: cond,
     });
-    console.log("page>>>", result);
+
     if (result.code == 200) data.content = result.data;
     return data;
   },

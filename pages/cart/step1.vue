@@ -421,7 +421,6 @@ export default {
       },
       // 收件人
       receiver: {
-        // address: "",
         phone: "0912345678",
         email: "RECEIVER01@gmail.com",
         name: "RECEIVER01",
@@ -504,7 +503,7 @@ export default {
   computed: {
     //相依的資料改變時才做計算方法
     SynCopy: function () {
-      console.log(this.checked.userData.value);
+     
       if (this.checked.userData.value === false) return;
       this.receiver.name = this.buyer.name;
       this.receiver.phone = this.buyer.phone;
@@ -565,7 +564,7 @@ export default {
         //   this.cash.show = d.payment_type == 6 ? false : true;
         // }
       }
-      console.log("logist", this.logistic);
+    
       return true;
     },
     /**
@@ -579,7 +578,7 @@ export default {
         this.$toast.error(result.data);
         return false;
       }
-      console.log("pay:", result);
+     
       for (let i in result.data) {
         let d = result.data[i];
         let o = {
@@ -599,7 +598,7 @@ export default {
       let cart = this.cart.list;
       let money = 0;
       let amount = 0;
-      console.log("calculateCart", cart);
+    
       Object.keys(cart).forEach((k) => {
         amount += Number(cart[k].amount);
         money += Number(cart[k].price) * Number(cart[k].amount);
@@ -632,7 +631,7 @@ export default {
         token: this.$store.state.account.token,
         condition: cond,
       });
-      console.log("get_completeCar:", result);
+    
       this.checked.step = true;
       if (result.code === 200) {
         cart_info = { state: 1, id: result.data.car_id };
@@ -683,7 +682,6 @@ export default {
           this.delay_cart();
         }, 1000);
       } else {
-        console.log("do");
         this.get_completeCar(false);
       }
     },
@@ -697,7 +695,6 @@ export default {
      */
     submit: async function () {
       return this.$validate().then((success, e) => {
-        console.log(this.validation.allErrors());
         return { res: success, message: this.validation.allErrors() };
       });
     },
@@ -725,7 +722,6 @@ export default {
         this.logistic.selected
       ].data.adapter_id;
       o.other.receiver = this.receiver;
-      console.log("create_Order", o);
       let cond = Struct.fromJavaScript(o);
       let result = await this.$store.dispatch("order/create_Order", {
         condition: cond,
@@ -774,7 +770,6 @@ export default {
     this.loading(true);
     this.order = JSON.parse(localStorage.getItem("order"));
     localStorage.removeItem("order");
-    // console.log("local:",this.order);
     this.cart.list = this.$store.state.cart.content;
     await this.get_completeCar();
     await this.get_logistics();

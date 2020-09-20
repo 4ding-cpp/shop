@@ -55,7 +55,6 @@ export default {
     if (condition !== null) req.addCondition(condition)
     if (pageLimit !== null){ 
       req.setPageLimit(pageLimit)
-      console.log("pageLimit:",req.toObject())
     }
     let product = await app.grpcAxios(app.$axios, method, metadata, req, (err, resp) => {
       const data = app.sqlpb.Response.deserializeBinary(resp.data);

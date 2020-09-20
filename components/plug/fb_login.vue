@@ -1,5 +1,5 @@
 <template>
-  <button class="w-100 btn l-btn btn-facebook btn-sm" @click="FBLogin">使用FACEBOOK{{title}}xx</button>
+  <button class="w-100 btn l-btn btn-facebook btn-sm" @click="FBLogin">使用FACEBOOK{{title}}</button>
 </template>
 <script>
 import { Struct } from "google-protobuf/google/protobuf/struct_pb";

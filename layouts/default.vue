@@ -1,7 +1,7 @@
 <template>
   <div>
-    <PlugGtm />
-    <PlugFbPixel />
+    <!-- <PlugGtm />
+    <PlugFbPixel /> -->
     <Loading />
     <Headers />
     <nuxt data-aos="fade-up" data-aos-delay="300" />

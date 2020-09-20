@@ -59,7 +59,7 @@ export default {
     let data = {
       page_info: {
         name: "分類",
-        url: "/class/?prod=所有商品",
+        url: "/products/class/?prod=所有商品",
         prod: route.query.prod,
       },
     };
@@ -75,7 +75,7 @@ export default {
       token: store.state.account.token,
       condition: cond,
     });
-console.log("get prod",result)
+
     if (result.code === 200) data.product_list = result.data;
 
     return data;

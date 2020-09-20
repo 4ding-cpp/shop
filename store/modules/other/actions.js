@@ -9,11 +9,11 @@ export default {
    */
   async appConf(context, { token = null }) {
     let app = this.app
-    console.log(this.app)
     let metadata = { "x-4d-token": token };
     let method = "AppConf";
     let req = new app.sqlpb.Query();
     let res = await app.grpcAxios(app.$axios, method, metadata, req);
+    console.log("AppConf:",res)
     if(res.code === 200) context.commit("set_config", res.data)
     return res;
   },

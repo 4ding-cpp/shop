@@ -20,8 +20,8 @@
             <ul class="navbar-nav">
               <li class="nav-item p-0">
                 <nuxt-link tag="a" class="nav-link" to="/test">
-                  <span v-if="!user.name">尚未登入!!</span>
-                  <span v-if="user.name">歡迎回來,{{user.name}}!!</span>
+                  <span v-if="!user.name">遊客</span>
+                  <span v-if="user.name">{{user.name}}</span>
                 </nuxt-link>
               </li>
               <li class="nav-item p-0">
@@ -109,7 +109,7 @@
                 v-if="item.title.tw === 'all_product' "
                 tag="a"
                 class="nav-link"
-                :to="`/class/?prod=所有商品`"
+                :to="`/products/class/?prod=所有商品`"
               >所有商品</nuxt-link>
               <nuxt-link
                 v-if="item.title.tw === 'page_contact' "
@@ -121,7 +121,7 @@
                 v-else-if="item.target.class"
                 tag="a"
                 class="nav-link"
-                :to="`/class/${item.target.class[0]}?prod=${item.title.tw}`"
+                :to="`/products/class/${item.target.class[0]}?prod=${item.title.tw}`"
               >{{item.title.tw}}</nuxt-link>
               <nuxt-link
                 v-else-if="item.page"

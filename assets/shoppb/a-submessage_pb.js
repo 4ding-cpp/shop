@@ -1181,8 +1181,8 @@ proto.ding4.ActivityTarget.prototype.toObject = function(opt_includeInstance) {
  */
 proto.ding4.ActivityTarget.toObject = function(includeInstance, msg) {
   var f, obj = {
-    activityId: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    urn: jspb.Message.getFieldWithDefault(msg, 2, "")
+    urn: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    name: (f = msg.getName()) && google_protobuf_struct_pb.Value.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1221,11 +1221,12 @@ proto.ding4.ActivityTarget.deserializeBinaryFromReader = function(msg, reader) {
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.setActivityId(value);
+      msg.setUrn(value);
       break;
     case 2:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setUrn(value);
+      var value = new google_protobuf_struct_pb.Value;
+      reader.readMessage(value,google_protobuf_struct_pb.Value.deserializeBinaryFromReader);
+      msg.setName(value);
       break;
     default:
       reader.skipField();
@@ -1256,28 +1257,29 @@ proto.ding4.ActivityTarget.prototype.serializeBinary = function() {
  */
 proto.ding4.ActivityTarget.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getActivityId();
+  f = message.getUrn();
   if (f.length > 0) {
     writer.writeString(
       1,
       f
     );
   }
-  f = message.getUrn();
-  if (f.length > 0) {
-    writer.writeString(
+  f = message.getName();
+  if (f != null) {
+    writer.writeMessage(
       2,
-      f
+      f,
+      google_protobuf_struct_pb.Value.serializeBinaryToWriter
     );
   }
 };
 
 
 /**
- * optional string activity_id = 1;
+ * optional string urn = 1;
  * @return {string}
  */
-proto.ding4.ActivityTarget.prototype.getActivityId = function() {
+proto.ding4.ActivityTarget.prototype.getUrn = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
@@ -1286,26 +1288,45 @@ proto.ding4.ActivityTarget.prototype.getActivityId = function() {
  * @param {string} value
  * @return {!proto.ding4.ActivityTarget} returns this
  */
-proto.ding4.ActivityTarget.prototype.setActivityId = function(value) {
+proto.ding4.ActivityTarget.prototype.setUrn = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
 /**
- * optional string urn = 2;
- * @return {string}
+ * optional google.protobuf.Value name = 2;
+ * @return {?proto.google.protobuf.Value}
  */
-proto.ding4.ActivityTarget.prototype.getUrn = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+proto.ding4.ActivityTarget.prototype.getName = function() {
+  return /** @type{?proto.google.protobuf.Value} */ (
+    jspb.Message.getWrapperField(this, google_protobuf_struct_pb.Value, 2));
 };
 
 
 /**
- * @param {string} value
+ * @param {?proto.google.protobuf.Value|undefined} value
+ * @return {!proto.ding4.ActivityTarget} returns this
+*/
+proto.ding4.ActivityTarget.prototype.setName = function(value) {
+  return jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
  * @return {!proto.ding4.ActivityTarget} returns this
  */
-proto.ding4.ActivityTarget.prototype.setUrn = function(value) {
-  return jspb.Message.setProto3StringField(this, 2, value);
+proto.ding4.ActivityTarget.prototype.clearName = function() {
+  return this.setName(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.ding4.ActivityTarget.prototype.hasName = function() {
+  return jspb.Message.getField(this, 2) != null;
 };
 
 

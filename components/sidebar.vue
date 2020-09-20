@@ -6,7 +6,7 @@
         <template v-for="(item,i) in menu">
           <!-- 所有商品 -->
           <li v-if="item.title.tw === 'all_product'">
-            <nuxt-link tag="a" class :to="`/class/?prod=所有商品`">所有商品</nuxt-link>
+            <nuxt-link tag="a" class :to="`/products/class/?prod=所有商品`">所有商品</nuxt-link>
           </li>
           <!-- 聯絡資訊 -->
           <li v-if="item.title.tw === 'page_contact'">
@@ -31,7 +31,7 @@
             </a>
             <ul v-if="item.class" class="collapse list-unstyled" :id="`Submenu`+i">
               <li v-for="(o,j) in item.class" :key="j" class="dropright">
-                <nuxt-link tag="a" class="dropdown-toggle-right" :to="`/class/${o.class_id}?prod=${o.name.tw}`">
+                <nuxt-link tag="a" class="dropdown-toggle-right" :to="`/products/class/${o.class_id}?prod=${o.name.tw}`">
                   <i class="fas float-left"></i>
                   {{o.name.tw}}
                 </nuxt-link>

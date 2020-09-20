@@ -72,8 +72,8 @@ export default {
       // 註冊
       registered: {
         name: "",
-        phone: "0922222222",
-        email: "xx@gmail.com",
+        phone: "",
+        email: "",
         password: "",
         address: "",
       },

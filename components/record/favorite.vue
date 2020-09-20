@@ -23,7 +23,7 @@
           <td class="align-middle">{{ item.price }}</td>
           <td class="align-middle">{{ item.original }}</td>
           <td class="align-middle">
-            <nuxt-link tag="span" class :to="`/product/${item.urn}`">查看</nuxt-link>|
+            <nuxt-link tag="span" class :to="`/products/${item.urn}`">查看</nuxt-link>|
             <span href="" @click="delFavorite(item.shell_id)" >刪除</span>
           </td>
         </tr>

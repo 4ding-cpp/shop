@@ -134,7 +134,6 @@ export default {
         alert(result.data);
         return false;
       } else {
-        console.log(result.data);
         this.data = result.data;
       }
       return true;
@@ -144,7 +143,6 @@ export default {
   mounted: async function () {
     this.loading(true);
     this.data = new this.orderpb.Order().toObject();
-    console.log("data", this.data);
     let query = this.$route.query;
     this.order_id = query.hasOwnProperty("id") ? query.id : "";
     if (this.order_id == "") {

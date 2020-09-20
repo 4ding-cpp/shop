@@ -46,7 +46,6 @@ export default {
       delete clone[key] ;
       state.content = clone ;
     }
-    console.log("renew:",state.content)
     localStorage.setItem('cart',JSON.stringify(state.content))
   },
 }

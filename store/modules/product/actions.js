@@ -61,6 +61,7 @@ export default {
     let req = new app.sqlpb.Query();
     if (condition !== null) req.addCondition(condition)
     let product = await app.grpcAxios(app.$axios, method, metadata, req);
+    console.log("FindProductGoods:",product)
     return product;
 
   },
@@ -104,7 +105,6 @@ export default {
         return arr.indexOf(element) === index;
       });
       ArrayID.push("0")
-      console.log("ArrayID", ArrayID)
     }
 
     context.commit("set_favorite", ArrayID)

@@ -17,6 +17,7 @@ export default {
 
       const data = app.sqlpb.Response.deserializeBinary(resp.data);
       context.commit("set_style", data.getResult().toJavaScript());
+      console.log("IndexWebsite:", data.getResult().toJavaScript() )
       return { code: 200, data: data.getResult().toJavaScript() };
     });
     return result;
@@ -60,11 +61,15 @@ export default {
 
     for (let i in menu) {
       let result = menu[i];
+
+      // 商品分類
       if (
+        !!result.target &&
         result.target.hasOwnProperty("class") &&
         result.target.class.length > 0
       ) {
         let tempClass = []; //
+       
         for (let j in result.target.class) {
           let classId = result.target.class[j];
           let cond = new app.sqlpb.Condition();
@@ -77,6 +82,10 @@ export default {
           if (resp.code == 200) tempClass.push(resp.data.shift());
         }
         menu[i] = { ...menu[i], class: tempClass };
+      }
+      // 進行中活動 顯示在左側
+      if (!!result.activity ){
+        // console.log(result.activity)
       }
     }
     context.commit("set_menu", menu);
@@ -104,7 +113,6 @@ export default {
       token: store.state.account.token,
       condition: cond
     });
-    console.log("sortType2Items >>>",response)
     return response;
   },
   /**
