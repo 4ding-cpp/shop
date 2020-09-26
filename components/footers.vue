@@ -3,33 +3,41 @@
     <div class="footer-link pt-3 pb-3">
       <div class="container">
         <div class="row">
-          <section class="col-sm-6 col-md-3" v-for="(item,i) in footer">
+          <section class="col-sm-6 col-md-3" v-for="(item, i) in footer">
             <hr v-if="item.title.tw !== 'fb_plug'" />
-            <h5 v-if="item.title.tw === 'footer_contact' ">聯絡資訊</h5>
-            <h5 v-else-if="item.title.tw === 'fb_plug' ">
-              <PlugFb style="width:100%" />
+            <h5 v-if="item.title.tw === 'footer_contact'">聯絡資訊</h5>
+            <h5 v-else-if="item.title.tw === 'fb_plug'">
+              <PlugFb style="width: 100%" />
             </h5>
-            <h5 v-else>{{item.title.tw}}</h5>
+            <h5 v-else>{{ item.title.tw }}</h5>
 
             <ul v-if="item.layout">
-              <template v-for="(o,j) in item.layout">
+              <template v-for="(o, j) in item.layout">
                 <!-- 聯絡資訊 -->
                 <li v-if="o.title.tw === 'page_contact'"></li>
                 <!-- 另開連結 -->
                 <li v-else-if="o.link">
                   <i class="fas fa-link"></i>
                   <a
-                    :href="`${(!(o.link).match(/^http?:\/\//i) || !(o.link).match(/^https?:\/\//i))? `http://${o.link}` :  o.link}`"
+                    :href="`${
+                      !o.link.match(/^http?:\/\//i) ||
+                      !o.link.match(/^https?:\/\//i)
+                        ? `http://${o.link}`
+                        : o.link
+                    }`"
                     target="_blank"
-                  >{{o.title.tw}}</a>
+                    >{{ o.title.tw }}</a
+                  >
                 </li>
                 <!-- 自訂頁面 -->
                 <li v-else-if="o.page">
                   <i class="fas fa-link"></i>
-                  <nuxt-link tag="a" class :to="`/pages/${o.page}`">{{o.title.tw}}</nuxt-link>
+                  <nuxt-link tag="a" class :to="`/pages/${o.page}`">{{
+                    o.title.tw
+                  }}</nuxt-link>
                 </li>
                 <!--  -->
-                <li v-else-if="o.title.tw">{{o.title.tw}}</li>
+                <li v-else-if="o.title.tw">{{ o.title.tw }}</li>
               </template>
             </ul>
           </section>
@@ -47,10 +55,28 @@ export default {
   data() {
     return {
       footer: [],
+      style: {
+        config: {},
+      },
     };
   },
   async created() {
     this.footer = this.get_footer();
+    this.style.config = this.get_styleColor();
+  },
+  mounted: function () {
+     $("footer h5").css(
+      "color",
+      this.style.config.footer_style.label
+    );
+    $("footer .footer-link").css(
+      "background",
+      this.style.config.footer_style.background
+    );
+    $("footer li ,footer li a").css(
+      "color",
+      this.style.config.footer_style.color
+    );
   },
   methods: {
     // 初始
@@ -59,6 +85,7 @@ export default {
     }),
     ...mapGetters({
       get_footer: "web/get_footer",
+      get_styleColor: "web/get_styleColor",
     }),
     async test() {},
   },

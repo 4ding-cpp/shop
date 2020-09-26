@@ -18,14 +18,6 @@
                 <section class>
                   <CarouselProduct :lists="product_info.photox" />
                 </section>
-                <!-- 活動列表 -->
-                <section class="active-block">
-                  <h3>本商品適用活動</h3>
-                  <div v-for="(item,i) in activity" class="d-flex">
-                    <div class="active-item mb-3">活動</div>
-                    <div>{{item.name.tw}}</div>
-                  </div>
-                </section>
               </div>
               <!-- 右側規格數量 -->
               <div class="col-md-6">
@@ -34,38 +26,60 @@
                     <a href="#">
                       <i
                         class="fas fa-heart fa-2x"
-                        :class="{'no':favorte===false}"
+                        :class="{ no: favorte === false }"
                         @click="toggleFavorte"
                       ></i>
                     </a>
                   </div>
 
-                  <h4>{{product_info.name.tw}}</h4>
-                  <div>規格:</div>
+                  <h4>{{ product_info.name.tw }}</h4>
+                  <!-- 活動列表 -->
                   <div class="row">
-                    <div v-for="(o,id) in product_info.specx" class="col-md-4 p-2 mb-3">
-                      <ButtonChoice
-                        :title="specxName(o.itemx)"
-                        :free="false"
-                        :active="specx===o.sku"
-                        @selected="specx=o.sku"
-                      />
-                    </div>
+                    <section class="active-block">
+                      <h3>本商品適用活動</h3>
+                      <div v-for="(item, i) in activity" class="d-flex">
+                        <div class="active-item mb-3">活動</div>
+                        <div>{{ item.name.tw }}</div>
+                      </div>
+                    </section>
                   </div>
                   <div class="row flex-md-column">
                     <div class="title">優惠售價</div>
                     <div class="price">
-                      <span class="offer line-through">NT$ {{product_info.price}}</span>
-                      <span class="originalPrice">NT${{product_info.original}}</span>
+                      <span class="offer line-through"
+                        >NT$ {{ product_info.price }}</span
+                      >
+                      <span class="originalPrice"
+                        >NT${{ product_info.original }}</span
+                      >
                     </div>
-                    <hr style="margin: 25px 0 30px;" />
+                    <hr style="margin: 25px 0 30px" />
+                  </div>
+                  <div class="row">規格:</div>
+                  <div class="row">
+                    <div
+                      v-for="(o, id) in product_info.specx"
+                      class="col-md-4 p-2 mb-3"
+                    >
+                      <ButtonChoice
+                        :title="specxName(o.itemx)"
+                        :free="false"
+                        :active="specx === o.sku"
+                        @selected="specx = o.sku"
+                      />
+                    </div>
                   </div>
                   <div class="row flex-md-column">
                     <div class="title">供貨狀況</div>
                     <div class="d-flex">
                       <div class="col-md-6 p-1">
                         <Select1
-                          :opt="[{ 'title':`NT$ ${product_info.price} (市價:NT$ ${product_info.original})` , 'value':product_info.price }]"
+                          :opt="[
+                            {
+                              title: `NT$ ${product_info.price} (市價:NT$ ${product_info.original})`,
+                              value: product_info.price,
+                            },
+                          ]"
                         />
                       </div>
                       <div class="col-md-6 p-1">
@@ -74,10 +88,20 @@
                     </div>
                     <div class="d-flex mt-1">
                       <div class="col-md-6 p-1">
-                        <button class="btn-block l-btn btn-secondary" @click="cartJoin()">加入購物車</button>
+                        <button
+                          class="btn-block l-btn btn-secondary"
+                          @click="cartJoin()"
+                        >
+                          加入購物車
+                        </button>
                       </div>
                       <div class="col-md-6 p-1">
-                        <button class="w-100 checkout-btn l-btn" @click="toStep1();">立即結帳</button>
+                        <button
+                          class="w-100 checkout-btn l-btn"
+                          @click="toStep1()"
+                        >
+                          立即結帳
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -92,23 +116,33 @@
               </div>
             </div>
             <!-- 規格說明 -->
-            <ul v-if="product_info.block!==null" class="nav nav-tabs" id="Tab" role="tablist">
-              <li class="nav-item" v-for="(item,i) in product_info.block">
+            <ul
+              v-if="product_info.block !== null"
+              class="nav nav-tabs"
+              id="Tab"
+              role="tablist"
+            >
+              <li class="nav-item" v-for="(item, i) in product_info.block">
                 <a
                   class="nav-link"
-                  :class="{'active':i==0}"
+                  :class="{ active: i == 0 }"
                   data-toggle="tab"
-                  :href="'#tab_'+i"
-                  :aria-controls="'tab_'+i"
-                >{{item.title.tw}}</a>
+                  :href="'#tab_' + i"
+                  :aria-controls="'tab_' + i"
+                  >{{ item.title.tw }}</a
+                >
               </li>
             </ul>
-            <div v-if="product_info.block!==null" class="tab-content mb-5" id="TabContent">
+            <div
+              v-if="product_info.block !== null"
+              class="tab-content mb-5"
+              id="TabContent"
+            >
               <div
-                v-for="(item,i) in product_info.block"
+                v-for="(item, i) in product_info.block"
                 class="tab-pane fade"
-                :class="{'active show':i==0}"
-                :id="'tab_'+i"
+                :class="{ 'active show': i == 0 }"
+                :id="'tab_' + i"
                 role="tabpanel"
                 v-html="item.content"
               ></div>
@@ -184,7 +218,7 @@ export default {
         urn: route.params.id,
       },
     });
-    
+
     if (result.code === 200) {
       for (let i in result.data.block) {
         let item = result.data.block[i];
@@ -232,7 +266,7 @@ export default {
       let result = await this.$store.dispatch("product/get_MyFavorite", {
         condition: cond,
       });
-    
+
       if (result.code === 0) return false;
 
       if (result.data.includes(String(this.product_info.shell_id))) {
@@ -271,7 +305,7 @@ export default {
           pid: this.product_info.product_id,
         },
       });
-     
+
       if (result.code == 200) {
         this.$toast.success("已新增我的最愛");
         this.favorte = true;
@@ -347,15 +381,7 @@ a .fa-heart {
   min-height: 50px;
 }
 .active-block {
-  box-sizing: border-box;
-  width: 100%;
-  float: left;
-  margin-left: 0;
-  margin-right: 0;
-  border: 1px solid #d4d9de;
-  border-top: 3px solid #4a4e5c;
-  padding: 16px;
-  margin-top: 30px;
+  margin-top: 20px;
   & h3 {
     font-size: 0.8em;
     line-height: 1.5;

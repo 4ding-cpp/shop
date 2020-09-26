@@ -3,29 +3,41 @@
     <div class="product">
       <nuxt-link
         tag="img"
-        v-if="data.photox!=null"
-        :src="IMG_URL+data.photox[0].src"
+        v-if="data.photox != null"
+        :src="IMG_URL + data.photox[0].src"
         class="card-img-top"
-        :to="'/products/'+data.urn"
+        :to="'/products/' + data.urn"
       ></nuxt-link>
       <nuxt-link
         tag="img"
         v-else
         src="/images/noprod.png"
         class="card-img-top"
-        :to="'/products/'+data.urn"
+        :to="'/products/' + data.urn"
       ></nuxt-link>
       <!-- <img :src="data.photo" class="card-img-top" alt="..." /> -->
       <div class="card-body">
         <div class="caption">
-          <nuxt-link tag="h4" class="text-center" :to="'/products/'+data.urn">{{data.name.tw}}</nuxt-link>
+          <nuxt-link
+            tag="h4"
+            v-if="data.activity !== null"
+            :to="'/products/' + data.urn"
+            class="text-center"
+            >【{{ data.activity[0].name.tw }}】</nuxt-link
+          >
+          <nuxt-link
+            tag="h4"
+            class="text-center"
+            :to="'/products/' + data.urn"
+            >{{ data.name.tw }}</nuxt-link
+          >
           <nuxt-link
             tag="section"
             class="d-flex justify-content-center"
-            :to="'/products/'+data.urn"
+            :to="'/products/' + data.urn"
           >
-            <span class="price">NT${{data.price}}</span>
-            <span class="originalPrice">${{data.original}}</span>
+            <span class="price">NT${{ data.price }}</span>
+            <span class="originalPrice">${{ data.original }}</span>
           </nuxt-link>
           <!-- <section class="d-flex justify-content-center ">
             <div class="text-danger">NT${{data.price}}</div>
@@ -67,9 +79,7 @@ export default {
       this.$emit("selected");
     },
   },
-  created() {
-
-  },
+  created() {},
 };
 </script>
 <style lang="scss" scoped>
@@ -103,7 +113,7 @@ img {
     font-size: 1.1em;
     font-weight: 400;
   }
-  & span.price{
+  & span.price {
     color: #232323;
   }
 }

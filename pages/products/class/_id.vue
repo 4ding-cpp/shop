@@ -77,7 +77,7 @@ export default {
     });
 
     if (result.code === 200) data.product_list = result.data;
-
+    console.log( data.product_list)
     return data;
   },
   async fetch({ store, $axios, app }) {},

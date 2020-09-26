@@ -1,36 +1,45 @@
 <template>
-  <div>
+  <div id="main" :style="{'background-color':style.config.background}" >
     <!-- <PlugGtm />
     <PlugFbPixel /> -->
     <Loading />
     <Headers />
-    <nuxt data-aos="fade-up" data-aos-delay="300" />
+    <nuxt  data-aos="fade-up" data-aos-delay="300" :style="{'background-color':style.config.background}" />
   </div>
 </template>
 <script>
-import { mapActions, mapMutations } from "vuex";
+import { mapActions, mapMutations, mapGetters } from "vuex";
 export default {
   transition: "fadeOpacity",
   middleware: "auth",
   data() {
     return {
-      app_id: "123",
+      app_id: "",
+      style: {
+        config: {},
+      },
     };
   },
   // 監聽,當路由發生變化的時候執行
-  watch: {
-
-  },
+  watch: {},
   methods: {
     // 初始
     ...mapActions({
       _store: "_store",
       loading: "loading",
     }),
+    ...mapGetters({
+      get_styleColor: "web/get_styleColor",
+    }),
   },
 
   beforeMount: async function () {},
- 
+  async created() {
+    this.style.config = this.get_styleColor();
+  },
+  mounted: function () {
+    $("html").css("background", this.style.config.background);
+  },
   destroyed() {},
 };
 </script>
