@@ -1,55 +1,81 @@
 <template>
   <div id="page">
-    {{SynCopy}}
+    {{ SynCopy }}
     <section class="content">
       <div class="container">
-        <section class="row">
+        <section
+          class="row"
+          style="min-height: 70vh"
+          v-if="cart.list.length == 0"
+        >
+          <CartsNoProducts class="mb-5" />
+        </section>
+
+        <section class="row" v-else>
           <!-- 左側 -->
-          <div class="col-md-2" style="padding-right:10px">
-            <div class="checkout-amount-wrap">
-              <ul class="list-unstyled components checkout-amount">
-                <li>
-                  <a href="#leftProdCounter" data-toggle="collapse" aria-expanded="false">
-                    結帳金額
-                    <i class="fas float-right"></i>
-                  </a>
-                </li>
-                <div class="collapse list-unstyled" id="leftProdCounter">
+          <div class="col-md-2" style="padding-right: 10px">
+            <div class="position-sticky">
+              <div class="checkout-amount-wrap">
+                <ul class="list-unstyled components checkout-amount">
                   <li>
-                    商品小計
-                    <span class="float-right">{{calculateCart()}}</span>
+                    <a
+                      href="#leftProdCounter"
+                      data-toggle="collapse"
+                      aria-expanded="true"
+                    >
+                      結帳金額
+                      <i class="fas float-right"></i>
+                    </a>
                   </li>
-                </div>
-                <li>
-                  運費
-                  <span
-                    v-if="logistic.list[logistic.selected]"
-                    class="float-right"
-                  >{{ logistic.list[logistic.selected].data.logistics_fee }}</span>
-                </li>
-                <li class="totoal-money font-weight-bolder">
-                  應付總額
-                  <span class="price float-right">
-                    NT$
+                  <div class="collapse list-unstyled show" id="leftProdCounter">
+                    <li>
+                      商品小計
+                      <span class="float-right">{{ calculateCart() }}</span>
+                    </li>
+                  </div>
+                  <li>
+                    運費
                     <span
                       v-if="logistic.list[logistic.selected]"
-                      class="total"
-                    >{{cart.money + logistic.list[logistic.selected].data.logistics_fee}}</span>
-                  </span>
-                </li>
-              </ul>
-            </div>
-            <div class="checkout-amount-wrap">
-              <ul class="list-unstyled components checkout-amount">
-                <li>優惠碼</li>
-                <li>
-                  輸入優惠碼
-                  <div style="height: 30px;">
-                    <input type="text" style="width:95px" class="h-100" />
-                    <button type="button" class="btn btn-outline-danger btn-sm">確認</button>
-                  </div>
-                </li>
-              </ul>
+                      class="float-right"
+                      >{{
+                        logistic.list[logistic.selected].data.logistics_fee
+                      }}</span
+                    >
+                  </li>
+                  <li class="totoal-money font-weight-bolder">
+                    應付總額
+                    <span class="price float-right">
+                      NT$
+                      <span
+                        v-if="logistic.list[logistic.selected]"
+                        class="total"
+                        >{{
+                          cart.money +
+                          logistic.list[logistic.selected].data.logistics_fee
+                        }}</span
+                      >
+                    </span>
+                  </li>
+                </ul>
+              </div>
+              <div class="checkout-amount-wrap">
+                <ul class="list-unstyled components checkout-amount">
+                  <li>優惠碼</li>
+                  <li>
+                    輸入優惠碼
+                    <div style="height: 30px">
+                      <input type="text" style="width: 95px" class="h-100" />
+                      <button
+                        type="button"
+                        class="btn btn-outline-danger btn-sm"
+                      >
+                        確認
+                      </button>
+                    </div>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
           <!-- 右側 -->
@@ -64,19 +90,23 @@
                     <th>名稱</th>
                     <th>規格</th>
                     <th>單價</th>
-                    <th style="width:200px">數量</th>
+                    <th style="width: 200px">數量</th>
                     <th>小計</th>
                     <th></th>
                   </thead>
                   <tbody>
-                    <tr v-for="(item,i) in cart.list">
+                    <tr v-for="(item, i) in cart.list">
                       <td>
-                        <img :src="`${imgesUrl}${item.photox[0].src}`" alt width="100px" />
+                        <img
+                          :src="`${imgesUrl}${item.photox[0].src}`"
+                          alt
+                          width="100px"
+                        />
                         <!-- <img src="/images/noprod.png" alt width="80px" /> -->
                       </td>
-                      <td>{{item.name.tw}}</td>
-                      <td>{{item.sku }}</td>
-                      <td class="font-size-16">NT${{item.price}}</td>
+                      <td>{{ item.name.tw }}</td>
+                      <td>{{ item.sku }}</td>
+                      <td class="font-size-16">NT${{ item.price }}</td>
                       <td>
                         <ButtonSubAdd
                           :data.sync="item"
@@ -84,13 +114,17 @@
                           @after_change="add_cart"
                         />
                       </td>
-                      <td class="font-size-16">{{ item.amount * item.price }}</td>
+                      <td class="font-size-16">
+                        {{ item.amount * item.price }}
+                      </td>
                       <td>
                         <i @click="del_cart(i)" class="fas fa-trash-alt"></i>
                       </td>
                     </tr>
-                    <tr v-if="cart.list.length==0">
-                      <td class="text-center text-danger" colspan="7">無資料</td>
+                    <tr v-if="cart.list.length == 0">
+                      <td class="text-center text-danger" colspan="7">
+                        無資料
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -110,7 +144,7 @@
             </div>
             <!-- step2 -->
 
-            <div v-if="checked.step===true" class="step2 d-flex flex-column">
+            <div v-if="checked.step === true" class="step2 d-flex flex-column pt-4">
               <div class="circle-head">會員專區</div>
               <div class="mb-2 font-weight-bolder">
                 會員登入
@@ -121,12 +155,17 @@
                   @click="get_completeCar"
                   type="button"
                   class="l-btn btn-facebook mr-2"
-                  style="width:50%"
+                  style="width: 50%"
                 >
-                  FACEBOOK
-                  快速註冊
+                  FACEBOOK 快速註冊
                 </button>
-                <button type="button" @click="signIn" class="l-btn btn-login mr-2 w-50">會員登入</button>
+                <button
+                  type="button"
+                  @click="signIn"
+                  class="l-btn btn-login mr-2 w-50"
+                >
+                  會員登入
+                </button>
               </div>
               <div class="mt-2 mb-2 font-weight-bolder">
                 <span class="hint-label">*</span>非會員購買
@@ -134,19 +173,21 @@
               <div class="col-md-12 pl-0 pr-2 float-left mb-3">
                 <input
                   class="form-control"
-                  :class="{'is-invalid': validation.hasError('buyer.email')}"
+                  :class="{ 'is-invalid': validation.hasError('buyer.email') }"
                   type="text"
                   v-model="buyer.email"
                   placeholder="連絡信箱"
                 />
               </div>
 
-              <div class="mt-2 mb-2 font-weight-bolder">
-                <span class="hint-label">*訂單通知會寄到此信箱，請您務必填入正確的 E-mail</span>
+              <div class="mb-2 font-weight-bolder">
+                <span class="hint-label"
+                  >*訂單通知會寄到此信箱，請您務必填入正確的 E-mail</span
+                >
               </div>
             </div>
             <!-- step3 -->
-            <div v-if="checked.step===true" class="step3">
+            <div v-if="checked.step === true" class="step3">
               <div class="d-flex flex-column pt-4">
                 <div class="circle-head">付款運送方式</div>
               </div>
@@ -168,12 +209,15 @@
                 <div class="col-md-2 float-left control-label">配送方式</div>
                 <div class="col-md-10 float-left">
                   <div class="row">
-                    <div v-for="(item,i) in logistic.list" class="col-md-4 pr-2 mb-3">
+                    <div
+                      v-for="(item, i) in logistic.list"
+                      class="col-md-4 pr-2 mb-3"
+                    >
                       <ButtonChoice
                         :title="item.title"
                         :free="false"
-                        :active="logistic.selected==item.id"
-                        @selected="logistic.selected=item.id"
+                        :active="logistic.selected == item.id"
+                        @selected="logistic.selected = item.id"
                       />
                     </div>
                   </div>
@@ -184,17 +228,22 @@
                     type="button"
                     @click="get_cvsStore()"
                     class="w-100 l-btn pick-btn btn-block"
-                  >選擇取貨門市</button>
+                  >
+                    選擇取貨門市
+                  </button>
                 </div>
                 <div class="col-md-2 float-left control-label">付款方式</div>
                 <div class="col-md-10 float-left">
-                  <div class="row" v-if="cash.show===true">
-                    <div v-for="(item,i) in cash.list" class="col-md-4 pr-2 mb-3">
+                  <div class="row" v-if="cash.show === true">
+                    <div
+                      v-for="(item, i) in cash.list"
+                      class="col-md-4 pr-2 mb-3"
+                    >
                       <ButtonChoice
                         :title="item.title"
                         :free="false"
-                        :active="cash.selected==item.id"
-                        @selected="cash.selected=item.id"
+                        :active="cash.selected == item.id"
+                        @selected="cash.selected = item.id"
                       />
                     </div>
                   </div>
@@ -222,14 +271,16 @@
                   <input
                     class="form-control"
                     v-model="buyer.name"
-                    :class="{'is-invalid': validation.hasError('buyer.name')}"
+                    :class="{ 'is-invalid': validation.hasError('buyer.name') }"
                     type="text"
                     placeholder="購買人姓名"
                   />
                   <div
                     v-if="validation.hasError('buyer.name')"
                     class="hint-label mt-2"
-                  >*{{ validation.firstError('buyer.name') }}</div>
+                  >
+                    *{{ validation.firstError("buyer.name") }}
+                  </div>
                 </div>
                 <div class="col-md-2 float-left control-label">
                   <span class="hint-label">*</span>聯絡電話
@@ -238,21 +289,27 @@
                   <input
                     class="form-control"
                     v-model="buyer.phone"
-                    :class="{'is-invalid': validation.hasError('buyer.phone')}"
+                    :class="{
+                      'is-invalid': validation.hasError('buyer.phone'),
+                    }"
                     type="text"
                     placeholder="購買人聯絡電話，例：0987654321"
                   />
                   <div
                     v-if="validation.hasError('buyer.phone')"
                     class="hint-label mt-2"
-                  >*{{ validation.firstError('buyer.phone') }}</div>
+                  >
+                    *{{ validation.firstError("buyer.phone") }}
+                  </div>
                 </div>
                 <div class="col-md-2 float-left control-label">聯絡地址</div>
                 <div class="col-md-10 mb-3 float-left">
                   <input
                     class="form-control"
                     v-model="buyer.address"
-                    :class="{'is-invalid': validation.hasError('buyer.address')}"
+                    :class="{
+                      'is-invalid': validation.hasError('buyer.address'),
+                    }"
                     type="text"
                     placeholder="請輸入購買人地址"
                   />
@@ -272,7 +329,8 @@
                     <label
                       class="form-check-label check-label ml-4"
                       for="defaultCheck1"
-                    >{{checked.userData.title}}</label>
+                      >{{ checked.userData.title }}</label
+                    >
                   </div>
                 </div>
               </div>
@@ -288,11 +346,15 @@
                   <input
                     class="form-control"
                     v-model="receiver.name"
-                    :class="{'is-invalid': validation.hasError('receiver.name')}"
+                    :class="{
+                      'is-invalid': validation.hasError('receiver.name'),
+                    }"
                     type="text"
                     placeholder="收件人姓名"
                   />
-                  <div class="hint-label mt-2">*超商取貨請使用本名，並記得攜帶身分證前往取貨</div>
+                  <div class="hint-label mt-2">
+                    *超商取貨請使用本名，並記得攜帶身分證前往取貨
+                  </div>
                 </div>
                 <div class="col-md-2 float-left control-label">
                   <span class="hint-label">*</span>聯絡電話
@@ -301,13 +363,15 @@
                   <input
                     class="form-control"
                     v-model="receiver.phone"
-                    :class="{'is-invalid': validation.hasError('receiver.phone')}"
+                    :class="{
+                      'is-invalid': validation.hasError('receiver.phone'),
+                    }"
                     type="text"
                     placeholder="收件人聯絡電話，例：0987654321"
                   />
-                  <div
-                    class="hint-label mt-2"
-                  >*取貨通知將以此電話聯繫，請勿加入任何空格或符號，使用超商取貨請務必填寫10碼手機，如：0987654321</div>
+                  <div class="hint-label mt-2">
+                    *取貨通知將以此電話聯繫，請勿加入任何空格或符號，使用超商取貨請務必填寫10碼手機，如：0987654321
+                  </div>
                 </div>
                 <div class="col-md-2 float-left control-label">
                   <span class="hint-label">*</span>聯絡信箱
@@ -316,21 +380,27 @@
                   <input
                     class="form-control"
                     v-model="receiver.email"
-                    :class="{'is-invalid': validation.hasError('receiver.email')}"
+                    :class="{
+                      'is-invalid': validation.hasError('receiver.email'),
+                    }"
                     type="text"
                     placeholder="聯絡信箱"
                   />
                   <div
                     v-if="validation.hasError('receiver.email')"
                     class="hint-label mt-2"
-                  >*{{ validation.firstError('receiver.email') }}</div>
+                  >
+                    *{{ validation.firstError("receiver.email") }}
+                  </div>
                 </div>
                 <div class="col-md-2 float-left control-label">聯絡地址</div>
                 <div class="col-md-10 float-left mb-3">
                   <input
                     class="form-control"
                     v-model="receiver.address"
-                    :class="{'is-invalid': validation.hasError('receiver.address')}"
+                    :class="{
+                      'is-invalid': validation.hasError('receiver.address'),
+                    }"
                     type="text"
                     placeholder="聯絡地址"
                   />
@@ -339,29 +409,52 @@
               <div class="row mb-3">
                 <div class="col-md-12">
                   <div class="w-100">
-                    <input class="form-check-input mt-2" type="checkbox" value checked />
-                    <label class="form-check-label check-label ml-4" for="defaultCheck1">用上述資料直接註冊會員</label>
-                  </div>
-                  <div class="w-100">
-                    <input class="form-check-input mt-2" type="checkbox" value checked />
+                    <input
+                      class="form-check-input mt-2"
+                      type="checkbox"
+                      value
+                      checked
+                    />
                     <label
                       class="form-check-label check-label ml-4"
                       for="defaultCheck1"
-                    >同意會員責任規範及個資聲明</label>
+                      >用上述資料直接註冊會員</label
+                    >
                   </div>
                   <div class="w-100">
-                    <input class="form-check-input mt-2" type="checkbox" value checked />
+                    <input
+                      class="form-check-input mt-2"
+                      type="checkbox"
+                      value
+                      checked
+                    />
                     <label
                       class="form-check-label check-label ml-4"
                       for="defaultCheck1"
-                    >為保障彼此之權益，賣家在收到您的訂單後仍保有決定是否接受訂單及出貨與否之權利</label>
+                      >同意會員責任規範及個資聲明</label
+                    >
+                  </div>
+                  <div class="w-100">
+                    <input
+                      class="form-check-input mt-2"
+                      type="checkbox"
+                      value
+                      checked
+                    />
+                    <label
+                      class="form-check-label check-label ml-4"
+                      for="defaultCheck1"
+                      >為保障彼此之權益，賣家在收到您的訂單後仍保有決定是否接受訂單及出貨與否之權利</label
+                    >
                   </div>
                   <div class="w-100 mt-3">
                     <button
                       type="button"
                       @click="create_Order()"
                       class="w-100 l-btn checkout-btn"
-                    >立即結帳</button>
+                    >
+                      立即結帳
+                    </button>
                   </div>
                 </div>
               </div>
@@ -503,7 +596,6 @@ export default {
   computed: {
     //相依的資料改變時才做計算方法
     SynCopy: function () {
-     
       if (this.checked.userData.value === false) return;
       this.receiver.name = this.buyer.name;
       this.receiver.phone = this.buyer.phone;
@@ -564,7 +656,7 @@ export default {
         //   this.cash.show = d.payment_type == 6 ? false : true;
         // }
       }
-    
+
       return true;
     },
     /**
@@ -578,7 +670,7 @@ export default {
         this.$toast.error(result.data);
         return false;
       }
-     
+
       for (let i in result.data) {
         let d = result.data[i];
         let o = {
@@ -598,7 +690,7 @@ export default {
       let cart = this.cart.list;
       let money = 0;
       let amount = 0;
-    
+
       Object.keys(cart).forEach((k) => {
         amount += Number(cart[k].amount);
         money += Number(cart[k].price) * Number(cart[k].amount);
@@ -631,7 +723,7 @@ export default {
         token: this.$store.state.account.token,
         condition: cond,
       });
-    
+
       this.checked.step = true;
       if (result.code === 200) {
         cart_info = { state: 1, id: result.data.car_id };
@@ -875,5 +967,9 @@ section {
   content: "\f054";
   transition: all 0.5s;
   transform: rotate(90deg);
+}
+// 左側結帳金額固定
+.position-sticky {
+  top: 100px;
 }
 </style>

@@ -101,6 +101,9 @@ li {
 img {
   cursor: pointer;
 }
+.card {
+  border-radius: 0rem;
+}
 .caption {
   cursor: pointer;
   & h4 {

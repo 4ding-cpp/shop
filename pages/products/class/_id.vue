@@ -29,7 +29,7 @@
             <!-- <div class>
               <img src="/images/banner01.png" class="img-fluid" alt="Responsive image" />
             </div>-->
-            <div class>
+            <div class="d-flex flex-wrap ">
               <template v-for="(item,i) in product_list">
                 <Products :data="item" />
               </template>
