@@ -506,9 +506,9 @@ export default {
       },
       // 購買人
       buyer: {
-        phone: "",
+        phone: "購買人電話",
         email: "",
-        name: "",
+        name: "購買人姓名",
         address: "",
         remark: "",
       },
@@ -852,10 +852,11 @@ export default {
   },
   created: function () {
     //實體建立完成。資料 data 已可取得，但 el 屬性還未被建立。
-    this.init_BuyerInfo();
+   
   },
   beforeMount: function () {
     //執行元素掛載之前。
+     this.init_BuyerInfo();
   },
   mounted: async function () {
     //元素已掛載， el 被建立。

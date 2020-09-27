@@ -55,19 +55,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.logo {
-  height: 50px;
+button {
+  height: 62px;
 }
-.nav-wrapper.list {
-  background-color: white;
-  border-bottom: 1px solid #ccc;
-}
-li {
-  padding-left: 20px;
-  padding-right: 20px;
-  border-left: 1px solid #ccc;
-  &:first-child {
-    border-left: 0px solid;
-  }
-}
+
+
 </style>

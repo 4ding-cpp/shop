@@ -15,6 +15,7 @@ export default {
     // 紀錄更新時間
     state.token_time = (o.t === true) ? new Date().getTime() / 1000 : 0;
     this.$cookies.set("4dingtoken", o.token, {
+      path: "/",
       maxAge: 60 * 60 * 24 * 7
     })
   },
