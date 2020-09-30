@@ -6,7 +6,7 @@
 ### /products/activity/{{activity.urn}} findProductGoods
 
 ## page
-#### /static/pages/{{page.urn}} findWebPage
+### /static/pages/{{page.urn}} findWebPage
 
 
 ## order
