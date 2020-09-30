@@ -15,7 +15,7 @@ export default function ({ app , $axios }) {
         bi.length % 256
     ])
     new Uint8Array(ib, 5).set(bi);
-    return fetch(`https://4ding.store/ding4.ShopRPC/${method}`, {
+    return fetch(`https://4ding.shop/ding4.ShopRPC/${method}`, {
         method: "POST",
         headers: {
             "content-type": "application/grpc-web+proto",

@@ -105,19 +105,19 @@ export default {
   },
   proxy: {
     '/static': {
-      target: 'https://4ding.store',
+      target: 'https://4ding.shop',
       changeOrigin: true,
     },
     '/logistics': {
-      target: 'https://4ding.store',
+      target: 'https://4ding.shop',
       changeOrigin: true,
     },
     '/payment': {
-      target: 'https://4ding.store',
+      target: 'https://4ding.shop',
       changeOrigin: true,
     },
     '/ding4.ShopRPC': {
-      target: 'https://4ding.store',
+      target: 'https://4ding.shop',
       changeOrigin: true,
     },
   },
